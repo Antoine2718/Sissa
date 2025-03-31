@@ -10,6 +10,17 @@ CONSTANTE JOUEUR_O = 2
 ; Grille de morpion : matrice 3x3
 MATRICE IF_3 grille[3][3]
 
+; Fonction d'évaluation pour déterminer le score d'un coup
+FONCTION EvaluerCoup(grille):
+    SI VerifierGagnant(grille, JOUEUR_X) ALORS
+        RETOURNER 10 // Joueur X gagne
+    SINON SI VerifierGagnant(grille, JOUEUR_O) ALORS
+        RETOURNER -10 // Joueur O gagne
+    SINON
+        RETOURNER 0 // Match nul ou jeu non terminé
+    FIN SI
+FIN FONCTION
+
 ; Fonction principale pour trouver le meilleur coup
 FONCTION MeilleurCoup(grille):
     INITIALISER meilleurScore à -INFINI
@@ -37,17 +48,6 @@ FONCTION MeilleurCoup(grille):
     FIN POUR
     
     RETOURNER meilleurCoupX, meilleurCoupY
-
-; Fonction d'évaluation pour déterminer le score d'un coup
-FONCTION EvaluerCoup(grille):
-    SI VerifierGagnant(grille, JOUEUR_X) ALORS
-        RETOURNER 10 // Joueur X gagne
-    SINON SI VerifierGagnant(grille, JOUEUR_O) ALORS
-        RETOURNER -10 // Joueur O gagne
-    SINON
-        RETOURNER 0 // Match nul ou jeu non terminé
-    FIN SI
-FIN FONCTION
 
 ; Fonction pour vérifier si un joueur a gagné
 FONCTION VerifierGagnant(grille, joueur):
