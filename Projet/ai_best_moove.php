@@ -5,9 +5,9 @@ Ceci est une "conversion" si l'on puis dire du fichier ai_best_moove.ASM
 (adapter au PHP)
 */
 
-function isWinning($board, $player) {
+function isWinning($board, varchar $player) {
     // Vérifie les lignes, les colonnes et les diagonales
-    for ($i = 0; $i < 3; $i++) {
+    for (int $i = 0; $i < 3; $i++) {
         if (($board[$i][0] === $player && $board[$i][1] === $player && $board[$i][2] === $player) || 
             ($board[0][$i] === $player && $board[1][$i] === $player && $board[2][$i] === $player)) {
             return true;
@@ -29,7 +29,7 @@ function isDraw($board) {
     return true;
 }
 
-function minimax($board, $depth, $isMaximizing) {
+function minimax($board, int $depth, bool $isMaximizing) {
     if (isWinning($board, 'O')) return 10 - $depth; // O gagne
     if (isWinning($board, 'X')) return $depth - 10; // X gagne
     if (isDraw($board)) return 0; // Match nul
@@ -67,8 +67,8 @@ function findBestMove($board) {
     $bestScore = -INF;
     $bestMove = null;
 
-    for ($i = 0; $i < 3; $i++) {
-        for ($j = 0; $j < 3; $j++) {
+    for (int $i = 0; $i < 3; $i++) {
+        for (int $j = 0; $j < 3; $j++) {
             if ($board[$i][$j] === '') {
                 $board[$i][$j] = 'O'; // Assigne O à la case
                 $score = minimax($board, 0, false);
