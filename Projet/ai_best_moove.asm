@@ -13,11 +13,11 @@ MATRICE IF_3 grille[3][3]
 ; Fonction d'évaluation pour déterminer le score d'un coup
 FONCTION EvaluerCoup(grille):
     SI VerifierGagnant(grille, JOUEUR_X) ALORS
-        RETOURNER 10 // Joueur X gagne
+        RETOURNER 10 ; Joueur X gagne
     SINON SI VerifierGagnant(grille, JOUEUR_O) ALORS
-        RETOURNER -10 // Joueur O gagne
+        RETOURNER -10 ; Joueur O gagne
     SINON
-        RETOURNER 0 // Match nul ou jeu non terminé
+        RETOURNER 0 ; Match nul ou jeu non terminé
     FIN SI
 FIN FONCTION
 
@@ -30,7 +30,7 @@ FONCTION MeilleurCoup(grille):
     POUR chaque ligne de 0 à 2 FAIRE
         POUR chaque colonne de 0 à 2 FAIRE
             SI grille[ligne][colonne] EST VIDE ALORS
-                // Simuler le coup
+                ; Simuler le coup
                 grille[ligne][colonne] <- JOUEUR_X
                 score <- EvaluerCoup(grille)
                 
@@ -41,7 +41,7 @@ FONCTION MeilleurCoup(grille):
                     meilleurCoupY <- colonne
                 FIN SI
                 
-                // Revenir à l'état original
+                ; Revenir à l'état original
                 grille[ligne][colonne] <- VIDE
             FIN SI
         FIN POUR
