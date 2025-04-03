@@ -1,21 +1,23 @@
 /*
 Base: Projet Sissa DB
-SGBD: postgre sql 
+SGBD: Mysql 
 */
 
 /*
-CREATION DES TABLES DE LA BASE
+CREATION DES TABLES DE LA BASE depuis le code généré par Looping
+Quelques modifications: COUNTER -> INT AUTO_INCREMENT
+                        BYTE -> TINYINT
 */
 
 CREATE TABLE Coup(
-   idCoup COUNTER,
+   idCoup INT AUTO_INCREMENT,
    code_coup CHAR(3),
-   numero_coup BYTE,
+   numero_coup TINYINT,
    PRIMARY KEY(idCoup)
 );
 
 CREATE TABLE Article(
-   idArticle COUNTER,
+   idArticle INT AUTO_INCREMENT,
    prix DECIMAL(8,2),
    nom VARCHAR(50) NOT NULL,
    stock INT NOT NULL,
@@ -25,7 +27,7 @@ CREATE TABLE Article(
 );
 
 CREATE TABLE Rang(
-   idRang INT,
+   idRang INT AUTO_INCREMENT,
    nomRang VARCHAR(20) NOT NULL,
    points_minimum INT NOT NULL,
    couleur_rang CHAR(7) NOT NULL,
@@ -33,15 +35,15 @@ CREATE TABLE Rang(
 );
 
 CREATE TABLE Robot(
-   idRobot INT,
+   idRobot INT AUTO_INCREMENT,
    nomRobot VARCHAR(50) NOT NULL,
-   niveauRobot BYTE NOT NULL,
+   niveauRobot TINYINT NOT NULL,
    lien_icone VARCHAR(50),
    PRIMARY KEY(idRobot)
 );
 
 CREATE TABLE Promotion(
-   idPromotion COUNTER,
+   idPromotion INT AUTO_INCREMENT,
    nom_promotion VARCHAR(50) NOT NULL,
    proportion_promotion DECIMAL(2,2) NOT NULL,
    debut_promotion DATETIME NOT NULL,
@@ -50,7 +52,7 @@ CREATE TABLE Promotion(
 );
 
 CREATE TABLE Utilisateur(
-   idUtilisateur COUNTER,
+   idUtilisateur INT AUTO_INCREMENT,
    nom VARCHAR(50) NOT NULL,
    points INT NOT NULL,
    identifiant VARCHAR(50),
@@ -62,7 +64,7 @@ CREATE TABLE Utilisateur(
 );
 
 CREATE TABLE Partie(
-   idPartie COUNTER,
+   idPartie INT AUTO_INCREMENT,
    date_premier_coup DATETIME,
    premier_joueur CHAR(1),
    idRobot INT NOT NULL,
@@ -73,7 +75,7 @@ CREATE TABLE Partie(
 );
 
 CREATE TABLE Remboursement(
-   idRemboursement COUNTER,
+   idRemboursement INT AUTO_INCREMENT,
    prix_remboursé DECIMAL(8,2),
    date_remboursement DATETIME,
    idUtilisateur INT NOT NULL,
@@ -110,6 +112,6 @@ CREATE TABLE a_la_promotion(
    FOREIGN KEY(idPromotion) REFERENCES Promotion(idPromotion)
 );
 
-ALTER TABLE coup add CONSTRAINT C_numero_coup CHECK(numero_coup between 0 and 9)
+ALTER TABLE coup add CONSTRAINT C_numero_coup CHECK(numero_coup between 0 and 9);
 
 ALTER TABLE rang add CONSTRAINT C_couleur_rang CHECK(couleur_rang like "#%")
