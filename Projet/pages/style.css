@@ -1,3 +1,4 @@
+
 body {
     font-family: Helvetica, sans-serif;
     margin: 0;
@@ -6,10 +7,25 @@ body {
 
 /* Style de la barre de navigation */
 .navbar {
-    background-color: #007BFF; /* Couleur bleu */
+    background-color: var(--sissa_dark_blue); /* Couleur bleu */
     overflow: hidden;
+    display: grid;
+    border-bottom: 1px solid grey; /*Petit détail*/
 }
-
+/*CSS pour le titre*/
+.title-navbar{
+    grid-column: 1;
+    display: flex;
+    justify-content: center;
+}
+/*CSS pour la partie navigation*/
+.inner-navbar{
+    grid-column: 2;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    vertical-align: middle;
+}
 a {
     float: left; /* Aligne les boutons à gauche */
     display: block;
@@ -22,7 +38,6 @@ p {
     text-align: left;
 }
 
-
 /* Style des liens dans la barre de navigation */
 .navbar a {
     float: left; /* Aligne les boutons à gauche */
@@ -34,13 +49,14 @@ p {
 }
 
 /* Change la couleur au survol */
-.navbar a:hover {
-    background-color: #ffffff; /* Couleur plus foncée au survol */
-    color: #007BFF
+.page_selected {
+    background-color: var(--sissa_light_blue); /* Couleur plus foncée au survol */
+    color: white;
+    border-radius: 10px;
 }
 
 #titre {
-    color: #ffffff; 
+    color: white; 
 }
 
 /* Contenu de la page */
@@ -49,10 +65,9 @@ p {
     text-align: center;
 }
 .color-button {
-    background-color: #007BFF; /* Vert */
+    background-color: var(--sissa_light_blue); /* Vert */
     color: white;
     border: none;
-    color: blanc;
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;

@@ -18,9 +18,11 @@
 
     <!-- Contenu principal -->
     <div class="content">
-        <h2>Bienvenue sur Sissa</h2>
-        <h1>Découvrer le meilleur site pour jouer au morpion <br> contre vos amis ou contre notre algorithme</h1>
-        <button class="color-button"><a href="index.php">Jouer maintenant</a></button>
+        <h2>A propos...</h2>
+        <h1>L'algorithme :</h1>
+        <p>Notre algorithme se base sur la méthode minimax, cette algorithme peut être vu sous la forme d'un arbre algorithmique, 
+            et consiste a selectionner le coup qui minimise le nombre maximal de coup avant de gagner.
+        <p>
     </div>
 
 </body>

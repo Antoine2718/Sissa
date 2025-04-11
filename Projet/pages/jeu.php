@@ -10,17 +10,14 @@
     ?>
 </head>
 <body>
-
-    <!--Barre de navigation-->
     <?php //Ajoute la barre de navigation
         include("../common/nav.php")
     ?>
+    
 
     <!-- Contenu principal -->
     <div class="content">
-        <h2>Bienvenue sur Sissa</h2>
-        <h1>Découvrer le meilleur site pour jouer au morpion <br> contre vos amis ou contre notre algorithme</h1>
-        <button class="color-button"><a href="index.php">Jouer maintenant</a></button>
+        
     </div>
 
 </body>
