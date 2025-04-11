@@ -19,7 +19,7 @@ function connect(){
         isset($config['username'])&&
         isset($config['password'])&&
         isset($config['database']))
-        ){
+        ){  /*Vérification du formattage du fichier db.json après une lecture réussie*/
         die("Le fichier de configuration est mal formaté");
     }
     $host = $config['host'];
