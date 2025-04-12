@@ -24,6 +24,8 @@
             et consiste a selectionner le coup qui minimise le nombre maximal de coup avant de gagner.
         <p>
     </div>
-
+    <?php
+        include("../common/footer.php");
+    ?>
 </body>
 </html>

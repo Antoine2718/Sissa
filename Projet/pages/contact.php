@@ -20,6 +20,8 @@
         <h2>Nous contacter</h2>
         <h1>assistance@example.com</h1>
     </div>
-
+    <?php
+        include("../common/footer.php");
+    ?>
 </body>
 </html>

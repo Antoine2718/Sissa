@@ -8,14 +8,16 @@
     <?php //Ajoute la barre de navigation
         include("../common/styles.php")
     ?>
+    <link rel="stylesheet" href="login.css">
 </head>
 <body>
-    <?php 
+    <?php
+        include("../common/nav.php");
         include("../common/db.php");
         $db = connect();
     ?>
     <div class="login-container">
-        <h1>Login</h1>
+        <h1>Connexion</h1>
         <form action="login_process.php" method="POST">
             <div class="form-group">
                 <label for="username">Identifiant:</label>
@@ -25,8 +27,17 @@
                 <label for="password">Mot de passe:</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            <button type="submit">Login</button>
+            <div class ="form-group">
+                <button class ="color-button" type="submit">Se connecter</button>
+            </div>
         </form>
+        <div class ="form-group">
+            <a href ="signin.php">S'inscrire</a>
+        </div>
+        
     </div>
+    <?php
+        include("../common/footer.php");
+    ?>
 </body>
 </html>

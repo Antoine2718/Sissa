@@ -22,6 +22,9 @@
         <h1>Découvrer le meilleur site pour jouer au morpion <br> contre vos amis ou contre notre algorithme</h1>
         <button class="color-button"><a href="index.php">Jouer maintenant</a></button>
     </div>
-
+    
+    <?php
+        include("../common/footer.php");
+    ?>
 </body>
 </html>

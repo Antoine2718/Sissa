@@ -1,4 +1,3 @@
-<!-- Barre de navigation -->
 <?php
 $nav_pages = array("index.php"=>"Accueil","jeu.php"=>"Jeu","contact.php"=>"Nous Contacter","a_propos.php"=>"À Propos","shop.php"=>"Boutique");
 $current_page = $_SERVER['REQUEST_URI'];
@@ -8,6 +7,11 @@ $current_page = end($page);
 //current_page vaut le nom du fichier actuel
 ?>
 <div class="navbar">
+    <div class = "connect-navbar">
+        <?php
+            echo "<a class =\"color-button\" href = \"login.php\">Connexion</a>";
+        ?>
+    </div>
     <div class ="title-navbar">
         <h1 id="titre"> Sissa </h1>
     </div>

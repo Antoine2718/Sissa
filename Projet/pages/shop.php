@@ -20,6 +20,8 @@
     <div class="content">
         <h2>Boutique</h2>
     </div>
-
+    <?php
+        include("../common/footer.php");
+    ?>
 </body>
 </html>
