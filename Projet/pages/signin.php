@@ -15,6 +15,32 @@
         include("../common/nav.php");
         include("../common/db.php");
         $db = connect();
+        
+    ?>
+    <?php
+        //Enum en php 8 
+        class Issue
+        {
+            const FINE = 'FINE';
+            const ALREADY_USED_USERNAME = 'ALREADY_USED_USERNAME';
+            const UNMATCHED_PASSWORD = 'UNMATCHED_PASSWORD';
+        }
+    ?>
+    <?php 
+    $ok = Issue::FINE;
+
+    $call_page = $_SERVER['HTTP_REFERER'];
+    //La page appelante doit être la page login.php ou signin.php
+    if(! ( strpos($call_page,"signin.php") || strpos($call_page,"login.php") )){
+        header('Location:error_page.php');
+        exit;  
+    }
+    //Les champs sont partiellement remplis
+    if(empty($_POST) || empty($_POST['password'] || empty($_POST['username']) || empty($_POST['cpassword']))){
+        $ok = Issue::FINE; //On envoie un formulaire vide comme si les champs était vide
+    }else{
+
+    }
     ?>
     <div class="login-container">
         <h1>Inscription</h1>
@@ -28,7 +54,7 @@
                 <input type="password" id="password" name="password" required>
             </div>
             <div class="form-group">
-                <label for="password">Confirmation du mot de passe:</label>
+                <label for="cpassword">Confirmation du mot de passe:</label>
                 <input type="password" id="cpassword" name="password" required>
             </div>
             <div class ="form-group">
