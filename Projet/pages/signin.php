@@ -17,23 +17,24 @@
         $db = connect();
     ?>
     <div class="login-container">
-        <h1>Connexion</h1>
-        <form action="login_process.php" method="POST">
+        <h1>Inscription</h1>
+        <form action="signin_process.php" method="POST">
             <div class="form-group">
-                <label for="username">Identifiant:</label>
+                <label for="username">Nom d'Utilisateur:</label>
                 <input type="text" id="username" name="username" required>
             </div>
             <div class="form-group">
                 <label for="password">Mot de passe:</label>
                 <input type="password" id="password" name="password" required>
             </div>
+            <div class="form-group">
+                <label for="password">Confirmation du mot de passe:</label>
+                <input type="password" id="cpassword" name="password" required>
+            </div>
             <div class ="form-group">
-                <button class ="color-button" type="submit">Se connecter</button>
+                <button class ="color-button" type="submit">S'inscrire</button>
             </div>
         </form>
-        <div class ="form-group">
-            <a href ="signin.php">S'inscrire</a>
-        </div>
     </div>
     <?php
         include("../common/footer.php");
