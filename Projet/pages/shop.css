@@ -5,7 +5,7 @@
     text-align: center;
     margin-bottom: 40px;
     position: relative;
-    backdrop-filter: blur(2px); /* Effet de flou doux derrière si besoin */
+    backdrop-filter: blur(2px); /* Effet de flou doux derrière*/
     border-bottom: 2px solid rgba(0, 51, 102, 0.1); /* Très fine bordure basse */
 }
 
@@ -50,7 +50,6 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="%23ffffff" opacity="0.05"/></svg>');
     pointer-events: none;
 }
 
