@@ -11,6 +11,7 @@
 </head>
 <body>
     <?php //Ajoute la barre de navigation
+        require_once("../common/db.php");
         include("../common/nav.php")
     ?>
     

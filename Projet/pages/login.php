@@ -1,3 +1,19 @@
+<?php 
+function matchPassword($db,$username,$password){
+    try{
+        $stmt = $db->prepare("SELECT mdp FROM utilisateur where identifiant = ?");
+        $stmt->bindParam(1, $username, PDO::PARAM_STR);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $db_hash = $result['mdp'];
+        return password_verify($password,$db_hash);
+    }catch(PDOException $e){
+        return "Error";
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -12,13 +28,67 @@
 </head>
 <body>
     <?php
+        require_once("../common/db.php");
         include("../common/nav.php");
-        include("../common/db.php");
         $db = connect();
+        class Issue
+        {
+            const FINE = 'FINE';
+            const INVALID_USERNAME = 'INVALID_USERNAME';
+            const INVALID_PASSWORD = 'INVALID_PASSWORD';
+            const REQUEST_ERROR = 'REQUEST_ERROR';
+        }
+        if(empty($_POST) || empty($_POST['password']) || empty($_POST['username'])){
+            $ok = Issue::FINE; //On envoie un formulaire vide comme si les champs était vide
+        }else{
+            $username = $_POST['username'];
+            $password =  $_POST['password'];
+            $result = isUsernameUsed($db,$username);
+            if($result instanceof string){
+                $ok = Issue::REQUEST_ERROR;
+            }else{
+                //Si le nom d'utilisateur n'existe pas
+                if($result == false){
+                    $ok = Issue::INVALID_USERNAME;
+                }else{
+                    //On vérifie le mdp
+                    $result = matchPassword($db,$username,$password);
+                    //erreur de requete
+                    if($result instanceof string){
+                        $ok = Issue::REQUEST_ERROR;
+                    }else{
+                        //Le mot de passe est faux
+                        if($result == false){
+                            $ok = Issue::INVALID_PASSWORD;
+                        }else{
+                            //on essaye de connecter l'utilisateur
+                            $result = connectUser($db,$username);
+                            if($result==false){
+                                $ok = Issue::REQUEST_ERROR;
+                            }else{
+                                session_start();
+                                $_SESSION['user'] = $result;
+                                header("Location:index.php");
+                                exit();
+                            }
+                        }
+                    }
+                }
+            }
+        }
     ?>
     <div class="login-container">
         <h1>Connexion</h1>
-        <form action="login_process.php" method="POST">
+        <?php 
+            if($ok ==Issue::INVALID_USERNAME){
+                echo "<p class =\"error\">Le nom d'utilisateur n'existe pas.</p>";
+            }else if($ok == Issue::INVALID_PASSWORD){
+                echo "<p class =\"error\">Mot de passe erroné.</p>";
+            }else if($ok == Issue::REQUEST_ERROR){
+                echo "<p class =\"error\">Erreur de requête à la base de donnée.</p>";
+            }
+        ?>
+        <form action="login.php" method="POST">
             <div class="form-group">
                 <label for="username">Identifiant:</label>
                 <input type="text" id="username" name="username" required>

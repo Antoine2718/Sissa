@@ -69,7 +69,7 @@
 }        
 .prix-produit {
     font-weight: bold;
-    color: #003366;
+    color: var(--sissa_night_sky);
     font-size: 1.2em;
     margin: 10px 0;
 }
@@ -80,7 +80,7 @@
     top: 10px;
     right: -10px;
     background: #ffd700;
-    color: #003366;
+    color: var(--sissa_night_sky);
     padding: 5px 15px;
     font-weight: bold;
     border-radius: 3px;
@@ -90,7 +90,7 @@
 }
 
 .carte-vedette {
-    border: 3px solid #003366 !important;
+    border: 3px solid var(--sissa_night_sky) !important;
     background: #f8f9fa;
 }
 
@@ -100,7 +100,7 @@
 }
 
 .produits-vedettes {
-    border-bottom: 5px solid #003366;
+    border-bottom: 5px solid var(--sissa_night_sky);
     margin-bottom: 40px;
     padding-bottom: 40px;
     position: relative;
@@ -120,7 +120,7 @@
 .produits-vedettes h2 {
     font-size: 2.5rem;
     text-transform: uppercase;
-    color: #003366;
+    color: var(--sissa_night_sky);
     text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
     margin-bottom: 1rem;
 }
@@ -137,9 +137,9 @@
 .bouton-categorie {
     padding: 8px 16px;
     border-radius: 20px;
-    border: 1px solid #003366;
+    border: 1px solid var(--sissa_night_sky);
     background-color: white;
-    color: #003366;
+    color: var(--sissa_night_sky);
     cursor: pointer;
     transition: all 0.3s ease;
     font-weight: 500;
@@ -150,7 +150,7 @@
 }
 
 .bouton-categorie.actif {
-    background-color: #003366;
+    background-color: var(--sissa_night_sky);
     color: white;
 }
 
@@ -190,11 +190,11 @@
 
 .filtre-prix input:focus {
     outline: none;
-    border-color: #003366;
+    border-color: var(--sissa_night_sky);
 }
 
 .bouton-appliquer {
-    background-color: #003366;
+    background-color: var(--sissa_night_sky);
     color: white;
     border: none;
     border-radius: 20px;
@@ -227,7 +227,7 @@
 .bouton-pagination {
     padding: 8px 15px;
     background-color: #f1f5f9;
-    color: #003366;
+    color: var(--sissa_night_sky);
     border-radius: 20px;
     text-decoration: none;
     font-size: 14px;
@@ -253,7 +253,7 @@
     border-radius: 50%;
     text-decoration: none;
     font-weight: 500;
-    color: #003366;
+    color: var(--sissa_night_sky);
     background-color: #f1f5f9;
     transition: all 0.3s ease;
 }
@@ -263,7 +263,7 @@
 }
 
 .numero-page.page-active {
-    background-color: #003366;
+    background-color: var(--sissa_night_sky);
     color: white;
 }
 

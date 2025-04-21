@@ -8,11 +8,14 @@ $current_page = end($page);
 $current_page = explode("?",$current_page);
 $current_page = reset($current_page);
 //current_page vaut le nom du fichier actuel
+session_start();
 ?>
 <div class="navbar">
     <div class = "connect-navbar">
         <?php
-            echo "<a class =\"color-button\" href = \"login.php\">Connexion</a>";
+            if(isConnected()){
+                echo "<a class =\"color-button disconnect-button\" href = \"deconnexion.php\">Deconnexion</a>";
+            }else echo "<a class =\"color-button\" href = \"login.php\">Connexion</a>";
         ?>
     </div>
     <div class ="title-navbar">

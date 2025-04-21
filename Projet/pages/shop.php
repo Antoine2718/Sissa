@@ -12,8 +12,8 @@
 <body>
     <?php 
     // Inclusion de la navigation et connexion à la base de données
-    include("../common/nav.php"); 
     require_once("../common/db.php");
+    include("../common/nav.php"); 
     $pdo = connect();
     ?>
     <?php

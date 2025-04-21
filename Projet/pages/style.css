@@ -72,8 +72,17 @@ p{
     text-align: center;
     padding: 14px 20px; /* Padding pour les boutons */
     text-decoration: none; /* Supprime le soulignement */
+    border-radius: 10px;
 }
 /* Change la couleur au survol */
+.navbar a:hover:not(.page_selected):not(.color-button){
+    background-color: var(--sissa_night_sky);
+    transition: all 0.1s ease;
+    
+}
+.navbar a:hover{
+    transform: scale(1.04);
+}
 .page_selected {
     background-color: var(--sissa_light_blue); /* Couleur plus foncée au survol */
     color: white;
@@ -88,7 +97,7 @@ p{
     text-align: center;
 }
 .color-button {
-    background-color: var(--sissa_light_blue); /* Vert */
+    background-color: var(--sissa_light_blue); 
     color: white;
     border: none;
     padding: 15px 32px;
@@ -99,4 +108,11 @@ p{
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 20px; /* Coins arrondis */
+}
+.disconnect-button{
+    background-color: var(--sissa_error_red);
+}
+.error{
+    color: var(--sissa_error_red);
+    text-align: center;
 }

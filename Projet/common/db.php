@@ -1,4 +1,5 @@
 <?php
+require_once("utilisateur.php");
 function connect(){
     /*
         Lit le fichier de configuration db.json et en extrait les informations de connexion à la base de donnée
@@ -38,8 +39,39 @@ function connect(){
     }
     return $connexion;
 }
-
+function connectUser($db,$username){
+    $stmt = $db->prepare("SELECT identifiant as idf, points as pts, idrang as id, type FROM utilisateur WHERE identifiant = ?");
+    $stmt->bindParam(1, $username, PDO::PARAM_STR);
+    $stmt->execute();
+    $result= $stmt->fetch(PDO::FETCH_ASSOC);
+    if(empty($result)){
+        return false;
+    }else{
+        $user = new Utilisateur($result['idf'],$result['pts'],$result['id'],$result['type']);
+        return $user;
+    }
+}
+function isConnected(){
+    return isset($_SESSION) && isset($_SESSION['user']);
+}
+function disconnect(){
+    if(isConnected()){
+        session_unset();
+        session_destroy();
+    }
+}
 function signout($db){
     unset($db);
+}
+function isUsernameUsed($db, $username){
+    try{
+        $stmt = $db->prepare("SELECT COUNT(*) as cs FROM utilisateur WHERE identifiant = ?");
+        $stmt->bindParam(1, $username, PDO::PARAM_STR);
+        $stmt->execute();
+        $count = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $count['cs']>0;
+    }catch(PDOException $e){
+        return "Error";
+    }
 }
 ?>
