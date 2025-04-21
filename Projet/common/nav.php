@@ -12,6 +12,9 @@ $current_page = $_SERVER['REQUEST_URI'];
 //Trouve le fichier de la page courrante en manipulant le path vers le fichier actuel
 $page = explode("/",$current_page);
 $current_page = end($page);
+//Fix pour les pages qui contiennent des requetes GET
+$current_page = explode("?",$current_page);
+$current_page = reset($current_page);
 //current_page vaut le nom du fichier actuel
 ?>
 <div class="navbar">

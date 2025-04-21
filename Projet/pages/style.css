@@ -17,7 +17,7 @@ body {
     color: white;
     
     width: 100%;
-    height: 7.5%;
+    height: 70px;
     display: table-row;
 }
 .footer-content{
@@ -54,18 +54,16 @@ body {
     align-items: center;
     vertical-align: middle;
 }
-a {
+a{
     float: left; /* Aligne les boutons à gauche */
     display: block;
     color: white; /* Couleur du texte */
     text-align: center;
     text-decoration: none; /* Supprime le soulignement */
 }
-
-p {
+p{
     text-align: left;
 }
-
 /* Style des liens dans la barre de navigation */
 .navbar a {
     float: left; /* Aligne les boutons à gauche */
@@ -75,18 +73,15 @@ p {
     padding: 14px 20px; /* Padding pour les boutons */
     text-decoration: none; /* Supprime le soulignement */
 }
-
 /* Change la couleur au survol */
 .page_selected {
     background-color: var(--sissa_light_blue); /* Couleur plus foncée au survol */
     color: white;
     border-radius: 10px;
 }
-
 #titre {
     color: white; 
 }
-
 /* Contenu de la page */
 .content {
     padding: 20px;

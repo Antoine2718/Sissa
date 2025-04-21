@@ -34,7 +34,6 @@
         <div class ="form-group">
             <a href ="signin.php">S'inscrire</a>
         </div>
-        
     </div>
     <?php
         include("../common/footer.php");
