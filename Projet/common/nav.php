@@ -1,4 +1,12 @@
 <?php
+$nb_articles = 0;
+if (isset($_SESSION['panier']) && !empty($_SESSION['panier'])) {
+    foreach ($_SESSION['panier'] as $item) {
+        if (isset($item['quantite'])) {
+            $nb_articles += $item['quantite'];
+        }
+    }
+}//On compte le nombre d'articles dans le panier
 $nav_pages = array("index.php"=>"Accueil","jeu.php"=>"Jeu","contact.php"=>"Nous Contacter","a_propos.php"=>"À Propos","shop.php"=>"Boutique");
 $current_page = $_SERVER['REQUEST_URI'];
 //Trouve le fichier de la page courrante en manipulant le path vers le fichier actuel
@@ -10,6 +18,7 @@ $current_page = end($page);
     <div class = "connect-navbar">
         <?php
             echo "<a class =\"color-button\" href = \"login.php\">Connexion</a>";
+            //On pourrait envisager de faire une fonction pour afficher le bouton de connexion ou de déconnexion en fonction de l'état de la session
         ?>
     </div>
     <div class ="title-navbar">
@@ -24,6 +33,13 @@ $current_page = end($page);
                     echo "<a class= \"page_selected\"href = \"$key\">$value</a>";
                 }else{
                     echo "<a href = \"$key\">$value</a>";
+                }
+                if($key == "shop.php"){
+                    //On affiche le nombre d'articles dans le panier
+                    echo "<div class=\"panier\">";
+                    echo "<a href=\"panier.php\">Panier</a>";
+                    echo "<span class=\"badge\">$nb_articles</span>";
+                    echo "</div>";
                 }
             }
         ?>
