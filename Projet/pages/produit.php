@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Détails du produit sur la boutique Sissa. Découvrez nos équipements de qualité pour les joueurs et compétiteurs.">
+    <meta name="keywords" content="produit, boutique, Sissa, équipements, joueurs, compétiteurs, morpion, détails, achat">
     <?php
+    session_start(); // On démarre la session pour pouvoir utiliser les variables de session
     // Initialisation des variables
     $product = null;
     $pageTitle = "Produit";
@@ -17,7 +20,7 @@
             try {
                 $pdo = connect();
                 // Requête unique pour récupérer toutes les données
-                $stmt = $pdo->prepare("SELECT * FROM Article WHERE idArticle = :id");
+                $stmt = $pdo->prepare("select * from Article where idArticle = :id");
                 $stmt->bindParam(':id', $id, PDO::PARAM_INT);
                 $stmt->execute();
                 $product = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -43,11 +46,20 @@
     <link rel ="stylesheet" href="produit.css">
 </head>
 <body>
-    <?php include("../common/nav.php"); ?>
+    <?php 
+    include("../common/nav.php"); ?>
 
     <div class="banniere-produit">
         <h1><?= $error ? "Erreur" : html_entity_decode($pageTitle) ?></h1> <!-- Ici html_entity_decode est nécessaire, autrement il peut y avoir des erreurs d'affichage comme un %quot; au lieu de " " -->
-        <p><?= $error ? "Un problème est survenu" : "Découvrez ce produit en détail" ?></p>
+    <?php if (!$error): ?>
+        <p class="intro-produit">
+            Chez Sissa, nous avons sélectionné avec soin ce
+            <span class="nom-produit"><?= htmlspecialchars($product['nom']) ?></span> 
+            pour vous offrir le meilleur équipement, conçu spécialement pour les joueurs et compétiteurs exigeants.
+        </p>
+    <?php else: ?>
+        <p>Un problème est survenu</p>
+    <?php endif; ?>
     </div>
 
     <div class="content">
@@ -112,12 +124,18 @@
                             </a>
                             
                             <?php if ($product['stock'] > 0): ?>
-                                <button class="bouton-panier">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                        <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-                                    </svg>
-                                    Ajouter au panier
-                                </button>
+                                <form method="post" action="../cart/ajouter_au_panier.php">
+                                    <input type="hidden" name="idArticle" value="<?= $product['idArticle'] ?>">
+                                    <input type="hidden" name="nom" value="<?= htmlspecialchars($product['nom']) ?>">
+                                    <input type="hidden" name="prix" value="<?= $product['prix'] ?>">
+                                    <input type="hidden" name="quantite" value="1"> <!-- On peut ajouter un champ pour la quantité si besoin -->
+                                    <button type="submit" class="bouton-panier">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                            <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                                        </svg>
+                                        Ajouter au panier
+                                    </button>
+                                </form>
                             <?php else: ?>
                                 <button class="bouton-panier" style="background-color: #6c757d; cursor: not-allowed;" disabled>
                                     Produit indisponible
@@ -137,7 +155,7 @@
                     $categorie = $product['categorie'];
                     $id = $product['idArticle'];
                     
-                    $stmt = $pdo->prepare("SELECT * FROM Article WHERE categorie = :categorie AND idArticle != :id AND stock > 0 ORDER BY RAND() LIMIT 3");
+                    $stmt = $pdo->prepare("select * from Article where categorie = :categorie and idArticle != :id and stock > 0 order by RAND() limit 3");
                     $stmt->bindParam(':categorie', $categorie, PDO::PARAM_STR);
                     $stmt->bindParam(':id', $id, PDO::PARAM_INT);
                     $stmt->execute();
@@ -146,25 +164,23 @@
                     if (count($produits_similaires) > 0):
             ?>
             <!-- TO DO améliorer le rendu de cette section, pour l'instant brut et pas très agréable -->
-            <section class="produits-similaires">
-                <h2>Produits similaires</h2>
-                <div class="grille-produits">
-                    <?php foreach ($produits_similaires as $produit): ?>
-                    <div class="carte-produit">
+            <section class="section-produits-similaires">
+            <h2>Produits similaires</h2>
+            <div class="liste-produits">
+                <?php foreach ($produits_similaires as $produit): ?>
+                <div class="produit-similaire">
+                    <a href="produit.php?id=<?= $produit['idArticle'] ?>">
                         <img src="<?= htmlspecialchars($produit['lien_image']) ?>" 
-                             alt="<?= htmlspecialchars($produit['nom']) ?>" 
-                             class="image-produit">
-                        <div class="info-produit">
-                            <h3><?= htmlspecialchars($produit['nom']) ?></h3>
-                            <p><?= htmlspecialchars(substr($produit['description'], 0, 100)) ?>...</p>
-                            <div class="prix-produit">
-                                <?= number_format($produit['prix'], 2, ',', ' ') ?> €
-                            </div>
-                            <a href="produit.php?id=<?= $produit['idArticle'] ?>" class="color-button">Voir le produit</a>
+                            alt="<?= htmlspecialchars($produit['nom']) ?>">
+                    </a>
+                    <h3 class="nom-produit"><?= htmlspecialchars($produit['nom']) ?></h3>
+                        <div class="prix-produit">
+                            <?= number_format($produit['prix'], 2, ',', ' ') ?> €
                         </div>
-                    </div>
-                    <?php endforeach; ?>
+                        <p class="description-courte"><?= htmlspecialchars(substr($produit['description'], 0, 80)) ?>...</p>
                 </div>
+                <?php endforeach; ?>
+            </div>
             </section>
             <?php
                     endif;

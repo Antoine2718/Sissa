@@ -4,9 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Boutique Sissa</title>
+    <meta name="description" content="Découvrez notre boutique en ligne avec une sélection de produits exclusifs. Trouvez le cadeau parfait pour vous ou vos amis passionnés de stratégie.">
+    <meta name="keywords" content="boutique, produits, Sissa, jeux de société, t-shirts, mugs, cadeaux, passionnés de stratégie, morpion, jeux de plateau">
     <?php 
+        session_start(); // Démarre la session pour accéder aux variables de session
         include("../common/styles.php"); 
     ?>
+    <!-- Ajoute Montserrat depuis Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="shop.css">
 </head>
 <body>
@@ -83,14 +88,14 @@
     <!-- Bannière principale de la boutique -->
     <div class="banniere-principale">
         <h1>Boutique Sissa</h1>
-        <p>Découvrez notre collection exclusive</p>
+        <p>Découvrez nos produits exclusifs pour les fans de Sissa. Des t-shirts, aux mugs, en passant par des jeux de plateau, trouvez le cadeau parfait pour vous ou vos amis passionnés de stratégie.</p>
     </div>
 
     <div class="content">
         <!-- Section des produits vedettes -->
         <section class="produits-vedettes">
             <h2>Nos Produits Vedettes</h2>
-            <p>Découvrez les meilleurs articles de notre collection</p>
+            <p class="sous-titre-vedette">Découvrez les meilleurs articles de notre collection</p>
             
             <?php
             // Récupération des 3 derniers produits en stock, choix arbitraire des 3 articles avec le moins de stock

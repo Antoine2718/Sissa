@@ -109,6 +109,24 @@ p{
     cursor: pointer;
     border-radius: 20px; /* Coins arrondis */
 }
+/* Style pour le panier dans la navbar */
+.lien-panier {
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+    color: #003366;
+    font-weight: 500;
+}
+
+.badge-panier {
+    background: #003366;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.8em;
+}
 .disconnect-button{
     background-color: var(--sissa_error_red);
 }
