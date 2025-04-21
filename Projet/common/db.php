@@ -64,6 +64,13 @@ function disconnect(){
 function signout($db){
     unset($db);
 }
+function getUser(){
+    if(isConnected()){
+        return $_SESSION['user'];
+    }else{
+        return false;
+    }
+}
 function isUsernameUsed($db, $username){
     try{
         $stmt = $db->prepare("SELECT COUNT(*) as cs FROM utilisateur WHERE identifiant = ?");

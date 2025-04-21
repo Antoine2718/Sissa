@@ -1,11 +1,14 @@
 .admin-nav{
     float: left;
     height: fit-content;
+    width: fit-content;
     margin-left: 5%;
-    display: flex;
-    background-color: var(--sissa_dark_blue);
+    display: table;
+    background-color: #d8dee9;
+    border: solid 1px grey;
+    border-radius: 15px;
+    border-spacing: 10px; /*On sépare les boutons entre eux*/
 }
-.admin-nav a{
-    padding: 10px;
-    color: black;
+.admin-nav-element{
+    display: table-row;
 }

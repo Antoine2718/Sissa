@@ -217,7 +217,6 @@
                         <a href="?page=<?= $nombre_pages ?><?= !empty($_GET['categorie']) ? '&categorie='.urlencode($_GET['categorie']) : '' ?><?= isset($_GET['min_price']) ? '&min_price='.urlencode($_GET['min_price']) : '' ?><?= isset($_GET['max_price']) ? '&max_price='.urlencode($_GET['max_price']) : '' ?>" class="bouton-pagination">Dernière &raquo;</a>
                     <?php endif; ?>
                 </div>
-                
                 <div class="info-pagination">
                     Page <?= $page_courante ?> sur <?= $nombre_pages ?> (<?= $total_articles ?> produits)
                 </div>
