@@ -116,12 +116,12 @@ p{
     align-items: center;
     gap: 5px;
     text-decoration: none;
-    color: #003366;
+    color: var(--sissa_night_sky);
     font-weight: 500;
 }
 
 .badge-panier {
-    background: #003366;
+    background: var(--sissa_night_sky);
     color: white;
     padding: 2px 8px;
     border-radius: 10px;
