@@ -1,0 +1,210 @@
+.content {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.table-panier {
+    width: 100%;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    border-collapse: collapse;
+    margin-bottom: 30px;
+}
+
+.table-panier th {
+    background-color: #003366;
+    color: white;
+    padding: 15px;
+    text-align: left;
+}
+
+.table-panier td {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+}
+
+.table-panier tfoot td {
+    font-weight: bold;
+    background-color: #f8f8f8;
+    font-size: 1.1em;
+}
+
+.quantite-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.quantite-btn {
+    width: 30px;
+    height: 30px;
+    border: none;
+    background: #003366;
+    color: white;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s;
+}
+
+.quantite-btn:hover {
+    background: #004c99;
+}
+
+.quantite-input {
+    width: 50px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 0 8px;
+    font-size: 16px;
+}
+
+.bouton-supprimer {
+    background: #ff5252;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background 0.3s;
+}
+
+.bouton-supprimer:hover {
+    background: #ff0000;
+}
+
+.actions-panier {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.bouton-retour {
+    background: #666;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 20px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background 0.3s;
+}
+
+.bouton-retour:hover {
+    background: #444;
+}
+
+.bouton-commander {
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 25px;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background 0.3s;
+    box-shadow: 0 2px 10px rgba(40, 167, 69, 0.3);
+}
+
+.bouton-commander:hover {
+    background: #218838;
+}
+
+.panier-vide {
+    text-align: center;
+    padding: 50px 0;
+    color: #666;
+}
+
+.panier-vide i {
+    display: block;
+    font-size: 50px;
+    margin-bottom: 20px;
+    color: #ddd;
+}
+
+.message-container {
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.produit-info {
+    display: flex;
+    align-items: center;
+}
+
+.produit-image {
+    width: 70px;
+    height: 70px;
+    background-color: #f8f8f8;
+    border-radius: 5px;
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.produit-image img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.produit-nom {
+    font-weight: 600;
+}
+
+.produit-details {
+    color: #666;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+/* Style pour masquer les boutons submit des formulaires */
+.hidden-submit {
+    display: none;
+}
+
+/* Styles pour les boutons plus et moins*/
+.btn-moins, .btn-plus {
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #003366;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-moins:hover, .btn-plus:hover {
+    background-color: #004c99;
+}

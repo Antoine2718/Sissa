@@ -4,10 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Boutique Sissa</title>
+    <meta name="description" content="Découvrez notre boutique en ligne avec une sélection de produits exclusifs. Trouvez le cadeau parfait pour vous ou vos amis passionnés de stratégie.">
+    <meta name="keywords" content="boutique, produits, Sissa, jeux de société, t-shirts, mugs, cadeaux, passionnés de stratégie, morpion, jeux de plateau">
     <?php 
         session_start(); // Démarre la session pour accéder aux variables de session
         include("../common/styles.php"); 
     ?>
+    <!-- Ajoute Montserrat depuis Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="shop.css">
 </head>
 <body>

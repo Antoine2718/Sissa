@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Détails du produit sur la boutique Sissa. Découvrez nos équipements de qualité pour les joueurs et compétiteurs.">
+    <meta name="keywords" content="produit, boutique, Sissa, équipements, joueurs, compétiteurs, morpion, détails, achat">
     <?php
     session_start(); // On démarre la session pour pouvoir utiliser les variables de session
     // Initialisation des variables
@@ -49,7 +51,15 @@
 
     <div class="banniere-produit">
         <h1><?= $error ? "Erreur" : html_entity_decode($pageTitle) ?></h1> <!-- Ici html_entity_decode est nécessaire, autrement il peut y avoir des erreurs d'affichage comme un %quot; au lieu de " " -->
-        <p><?= $error ? "Un problème est survenu" : "Découvrez ce produit en détail" ?></p>
+    <?php if (!$error): ?>
+        <p class="intro-produit">
+            Chez Sissa, nous avons sélectionné avec soin ce
+            <span class="nom-produit"><?= htmlspecialchars($product['nom']) ?></span> 
+            pour vous offrir le meilleur équipement, conçu spécialement pour les joueurs et compétiteurs exigeants.
+        </p>
+    <?php else: ?>
+        <p>Un problème est survenu</p>
+    <?php endif; ?>
     </div>
 
     <div class="content">
