@@ -1,12 +1,13 @@
 <?php
+require_once("../common/utilisateur.php");
 session_start();
 require_once '../common/db.php';
 $pdo=connect();
 // On démarre la session pour accéder aux variables de session
 // === Ce script permet de commander les articles présents dans le panier ===
-if (!isset($_SESSION['idUtilisateur'])) {
-    header("Location: login.php");
-    exit;
+if (!isConnected()){
+    header("Location: ../pages/login.php");
+    exit();
 }
 
 if (empty($_SESSION['panier'])) {
@@ -37,7 +38,7 @@ try {
                               values (?, ?, NOW(), ?)"); // On utilise NOW() pour la date d'achat
         // On utilise une requête préparée pour éviter les injections SQL
         $stmt->execute([
-            $_SESSION['idUtilisateur'],
+            getUser()->getID(),
             $idArticle,
             $item['quantite']
         ]);
@@ -52,4 +53,3 @@ try {
 }
 
 header("Location: ../pages/historique_commande.php"); // Redirige vers la page d'historique des commandes
-exit;

@@ -204,7 +204,6 @@
                         <?php
                         // Affichage des numéros de page avec un intervalle autour de la page courante
                         $intervalle = 2; // Nombre de pages à afficher avant et après la page courante
-                        
                         for ($i = max(1, $page_courante - $intervalle); $i <= min($nombre_pages, $page_courante + $intervalle); $i++) {
                             $classe_page = ($i == $page_courante) ? 'page-active' : '';
                             echo '<a href="?page='.$i.(!empty($_GET['categorie']) ? '&categorie='.urlencode($_GET['categorie']) : '').(isset($_GET['min_price']) ? '&min_price='.urlencode($_GET['min_price']) : '').(isset($_GET['max_price']) ? '&max_price='.urlencode($_GET['max_price']) : '').'" class="numero-page '.$classe_page.'">'.$i.'</a>';

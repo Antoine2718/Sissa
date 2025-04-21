@@ -40,14 +40,14 @@ function connect(){
     return $connexion;
 }
 function connectUser($db,$username){
-    $stmt = $db->prepare("SELECT identifiant as idf, points as pts, idrang as id, type FROM utilisateur WHERE identifiant = ?");
+    $stmt = $db->prepare("SELECT idUtilisateur as id,identifiant as idf, points as pts, idrang as id, type FROM utilisateur WHERE identifiant = ?");
     $stmt->bindParam(1, $username, PDO::PARAM_STR);
     $stmt->execute();
     $result= $stmt->fetch(PDO::FETCH_ASSOC);
     if(empty($result)){
         return false;
     }else{
-        $user = new Utilisateur($result['idf'],$result['pts'],$result['id'],$result['type']);
+        $user = new Utilisateur($result['id'],$result['idf'],$result['pts'],$result['id'],$result['type']);
         return $user;
     }
 }

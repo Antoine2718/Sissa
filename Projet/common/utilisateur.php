@@ -4,14 +4,22 @@ class Utilisateur {
         private $points;
         private $idRang;
         private $type;
-
-        public function __construct($identifiant, $points, $idRang, $type) {
+        private $id;
+        public function __construct($id,$identifiant, $points, $idRang, $type) {
             $this->identifiant = $identifiant;
             $this->points = $points;
             $this->idRang = $idRang;
             $this->type = $type;
+            $this->id=$id;
+        }
+        public function getID() {
+            return $this->id;
         }
 
+        public function setID($id) {
+            $this->id = $id;
+        }
+        
         public function getIdentifiant() {
             return $this->identifiant;
         }

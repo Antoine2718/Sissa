@@ -27,12 +27,11 @@ function ajoutUtilisateur($db,$username,$hashed_password){
     <?php
         require_once("../common/db.php");
         include("../common/nav.php");
-        
         require_once("../common/utilisateur.php");
         $db = connect();
     ?>
     <?php
-        //Enum en php 8 
+        //Enum en php 8
         class Issue
         {
             const FINE = 'FINE';

@@ -1,10 +1,11 @@
 <?php
+require_once("../common/utilisateur.php");
 session_start();
 require_once '../common/db.php';
 $pdo = connect();
 
 // Vérifier si l'utilisateur est connecté
-if (!isset($_SESSION['idUtilisateur'])) {
+if (!isConnected()) {
     $_SESSION['erreur'] = "Vous devez être connecté pour voir votre historique de commandes.";
     header("Location: login.php");
     exit;
@@ -13,9 +14,8 @@ if (!isset($_SESSION['idUtilisateur'])) {
 $message = $_SESSION['succes'] ?? '';
 $erreur = $_SESSION['erreur'] ?? '';
 unset($_SESSION['succes'], $_SESSION['erreur']);
-
 // Récupérer l'historique des commandes de l'utilisateur
-$idUtilisateur = $_SESSION['idUtilisateur'];
+$idUtilisateur = getUser()->getID();
 $stmt = $pdo->prepare("
     select a.idArticle, a.nom, ac.quantité_achat, ac.date_achat, a.prix 
     from achete ac
