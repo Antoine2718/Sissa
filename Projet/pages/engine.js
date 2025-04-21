@@ -1,4 +1,8 @@
-/* Engine en JS pour le moment, partie algo en PHP */
+/* IMPORTANT 
+Engine en JS POUR LE MOMENT, partie algo en PHP 
+
+Conversion JS ---> PHP en cours
+*/
 
 let IF_3_affichage = document.querySelector("table");
         IF_3_affichage.addEventListener('click',jouer);
