@@ -21,5 +21,5 @@ INSERT INTO rang (nomRang,points_minimum,couleur_rang) VALUES
     Ajout des utilisateurs
 */
 INSERT INTO utilisateurs (points,identifiant,mdp,type,idRang) VALUES
-(0,"hbrouard","$2y$10$qgsA4FPow6oLrM5OX9dfo.Wzk0DxnFx8tAd2Rnl3NZX/QNo0o3dMK","admin",1) /*Mot de passe: mdp */
+(0,"hbrouard","$2y$10$qgsA4FPow6oLrM5OX9dfo.Wzk0DxnFx8tAd2Rnl3NZX/QNo0o3dMK","admin",1) /*Mot de passe: test */
 ;

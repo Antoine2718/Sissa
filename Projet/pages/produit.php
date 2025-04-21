@@ -6,6 +6,7 @@
     <meta name="description" content="Détails du produit sur la boutique Sissa. Découvrez nos équipements de qualité pour les joueurs et compétiteurs.">
     <meta name="keywords" content="produit, boutique, Sissa, équipements, joueurs, compétiteurs, morpion, détails, achat">
     <?php
+    require_once("../common/utilisateur.php");
     session_start(); // On démarre la session pour pouvoir utiliser les variables de session
     // Initialisation des variables
     $product = null;

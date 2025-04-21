@@ -6,7 +6,8 @@
     <title>Boutique Sissa</title>
     <meta name="description" content="Découvrez notre boutique en ligne avec une sélection de produits exclusifs. Trouvez le cadeau parfait pour vous ou vos amis passionnés de stratégie.">
     <meta name="keywords" content="boutique, produits, Sissa, jeux de société, t-shirts, mugs, cadeaux, passionnés de stratégie, morpion, jeux de plateau">
-    <?php 
+    <?php
+        require_once("../common/utilisateur.php");
         session_start(); // Démarre la session pour accéder aux variables de session
         include("../common/styles.php"); 
     ?>
@@ -18,7 +19,7 @@
     <?php 
     // Inclusion de la navigation et connexion à la base de données
     require_once("../common/db.php");
-    include("../common/nav.php"); 
+    include("../common/nav.php");
     $pdo = connect();
     ?>
     <?php

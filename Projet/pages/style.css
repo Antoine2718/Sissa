@@ -130,6 +130,9 @@ p{
 .disconnect-button{
     background-color: var(--sissa_error_red);
 }
+.special-button{
+    background-color: #099268;
+}
 .error{
     color: var(--sissa_error_red);
     text-align: center;

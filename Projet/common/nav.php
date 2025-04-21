@@ -31,6 +31,9 @@ if(!isset($_SESSION))session_start();
     </div>
     <div class= "inner-navbar">
         <?php
+            if(isAdmin()){
+                echo "<a class =\"color-button special-button\" href=\"admin.php\">administration</a>";
+            }
             //Affiche les éléments de la navbar
             foreach ($nav_pages as $key => $value) {
                 if($key == "panier.php"){

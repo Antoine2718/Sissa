@@ -1,4 +1,5 @@
 <?php
+require_once("../common/utilisateur.php");
 session_start();
 require_once '../common/db.php';
 $pdo = connect();

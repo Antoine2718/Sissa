@@ -52,7 +52,8 @@ function connectUser($db,$username){
     }
 }
 function isConnected(){
-    return isset($_SESSION) && isset($_SESSION['user']);
+    if(!isset($_SESSION))session_start();
+    return isset($_SESSION['user']);
 }
 function disconnect(){
     if(isConnected()){
@@ -73,5 +74,8 @@ function isUsernameUsed($db, $username){
     }catch(PDOException $e){
         return "Error";
     }
+}
+function isAdmin(){
+    return isConnected()&&$_SESSION['user']->getType()=="admin";
 }
 ?>

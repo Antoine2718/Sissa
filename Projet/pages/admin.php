@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sissa</title>
+    <title>Administration</title>
     <!--Ajoute les pages de styles-->
     <?php //Ajoute la barre de navigation
         include("../common/styles.php")
     ?>
+    <link rel="stylesheet" href="admin.css">
 </head>
 <body>
     <!--Barre de navigation-->
@@ -18,11 +19,12 @@
 
     <!-- Contenu principal -->
     <div class="content">
-        <h2>Bienvenue sur Sissa</h2>
-        <h1>Découvrer le meilleur site pour jouer au morpion <br> contre vos amis ou contre notre algorithme</h1>
-        <button class="color-button"><a href="index.php">Jouer maintenant</a></button>
+        <div class="admin-nav">
+            <a href="#">test</a>
+            <a href="#">test</a>
+            <a href="#">test</a>
+        </div>
     </div>
-    
     <?php
         include("../common/footer.php");
     ?>

@@ -1,0 +1,11 @@
+.admin-nav{
+    float: left;
+    height: fit-content;
+    margin-left: 5%;
+    display: flex;
+    background-color: var(--sissa_dark_blue);
+}
+.admin-nav a{
+    padding: 10px;
+    color: black;
+}
