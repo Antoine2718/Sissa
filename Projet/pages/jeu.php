@@ -75,7 +75,7 @@
 
     <!-- Contenu principal -->
     <div class="content">
-                        <script src="minimax_ai.js" defer></script> <!--Intégration de l'IA Minimax JS.-->
+                        <?php include 'minimax_ai.php'; ?> <!--Intégration de l'IA Minimax -->
                         <script src="engine.js" defer></script> <!--Intégration du moteur de jeu.-->
 
 
