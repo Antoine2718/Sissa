@@ -33,10 +33,10 @@ function minimax(grille, maximisation) {
     $resultat;
 
     if (($resultat = gagner()) != null) {
-        return scores[$resultat];
+        return $GLOBALS["scores"][$resultat];
     } 
     else if (egalite()) {
-        return scores["true"];
+        return $GLOBALS["scores"]["true"];
     }
     
     if (maximisation) {
