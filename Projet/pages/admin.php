@@ -35,19 +35,11 @@
         <?php 
         if(!empty($_GET) && isset($_GET['action'])){
             $action = $_GET['action'];
-            $name ="";
-            $page = 1;
-            if(isset($_GET['page'])){
-                $page= $_GET['page'];
-            }
             if($action == "USR"){
                 include("../admin/listUser.php");
-                $name ="Utilisateurs";
-                $number_of_users = getNumberOfUsers($db);
             }
-           
-            $nombre_pages=round( $number_of_users/10 + ($number_of_users%10==0?0:1));
-            generatePagination("admin.php",$page,$nombre_pages,$action,$number_of_users ,$name);
+            
+            
         }
         
     ?>

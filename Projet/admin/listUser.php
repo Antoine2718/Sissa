@@ -10,6 +10,7 @@
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             echo "<table class=\"list-table\">";
+            
             echo "<thead><tr><td>Nom</td><td>Points</td><td>Role</td></tr></thead>";
             foreach($result as $user){
                 $nom = $user['identifiant'];
@@ -31,6 +32,12 @@
                 </td>
                 </tr>";
             }
+            echo "<caption>";
+            $name ="Utilisateurs";
+            $number_of_users = getNumberOfUsers($db);
+            $nombre_pages=round( $number_of_users/10 + ($number_of_users%10==0?0:1));
+            generatePagination("admin.php",$page,$nombre_pages,"USR",$number_of_users ,$name);
+            echo "</caption>";
             echo "</table>";
         }catch(PDOException $e){
             echo "Une erreur est survenue";
