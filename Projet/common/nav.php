@@ -44,7 +44,7 @@ if(!isset($_SESSION))session_start();
                     }else{
                         echo "<a href=\"panier.php\">Panier</a>";
                     }
-                    echo "<span class=\"badge\">$nb_articles</span>";
+                    echo "<span class=\"badge-panier\">$nb_articles</span>";
                     echo "</div>";
                 }else{
                     //si le fichier du href match le fichier courant on ajoute la class page_selected

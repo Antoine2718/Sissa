@@ -108,23 +108,57 @@ p{
     cursor: pointer;
     border-radius: 20px; /* Coins arrondis */
 }
-/* Style pour le panier dans la navbar */
-.lien-panier {
-    margin-left: 20px;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    text-decoration: none;
-    color: var(--sissa_night_sky);
-    font-weight: 500;
+/* Style pour le conteneur du panier dans la navbar */
+.panier {
+    position: relative; /* Pour permettre le positionnement absolu du badge */
+    display: inline-block; /* Assure que le conteneur ne prend que l'espace nécessaire */
+    margin: 0 5px; /* Espace autour du conteneur */
+}
+
+/* Style pour le lien panier */
+.panier a {
+    display: inline-block; /* Nécessaire pour un positionnement correct */
+    position: relative; /* Pour établir un contexte de positionnement */
+    padding : 14px 20px; /* Espace supplémentaire pour le badge */
+    text-align: center; /* Centrer le texte du lien */
 }
 
 .badge-panier {
-    background: var(--sissa_night_sky);
+    position: absolute;
+    top: -10px; /* Position au-dessus du texte */
+    right: -10px; /* Légèrement décalé vers la droite */
+    background: transparent; /* Fond transparent par défaut */
     color: white;
     padding: 2px 8px;
     border-radius: 10px;
     font-size: 0.8em;
+    min-width: 16px; /* Largeur minimale du badge */
+    text-align: center;
+    z-index: 1; /* Assure que le badge est au-dessus du texte */
+    border : 1px solid white; /* Bordure blanche pour le badge */
+}
+
+/* Ajustement pour la version sélectionnée */
+.panier a.page_selected + .badge-panier {
+    background: var(--sissa_light_blue); /* Assorti à la classe page_selected */
+}
+
+/* Changement de couleur au survol */
+.panier:hover .badge-panier {
+    background: var(--sissa_night_sky); /* Assorti à la classe page_selected */
+    color: white; /* Couleur du texte au survol */
+}
+
+/* Pour les petits écrans*/
+@media screen and (max-width: 768px) {
+    .panier {
+        margin: 0 5px; /* Maintenir l'espace même sur petit écran */
+    }
+    
+    .badge-panier {
+        top: -8px; /* Légèrement ajusté pour les petits écrans */
+        right: -3px;
+    }
 }
 .disconnect-button{
     background-color: var(--sissa_error_red);
