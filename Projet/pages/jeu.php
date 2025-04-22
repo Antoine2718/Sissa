@@ -12,26 +12,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: Arial, sans-serif;
             animation: bgChange 10s infinite alternate;
         }
 
-            .container {
+        .container {
             text-align: center;
             align-items: center;
         }
 
-        a {
-            color: black;
-            font-family: 'Menlo', monospace;
-            margin-bottom: 0px;
-        }
-
-        a:hover {
-            color: white;
-            font-family: 'Menlo', monospace;
-            margin-bottom: 0px;
-        }
 
         #status {
             font-family: 'Menlo', monospace;
