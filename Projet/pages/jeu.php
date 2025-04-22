@@ -141,7 +141,7 @@
                         <div id="board"> </div>
                         </div>
                         <button id="reset">
-                            <a href="jeu.php" class="button">recommencer</a>
+                            <a href="jeu.php" class="color-button">recommencer</a>
                         </button>
                     <div id="status"></div>
                 </td>
