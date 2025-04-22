@@ -1,6 +1,7 @@
 .admin-nav{
+    grid-column: 1;
     float: left;
-    height: fit-content;
+    height: 90%;
     width: fit-content;
     margin-left: 5%;
     display: table;
@@ -11,4 +12,23 @@
 }
 .admin-nav-element{
     display: table-row;
+}
+.list-table{
+    grid-column: 2;
+    width: 70%;
+    background:white;
+    border-radius:10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    border-collapse: collapse;
+    display: table;
+}
+.list-table thead{
+    background-color: #d8dee9;
+}
+.list-table-element{
+    margin-top: 5px;
+    margin-bottom: 5px;
 }

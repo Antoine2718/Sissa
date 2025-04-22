@@ -85,4 +85,14 @@ function isUsernameUsed($db, $username){
 function isAdmin(){
     return isConnected()&&$_SESSION['user']->getType()=="admin";
 }
+function getNumberOfUsers($db){
+    try{
+        $stmt = $db->prepare("SELECT COUNT(*) as cs FROM utilisateur");
+        $stmt->execute();
+        $count = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $count['cs'];
+    }catch(PDOException $e){
+        return "Error";
+    }
+}
 ?>
