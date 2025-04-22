@@ -201,12 +201,12 @@
             if (emptyCells.length === 0 || !gameActive) {
                 return;
             }
-    
+            
             const randomIndex = emptyCells[Math.floor(Math.random() * emptyCells.length)];
             boardState[randomIndex] = currentPlayer;
             const cell = document.querySelector(`.cell[data-index='${randomIndex}']`);
             cell.innerText = currentPlayer;
-    
+
             if (checkWinner()) {
                 statusDisplay.innerText = `${currentPlayer} a gagné!`;
                 gameActive = false;

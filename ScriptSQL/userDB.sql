@@ -10,7 +10,7 @@ ALTER TABLE Utilisateur MODIFY COLUMN mdp VARCHAR(250);
     Ajout des rangs
 */
 INSERT INTO rang (nomRang,points_minimum,couleur_rang) VALUES
-("Nouveau",0,"#ffffff"),/*Rang par défaut*/
+("Nouveau",0,"#000000"),/*Rang par défaut*/
 ("Novice",150,"#c0eb75"),
 ("Apprenti",300,"#01ae75"),
 ("Expert",450,"#CB4154"),

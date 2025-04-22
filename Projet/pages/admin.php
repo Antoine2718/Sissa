@@ -10,6 +10,7 @@
     ?>
     <link rel="stylesheet" href="admin.css">
     <link rel="stylesheet" href="shop.css">
+    <link rel="stylesheet" href="login.css">
 </head>
 <body>
     <!--Barre de navigation-->
@@ -33,10 +34,15 @@
         </div>
         <div class="data">
         <?php 
+        if(isset($_SESSION['message'])){
+            echo $_SESSION['message'];
+        }
         if(!empty($_GET) && isset($_GET['action'])){
             $action = $_GET['action'];
             if($action == "USR"){
                 include("../admin/listUser.php");
+            }else if($action=="UPD"){
+                getUpdateForm();
             }
             
             
