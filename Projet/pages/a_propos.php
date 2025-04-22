@@ -83,11 +83,12 @@
         <div class="contact-container">
             <div>
                 <h1 id="Message_bleu">Notre Mission</h1>
-                Sissa est né d'une passion partagée pour les jeux de stratégie simples mais profonds. 
+                Sissa est né d'une passion partagée pour les jeux de stratégie simples mais profonds. <br>
                 Notre mission est de transformer le jeu classique du morpion en une expérience moderne et captivante,
-                 accessible à tous et partout.
+                 accessible à tous et partout. <br>
                  Nous croyons que les jeux les plus simples peuvent créer les moments les plus mémorables et
                  les connexions les plus fortes.
+                <br>
                  C'est pourquoi nous avons créé cette plateforme qui combine l'aspect traditionnel du morpion avec des
                  technologies modernes et une interface conviviale.
             </div>
