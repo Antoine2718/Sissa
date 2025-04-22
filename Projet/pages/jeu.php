@@ -172,6 +172,7 @@
         }
     
         function humanPlay(e) {
+            if(currentPlayer != "X")return;
             const cellIndex = e.target.getAttribute('data-index');
     
             if (boardState[cellIndex] !== '' || !gameActive) {

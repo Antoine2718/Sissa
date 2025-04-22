@@ -81,7 +81,7 @@
         .contact-container {
             display: grid;
             grid-template-columns: 50% 50%; /* Définir les largeurs des colonnes */
-            height: 100vh;
+            height: fit-content;
         }
         .left {
             padding: 20px;

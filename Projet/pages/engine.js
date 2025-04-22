@@ -338,7 +338,7 @@ let IF_3_affichage = document.querySelector("table");
                     CASE.style.color = "blue";
                     idJoueur = 1; // Changement de joueur
                 }
-                ,700) 
+                ,0) 
             }
             
         }
