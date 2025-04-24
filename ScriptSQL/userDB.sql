@@ -6,6 +6,23 @@
 */
 ALTER TABLE Utilisateur DROP COLUMN nom;
 ALTER TABLE Utilisateur MODIFY COLUMN mdp VARCHAR(250);
+
+/*
+    Ajout des IA
+*/
+INSERT INTO robot (idRobot,	nomRobot,	niveauRobot,	lien_icone) VALUES
+("Alice","10", "example.com"),
+("Bob","9", "example.com"),
+("Cédric","8", "example.com"),
+("Daniel","7", "example.com"),
+("Eric","6", "example.com"),
+("Francois","5", "example.com"),
+("Gérard","4", "example.com"),
+("Harold","3", "example.com"),
+("Ivan","2", "example.com"),
+("Jean","1", "example.com"),
+;
+
 /*
     Ajout des rangs
 */
