@@ -57,7 +57,8 @@ function getUserWithId($db,$id){
     $stmt->execute();
     $result= $stmt->fetch(PDO::FETCH_ASSOC);
     if(empty($result)){
-        return false;
+        header("Location: ../pages/error_page.php");
+        exit();
     }else{
         $user = new Utilisateur($result['id'],$result['idf'],$result['pts'],$result['idr'],$result['type']);
         return $user;
@@ -121,7 +122,8 @@ function updateRank($db,$idUser){
         $stmt->fetch(PDO::FETCH_ASSOC);
         return true;
     }catch(PDOException $e){
-        return "Error";
+        header("Location: ../pages/error_page.php");
+        exit();
     }
 }
 function getNumberOfUsers($db){
@@ -131,7 +133,38 @@ function getNumberOfUsers($db){
         $count = $stmt->fetch(PDO::FETCH_ASSOC);
         return $count['cs'];
     }catch(PDOException $e){
-        return "Error";
+        header("Location: ../pages/error_page.php");
+        exit();
     }
+}
+function getPurchaseHistory($pdo,$idUtilisateur){
+    try{
+        $stmt = $pdo->prepare("
+    select a.idArticle, a.nom, ac.quantité_achat, ac.date_achat, a.prix 
+    from achete ac
+    join article a on ac.idArticle = a.idArticle
+    where ac.idUtilisateur = ?
+    order by ac.date_achat desc
+        ");
+        $stmt->execute([$idUtilisateur]);
+        $commandes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $commandes;
+    }catch(PDOException $e){
+        header("Location: ../pages/error_page.php");
+        exit();
+    }
+}
+function groupPurchasesPerDay($commandes){
+    $commandesParDate = [];
+    foreach ($commandes as $commande) {
+        $date = date('Y-m-d', strtotime($commande['date_achat']));// Format de la date pour le regroupement
+        // On ne garde que la date sans l'heure pour le regroupement
+        if (!isset($commandesParDate[$date])) {// Si la date n'existe pas encore dans le tableau
+            // On l'initialise avec un tableau vide
+            $commandesParDate[$date] = [];
+        }
+        $commandesParDate[$date][] = $commande;// On ajoute la commande à la date correspondante
+    }
+    return $commandesParDate;
 }
 ?>

@@ -49,6 +49,7 @@
                 <td>
                 <div class=\"list-table-element\">
                     <a class =\"color-button table-button\" href=\"../pages/admin.php?action=UPD&id=$id\">Modifier</a>
+                    <a class =\"color-button table-button\" href=\"../pages/admin.php?action=HST&id=$id\">Commandes</a>
                 </div>
                 </td>
                 </tr>";

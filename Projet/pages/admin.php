@@ -37,12 +37,32 @@
         if(isset($_SESSION['message'])){
             echo $_SESSION['message'];
         }
+        $db = connect();
         if(!empty($_GET) && isset($_GET['action'])){
             $action = $_GET['action'];
             if($action == "USR"){
                 include("../admin/listUser.php");
             }else if($action=="UPD"){
-                getUpdateForm();
+                if(isset($_GET['id'])&&preg_match("/^[0-9]+$/",$_GET['id'])){
+                    getUpdateForm();
+                }else{
+                    header("Location: error_page.php");
+                    exit();
+                }
+                
+            }else if($action=="HST"){
+                if(isset($_GET['id'])&&preg_match("/^[0-9]+$/",$_GET['id'])){
+                    $name =getUserWithId($db,$_GET['id'])->getIdentifiant();
+                    $title ="Historique de commande de $name";
+                    $commandes = getPurchaseHistory($db,$_GET['id']);
+                    $commandesParDate = groupPurchasesPerDay($commandes);
+                    echo "<div class =\"sub-content\">";
+                    include("../cart/afficherHistoriqueCommande.php");
+                    echo"</div>";
+                }else{
+                    header("Location: error_page.php");
+                    exit();
+                }
             }
             
             
