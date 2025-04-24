@@ -20,7 +20,7 @@ INSERT INTO robot (idRobot,	nomRobot,	niveauRobot,	lien_icone) VALUES
 ("Gérard","4", "example.com"),
 ("Harold","3", "example.com"),
 ("Ivan","2", "example.com"),
-("Jean","1", "example.com"),
+("Jean","1", "example.com")
 ;
 
 /*
