@@ -4,7 +4,7 @@ session_start();
 // --- Connexion à la base de données ---
 // À adapter
 try {
-    $pdo = new PDO("mysql:host=localhost;dbname=projet_sissa_db;charset=utf8", "username", "password");
+    $pdo = new PDO("mysql:host=localhost;dbname=sissa;charset=utf8", "paula", "testmdp");
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
