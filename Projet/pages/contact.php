@@ -144,6 +144,13 @@
         <div class="questions-container">
             <h2 id="Message_bleu">Questions fréquemment posées</h1>
                 <br>
+            <h3> D'où vient le nom Sissa ? </h3>
+                La légende de Sissa est un mythe qui raconte l'histoire de l'invention des échecs, enj Inde, un roi aurait demandé au mathématicien Sissa
+            d'inventé un jeu basé sur la stratégie et la réfléxion, Sissa aurait alors inventé le jeu des éches, le Roi souhaitant le remercié, Sissa a demande
+            ce qui peut semblé un modeste salaire : 1 grains de riz sur la première case du plateau, 2 sur la deuxième, 4 sur la troisième,....
+            <br> Ce qui constitue en fait la somme des termes d'une suite géométrique de raison 2 !
+            <br> Ainsi cela représente en réalité 2 puissance 64 - 1 grains de riz ce qui est énorme !
+            <br> Nous avons choissis ce nom en référence a cette histoire (bien que probablement éronnée, mais illustrant l'astuce et l'ingéniosité.
             <h3> Comment puis-je réinitialiser mon mot de passe ? </h3>
                 Vous pouvez réinitialiser votre mot de passe en cliquant sur "Mot de passe oublié" sur la page de connexion. Un 
             email vous sera envoyé avec les instructions pour créer un nouveau mot de passe.
