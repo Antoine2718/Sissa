@@ -154,7 +154,7 @@ function best_move($board) {
 function logMove($cell) {
     global $pdo;
     $moveNumber = count($_SESSION['history_X']) + count($_SESSION['history_O']);
-    $stmt = $pdo->prepare("INSERT INTO moves (code, numero) VALUES (:code, :numero)");
+    $stmt = $pdo->prepare("INSERT INTO Coup (code_coup, numero_coup) VALUES (:code, :numero)");
     $stmt->execute([':code' => $cell, ':numero' => $moveNumber]);
 }
 
