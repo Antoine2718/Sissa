@@ -63,11 +63,8 @@
                     header("Location: error_page.php");
                     exit();
                 }
-            }
-            
-            
+            }   
         }
-        
     ?>
     </div>
     </div>
