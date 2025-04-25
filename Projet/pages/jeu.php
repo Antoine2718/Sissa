@@ -164,7 +164,7 @@ function best_move($board) {
 function logMove($cell) {
     global $pdo;
     $moveNumber = count($_SESSION['history_X']) + count($_SESSION['history_O']);
-    $stmt = $pdo->prepare("INSERT INTO moves (code, numero) VALUES (:code, :numero)");
+    $stmt = $pdo->prepare("INSERT INTO coup (code_coup, numero_coup) VALUES (:code, :numero)");
     $stmt->execute([':code' => $cell, ':numero' => $moveNumber]);
 }
 
@@ -281,13 +281,13 @@ if ($_SESSION['mode'] === 'computer' && $_SESSION['current_player'] === 'O' && $
         <?php if ($_SESSION['mode'] === 'computer'): ?>
     <!-- Affichage de la liste des robots disponibles -->
     <div class="robots">
-        <h3>Robots disponibles</h3>
+        <h3>IA disponibles</h3>
         <?php if (!empty($robots)): ?>
             <ul>
                 <?php foreach ($robots as $robot): ?>
                     <li>
-                        <img src="<?= $robot['lien_icone'] ?>" alt="<?= $robot['nomRobot'] ?>" style="width:30px;height:30px; vertical-align: middle;">
-                        <?= $robot['nomRobot'] ?> - Niveau : <?= $robot['niveauRobot'] ?>%
+                        <img src="<?= $robot['lien_icone'] ?>" style="width:30px;height:30px; vertical-align: middle;">
+                        <?= $robot['nomRobot'] ?> - Niveau : <?= $robot['niveauRobot'] ?>
                     </li>
                 <?php endforeach; ?>
             </ul>
@@ -347,4 +347,3 @@ if ($_SESSION['mode'] === 'computer' && $_SESSION['current_player'] === 'O' && $
     ?>
 </body>
 </html>
-
