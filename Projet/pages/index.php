@@ -20,7 +20,7 @@
     <div class="content">
         <h2>Bienvenue sur Sissa</h2>
         <h1>Découvrer le meilleur site pour jouer au morpion <br> contre vos amis ou contre notre algorithme</h1>
-        <button class="color-button"><a href="index.php">Jouer maintenant</a></button>
+        <button class="color-button"><a href="jeu.php">Jouer maintenant</a></button>
     </div>
     
     <?php

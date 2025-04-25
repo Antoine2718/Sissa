@@ -11,16 +11,16 @@ ALTER TABLE Utilisateur MODIFY COLUMN mdp VARCHAR(250);
     Ajout des IA
 */
 INSERT INTO robot (idRobot,	nomRobot,	niveauRobot,	lien_icone) VALUES
-("Alice","10", "example.com"),
-("Bob","9", "example.com"),
-("Cédric","8", "example.com"),
-("Daniel","7", "example.com"),
-("Eric","6", "example.com"),
-("Francois","5", "example.com"),
-("Gérard","4", "example.com"),
-("Harold","3", "example.com"),
-("Ivan","2", "example.com"),
-("Jean","1", "example.com")
+(1, "Alice","10", "example.com"),
+(2, "Bob","9", "example.com"),
+(3, "Cédric","8", "example.com"),
+(4, "Daniel","7", "example.com"),
+(5, "Eric","6", "example.com"),
+(6, "Francois","5", "example.com"),
+(7, "Gérard","4", "example.com"),
+(8, "Harold","3", "example.com"),
+(9, "Ivan","2", "example.com"),
+(10, "Jean","1", "example.com")
 ;
 
 /*
