@@ -4,7 +4,7 @@ session_start();
 // --- Connexion à la base de données ---
 // À adapter
 try {
-    $pdo = new PDO("mysql:host=localhost;dbname=sissa;charset=utf8", "paula", "testmdp");
+    $pdo = new PDO("mysql:host=localhost;dbname=projet_sissa_db;charset=utf8", "paula", "testmdp");
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
@@ -284,12 +284,15 @@ if ($_SESSION['mode'] === 'computer' && $_SESSION['current_player'] === 'O' && $
         <h3>IA disponibles</h3>
         <?php if (!empty($robots)): ?>
             <ul>
+                <form>
                 <?php foreach ($robots as $robot): ?>
-                    <li>
                         <img src="<?= $robot['lien_icone'] ?>" style="width:30px;height:30px; vertical-align: middle;">
                         <?= $robot['nomRobot'] ?> - Niveau : <?= $robot['niveauRobot'] ?>
-                    </li>
+                        <input id="difficulty" type="checkbox" name="difficulty" values="<?= $robot['niveauRobot'] ?>">
+                        <br>
                 <?php endforeach; ?>
+                <input type="submit" value="Commencer">
+                </form>
             </ul>
         <?php else: ?>
             <p>Aucun robot disponible.</p>
