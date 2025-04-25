@@ -1,3 +1,199 @@
+<?php
+session_start();
+
+// --- Connexion à la base de données ---
+// À adapter
+try {
+    $pdo = new PDO("mysql:host=localhost;dbname=projet_sissa_db;charset=utf8", "username", "password");
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("Erreur de connexion à la base de données : " . $e->getMessage());
+}
+
+// --- Sélection du mode de jeu ---
+if (!isset($_SESSION['mode'])) {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['mode_selection'])) {
+        $_SESSION['mode'] = $_POST['mode_selection'];
+    } else {
+        // Affichage du formulaire de choix de mode
+        ?>
+        <!DOCTYPE html>
+        <html lang="fr">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Sissa - Choix du mode</title>
+            <style>
+                body { font-family: Helvetica, sans-serif; text-align: center; }
+                h2 { color: #005eff; }
+            </style>
+        </head>
+        <body>
+            <h2>Choisissez le mode de jeu</h2>
+            <form method="post">
+                <input type="radio" name="mode_selection" value="computer" id="computer">
+                <label for="computer">Jouer contre notre IA 🧠 </label><br>
+
+                <input type="radio" name="mode_selection" value="human" id="human" required>
+                <label for="human">Jouer contre un ami</label><br><br>
+
+                <input type="submit" value="Commencer">
+            </form>
+        </body>
+        </html>
+        <?php
+        exit();
+    }
+}
+
+// --- Si on joue en mode IA, on récupère tous les robots depuis la BDD ---
+if ($_SESSION['mode'] === 'computer') {
+    try {
+        $stmt = $pdo->query("SELECT idRobot, nomRobot, niveauRobot, lien_icone FROM robots");
+        $robots = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        echo "Erreur lors de la récupération des robots : " . $e->getMessage();
+        $robots = [];
+    }
+}
+
+// --- Réinitialisation du jeu ---
+if (isset($_POST['reset'])) {
+    session_destroy();
+    header('Location: ' . $_SERVER['PHP_SELF']);
+    exit();
+}
+
+// --- Initialisation du plateau et des données de session ---
+if (!isset($_SESSION['board'])) {
+    $_SESSION['board'] = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
+    $_SESSION['current_player'] = 'X';
+    $_SESSION['history_X'] = []; // Historique des coups du joueur X (humain)
+    $_SESSION['history_O'] = []; // Historique des coups du joueur O (humain ou IA)
+}
+
+// --- Fonctions de gestion du jeu ---
+// Vérifie s'il y a un gagnant sur le plateau
+function checkWinner($board) {
+    $winning_combinations = [
+        [0, 1, 2], [3, 4, 5], [6, 7, 8], // Lignes
+        [0, 3, 6], [1, 4, 7], [2, 5, 8], // Colonnes
+        [0, 4, 8], [2, 4, 6]             // Diagonales
+    ];
+    
+    foreach ($winning_combinations as $combination) {
+        if ($board[$combination[0]] !== ' ' &&
+            $board[$combination[0]] === $board[$combination[1]] &&
+            $board[$combination[1]] === $board[$combination[2]]) {
+            return $board[$combination[0]];
+        }
+    }
+    return null;
+}
+
+// Implémentation de l'algorithme Minimax
+// 'O' est joué par l'ordinateur et 'X' par l'humain
+function minimax($board, $depth, $is_maximizing) {
+    $winner = checkWinner($board);
+    if ($winner !== null) {
+        if ($winner === 'O') {
+            return 10 - $depth;
+        } elseif ($winner === 'X') {
+            return $depth - 10;
+        }
+    }
+    if (!in_array(' ', $board)) {
+        return 0;
+    }
+    
+    if ($is_maximizing) {
+        $bestScore = -INF;
+        for ($i = 0; $i < count($board); $i++) {
+            if ($board[$i] === ' ') {
+                $board[$i] = 'O';
+                $score = minimax($board, $depth + 1, false);
+                $board[$i] = ' ';
+                $bestScore = max($score, $bestScore);
+            }
+        }
+        return $bestScore;
+    } else {
+        $bestScore = INF;
+        for ($i = 0; $i < count($board); $i++) {
+            if ($board[$i] === ' ') {
+                $board[$i] = 'X';
+                $score = minimax($board, $depth + 1, true);
+                $board[$i] = ' ';
+                $bestScore = min($score, $bestScore);
+            }
+        }
+        return $bestScore;
+    }
+}
+
+// Détermine le meilleur coup pour l'ordinateur
+function best_move($board) {
+    $bestScore = -INF;
+    $move = -1;
+    for ($i = 0; $i < count($board); $i++) {
+        if ($board[$i] === ' ') {
+            $board[$i] = 'O';
+            $score = minimax($board, 0, false);
+            $board[$i] = ' ';
+            if ($score > $bestScore) {
+                $bestScore = $score;
+                $move = $i;
+            }
+        }
+    }
+    return $move;
+}
+
+// Fonction qui enregistre un coup dans la base de données
+// Chaque coup est caractérisé par un code (ici, l'indice de la case) et un numéro de coup
+function logMove($cell) {
+    global $pdo;
+    $moveNumber = count($_SESSION['history_X']) + count($_SESSION['history_O']);
+    $stmt = $pdo->prepare("INSERT INTO moves (code, numero) VALUES (:code, :numero)");
+    $stmt->execute([':code' => $cell, ':numero' => $moveNumber]);
+}
+
+// --- Gestion du coup joué par l'humain ---
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cell'])) {
+    $cell = intval($_POST['cell']);
+    
+    if ($_SESSION['board'][$cell] === ' ' && checkWinner($_SESSION['board']) === null) {
+        $_SESSION['board'][$cell] = $_SESSION['current_player'];
+        
+        if ($_SESSION['current_player'] === 'X') {
+            $_SESSION['history_X'][] = $cell;
+        } else {
+            $_SESSION['history_O'][] = $cell;
+        }
+        // Envoi du coup dans la BDD
+        logMove($cell);
+        
+        $_SESSION['current_player'] = $_SESSION['current_player'] === 'X' ? 'O' : 'X';
+    }
+}
+
+// Vérification du gagnant après le coup joué par l'humain
+$winner = checkWinner($_SESSION['board']);
+
+// --- Si le mode est "computer" et que c'est le tour de l'IA, jouer le coup de l'ordinateur ---
+if ($_SESSION['mode'] === 'computer' && $_SESSION['current_player'] === 'O' && $winner === null) {
+    $aiMove = best_move($_SESSION['board']);
+    if ($aiMove !== -1 && $_SESSION['board'][$aiMove] === ' ') {
+        $_SESSION['board'][$aiMove] = 'O';
+        $_SESSION['history_O'][] = $aiMove;
+        // Envoi du coup de l'IA dans la BDD
+        logMove($aiMove);
+        $_SESSION['current_player'] = 'X';
+        $winner = checkWinner($_SESSION['board']);
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -6,29 +202,21 @@
     <title>Sissa</title>
     <!--Ajoute les pages de styles-->
     <style>
-        body {
-            height: 100vh;
-            margin: 0;
+                body { font-family: Helvetica, sans-serif; }
+        .container {  
             align-items: center;
             justify-content: center;
-            font-family: Arial, sans-serif;
-            animation: bgChange 10s infinite alternate;
-        }
-
-        .container {
+            margin: auto;
+            position: relative;
             text-align: center;
-            align-items: center;
+            width: 306px;
         }
-
-        .board {
-            color: #005eff;
-            display: grid;
-            grid-template-columns: repeat(3, 100px);
-            grid-template-rows: repeat(3, 100px);
-            gap: 5px;
-            margin-right: 40px; /* Espace entre le plateau et l'historique */
+        .board { 
+            display: grid; 
+            grid-template-columns: repeat(3, 100px); 
+            gap: 5px; 
+            margin-top: 10px; 
         }
-
         .cell {
             width: 100px;
             height: 100px;
@@ -41,75 +229,32 @@
             cursor: pointer;
             transition: background-color 0.3s;
         }
-
         .cell:hover {
             color: white;
             background-color: #005eff;
         }
-
-        #status {
-            font-family: 'Menlo', monospace;
-            margin-top: 30px;
-            font-size: x-large;
-        }
-
-        .historique {
-            max-width: 200px;
-            margin-left: 20px;
+        .winner { color: blue; font-weight: bold; }
+        .history { margin-top: 10px; }
+        .history ul { list-style-type: none; padding: 0; }
+        .history li { background: #eee; margin: 4px 0; padding: 4px 8px; border-radius: 4px; }
+        .reset-btn { margin-top: 10px; }
+        .robots {
+            margin: 20px auto;
+            width: 306px;
+            text-align: left;
+            background-color: #f5f5f5;
             padding: 10px;
             border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-            text-align: center;
-            height: 30vh;
-        }
-
-        .historique h3 {
-            margin: 0;
-            font-size: 1.5em;
-            color: #005eff;
-        }
-        .container {
-            display: grid;
-            grid-template-columns: 30% 70%; /* Définir les largeurs des colonnes */
-        }
-        .left {
-            padding: 20px;
-        }
-
-        .right {
-            padding: 20px;
-        }
-
-        .messenger-container {
-            background-color: white;
-            align-items: center;
             border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            max-width: 800px;
-            margin: auto;
-            padding: 20px;
         }
-
-        a, button {
-            font-family: 'Menlo', monospace;
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 1em;
-            color: white;
-            background-color: #007BFF;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
+        .robots ul {
+            list-style: none;
+            padding: 0;
         }
-
-        button:hover {
-            color: white;
-            background-color: #005eff;
+        .robots li {
+            margin: 5px 0;
         }
-
     </style>
-    
     <?php //Ajoute la barre de navigation
         include("../common/styles.php")
     ?>
@@ -123,136 +268,69 @@
 
     <!-- Contenu principal -->
     <div class="content">
-        <table>
-        <div class="container">
-        <div class="left">
-            <div class="historique" id="historique">
-                <h3>Coups:</h3>
-                <br>
-                <div id="historiqueList"></div>
+        <?php if ($_SESSION['mode'] === 'computer'): ?>
+    <!-- Affichage de la liste des robots disponibles -->
+    <div class="robots">
+        <h3>Robots disponibles</h3>
+        <?php if (!empty($robots)): ?>
+            <ul>
+                <?php foreach ($robots as $robot): ?>
+                    <li>
+                        <img src="<?= $robot['lien_icone'] ?>" alt="<?= $robot['nomRobot'] ?>" style="width:30px;height:30px; vertical-align: middle;">
+                        <?= $robot['nomRobot'] ?> - Niveau : <?= $robot['niveauRobot'] ?>%
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        <?php else: ?>
+            <p>Aucun robot disponible.</p>
+        <?php endif; ?>
+    </div>
+    <?php endif; ?>
+
+    <div class="container">
+        <div class="board">
+            <?php foreach ($_SESSION['board'] as $index => $value): ?>
+                <div class="cell" onclick="document.getElementById('cellInput<?= $index ?>').submit();">
+                    <?= $value ?>
+                    <form id="cellInput<?= $index ?>" method="post" style="display: none;">
+                        <input type="hidden" name="cell" value="<?= $index ?>">
+                    </form>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        
+        <!-- Affichage du gagnant ou du match nul -->
+        <?php if ($winner): ?>
+            <h2 class="winner"><?= $winner ?> a gagné !</h2>
+        <?php elseif (!in_array(' ', $_SESSION['board'])): ?>
+            <h2>Match nul !</h2>
+        <?php endif; ?>
+
+        <!-- Bouton de réinitialisation visible à tout moment -->
+        <form method="post" class="reset-btn">
+            <input type="submit" name="reset" value="Nouvelle partie" />
+        </form>
+
+        <!-- Affichage de l'historique des coups -->
+        <div class="history">
+            <div>
+                <h3>Joueur X</h3>
+                <ul>
+                    <?php foreach ($_SESSION['history_X'] as $move): ?>
+                        <li>Joué en <?= $move ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+            <div>
+                <h3>Joueur O</h3>
+                <ul>
+                    <?php foreach ($_SESSION['history_O'] as $move): ?>
+                        <li>Joué en <?= $move ?></li>
+                    <?php endforeach; ?>
+                </ul>
             </div>
         </div>
-        <div class="right">
-            <div class="board" id="board"></div>
-        </div>
-        </div>
-        <div class="messenger-container">
-            <div id="reset">
-                <a href="jeu_v2.html" class="button">recommencer</a>
-            </div>
-            <div id="status"></div>
-        </div>
-        </table>
-        <script>
-            const board = document.getElementById('board');
-            const statusDisplay = document.getElementById('status');
-            const historiqueList = document.getElementById('historiqueList');
-            let boardState = ['', '', '', '', '', '', '', '', ''];
-            let currentPlayer = 'X';
-            let gameActive = true;
-            let human_display = [
-                "(1,1)", "(1,2)", "(1,3)", "(2,1)", "(2,2)", "(2,3)", 
-                "(3,1)", "(3,2)", "(3,3)", 
-            ];
-    
-            function initializeBoard() {
-                boardState = ['', '', '', '', '', '', '', '', ''];
-                currentPlayer = 'X';
-                gameActive = true;
-                statusDisplay.innerText = "C'est à votre tour!";
-                board.innerHTML = '';
-                historiqueList.innerHTML = ''; // Réinitialiser l'historique
-    
-                coup_nb = 0;
-    
-                for (let i = 0; i < 9; i++) {
-                    const cell = document.createElement('div');
-                    cell.classList.add('cell');
-                    cell.setAttribute('data-index', i);
-                    cell.addEventListener('click', humanPlay);
-                    board.appendChild(cell);
-                }
-            }
-    
-            function humanPlay(e) {
-                const cellIndex = e.target.getAttribute('data-index');
-                if(currentPlayer != "X") {return;}
-    
-                if (boardState[cellIndex] !== '' || !gameActive) {
-                    return;
-                }
-                
-                boardState[cellIndex] = currentPlayer;
-                e.target.innerText = currentPlayer;
-    
-                // Ajouter le coup à l'historique
-                updateHistorique(currentPlayer, cellIndex);
-    
-                if (checkWinner()) {
-                    statusDisplay.innerText = `${currentPlayer} a gagné!`;
-                    gameActive = false;
-                    return;
-                }
-    
-                currentPlayer = 'π';
-                statusDisplay.innerText = "🧠 Réflexion......";
-                if(!gameActive) {
-                    statusDisplay.innerText = "Egalité !";
-                }
-    
-    
-                setTimeout(computerPlay, 500); // Attendre avant que l'ordinateur joue
-            }
-    
-            // ******** Partie AI ********
-            function computerPlay() {
-                const emptyCells = boardState.map((cell, index) => cell === '' ? index : null).filter(index => index !== null);
-                const randomIndex = Math.floor(Math.random() * emptyCells.length);
-                const cellIndex = emptyCells[randomIndex];
-                
-                boardState[cellIndex] = currentPlayer;
-                const cell = board.querySelector(`[data-index='${cellIndex}']`);
-                cell.innerText = currentPlayer;
-    
-                // Ajouter le coup à l'historique
-                updateHistorique(currentPlayer, cellIndex);
-                
-                if (checkWinner()) {
-                    statusDisplay.innerText = `${currentPlayer} a gagné!`;
-                    gameActive = false;
-                    return;
-                }
-                
-                currentPlayer = 'X';
-                statusDisplay.innerText = "C'est à votre tour!";
-            }
-    
-            function checkWinner() {
-                const winningConditions = [
-                    [0, 1, 2], [3, 4, 5], [6, 7, 8], // lignes
-                    [0, 3, 6], [1, 4, 7], [2, 5, 8], // colonnes
-                    [0, 4, 8], [2, 4, 6]             // diagonales
-                ];
-    
-                for (let condition of winningConditions) {
-                    const [a, b, c] = condition;
-                    if (boardState[a] && boardState[a] === boardState[b] && boardState[a] === boardState[c]) {
-                        return true;
-                    }
-                }
-                return false;
-            }
-    
-            function updateHistorique(player, cellIndex) {
-                coup_nb += 1;
-                const move = document.createElement('div');
-                move.innerText = `${coup_nb}.   ${player} : ${human_display[parseInt(cellIndex)]}`;
-                historiqueList.appendChild(move);
-            }
-    
-            document.getElementById('reset').addEventListener('click', initializeBoard);
-            window.onload = initializeBoard; // Initialiser le plateau au chargement de la page
-        </script>
+    </div>
     </div>
     <?php
         include("../common/footer.php");
