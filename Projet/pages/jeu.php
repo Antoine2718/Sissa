@@ -59,7 +59,7 @@ if (!isset($_SESSION['mode'])) {
 // --- Si on joue en mode IA, on récupère tous les robots depuis la BDD ---
 if ($_SESSION['mode'] === 'computer') {
     try {
-        $stmt = $pdo->query("SELECT idRobot, nomRobot, niveauRobot, lien_icone FROM robots");
+        $stmt = $pdo->query("SELECT idRobot, nomRobot, niveauRobot, lien_icone FROM robot");
         $robots = $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         echo "Erreur lors de la récupération des robots : " . $e->getMessage();
