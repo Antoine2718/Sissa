@@ -27,8 +27,15 @@ if (!isset($_SESSION['mode'])) {
                 body { font-family: Helvetica, sans-serif; text-align: center; }
                 h2 { color: #005eff; }
             </style>
+                <?php //Ajoute la barre de navigation
+                include("../common/styles.php")
+                ?>
         </head>
         <body>
+        <?php //Ajoute la barre de navigation
+            require_once("../common/db.php");
+            include("../common/nav.php")
+        ?>
             <h2>Choisissez le mode de jeu</h2>
             <form method="post">
                 <input type="radio" name="mode_selection" value="computer" id="computer">
@@ -39,6 +46,9 @@ if (!isset($_SESSION['mode'])) {
 
                 <input type="submit" value="Commencer">
             </form>
+            <?php
+            include("../common/footer.php");
+            ?>
         </body>
         </html>
         <?php
@@ -154,7 +164,7 @@ function best_move($board) {
 function logMove($cell) {
     global $pdo;
     $moveNumber = count($_SESSION['history_X']) + count($_SESSION['history_O']);
-    $stmt = $pdo->prepare("INSERT INTO Coup (code_coup, numero_coup) VALUES (:code, :numero)");
+    $stmt = $pdo->prepare("INSERT INTO moves (code, numero) VALUES (:code, :numero)");
     $stmt->execute([':code' => $cell, ':numero' => $moveNumber]);
 }
 
@@ -337,3 +347,4 @@ if ($_SESSION['mode'] === 'computer' && $_SESSION['current_player'] === 'O' && $
     ?>
 </body>
 </html>
+
