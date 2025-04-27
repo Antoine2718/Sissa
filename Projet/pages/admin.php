@@ -63,7 +63,10 @@
                     header("Location: error_page.php");
                     exit();
                 }
-            }   
+            }else if($action=='HSH'){
+                include("../admin/listPurchases.php");
+                
+            }
         }
     ?>
     </div>

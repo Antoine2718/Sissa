@@ -57,7 +57,7 @@
             echo "<caption>";
             $name ="Utilisateurs";
             $number_of_users = getNumberOfUsers($db);
-            $nombre_pages=round( $number_of_users/10 + ($number_of_users%10==0?0:1));
+            $nombre_pages=floor( $number_of_users/$GLOBALS['user_per_page'] + ($number_of_users%$GLOBALS['user_per_page']==0?0:1));
             generatePagination("admin.php",$page,$nombre_pages,"USR",$number_of_users ,$name);
             echo "</caption>";
             echo "</table>";

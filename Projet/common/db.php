@@ -137,6 +137,18 @@ function getNumberOfUsers($db){
         exit();
     }
 }
+function getNumberOfPurchases($db){
+    try{
+        $stmt = $db->prepare("SELECT COUNT(*) as cs FROM achete ");
+        
+        $stmt->execute();
+        $count = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $count['cs'];
+    }catch(PDOException $e){
+        header("Location: ../pages/error_page.php");
+        exit();
+    }
+}
 function getPurchaseHistory($pdo,$idUtilisateur){
     try{
         $stmt = $pdo->prepare("
@@ -147,6 +159,26 @@ function getPurchaseHistory($pdo,$idUtilisateur){
     order by ac.date_achat desc
         ");
         $stmt->execute([$idUtilisateur]);
+        $commandes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $commandes;
+    }catch(PDOException $e){
+        header("Location: ../pages/error_page.php");
+        exit();
+    }
+}
+function getPurchases($pdo,$page,$page_size){
+    try{
+        $stmt = $pdo->prepare("
+    select u.idUtilisateur as id,u.identifiant as identifiant, a.nom as produit, a.idArticle as idP, ac.quantité_achat as qte, ac.date_achat as date
+    from achete ac
+    inner join article a on ac.idArticle = a.idArticle
+    inner join utilisateur u on ac.idUtilisateur = u.idUtilisateur 
+    order by ac.date_achat desc limit ?,?
+        ");
+        $debut =($page-1) * $page_size;
+        $stmt->bindParam(1,$debut, PDO::PARAM_INT);
+        $stmt->bindParam(2,$page_size, PDO::PARAM_INT);
+        $stmt->execute();
         $commandes = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $commandes;
     }catch(PDOException $e){

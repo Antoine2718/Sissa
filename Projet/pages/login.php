@@ -42,7 +42,9 @@ function matchPassword($db,$username,$password){
             $username = $_POST['username'];
             $password =  $_POST['password'];
             $result = isUsernameUsed($db,$username);
-            if($result instanceof string){
+            if(!preg_match("/^[a-zA-Z0-9_]{1,20}$/",$username)){
+                $ok = Issue::MALFORMATED_INPUTS;
+            }else if($result instanceof string){
                 $ok = Issue::REQUEST_ERROR;
             }else{
                 //Si le nom d'utilisateur n'existe pas
@@ -89,7 +91,7 @@ function matchPassword($db,$username,$password){
         <form action="login.php" method="POST">
             <div class="form-group">
                 <label for="username">Identifiant:</label>
-                <input type="text" id="username" name="username" required>
+                <input type="text" id="username" name="username" pattern="^[a-zA-Z0-9_]{1,20}$" required>
             </div>
             <div class="form-group">
                 <label for="password">Mot de passe:</label>

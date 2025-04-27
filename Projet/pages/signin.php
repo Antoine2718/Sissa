@@ -57,7 +57,9 @@ function ajoutUtilisateur($db,$username,$hashed_password){
         $username = $_POST['username'];
         $password =  $_POST['password'];
         $cpassword = $_POST['cpassword'];
-        if($password != $cpassword){
+        if(!preg_match("/^[a-zA-Z0-9_]{1,20}$/",$username)){
+            $ok = Issue::MALFORMATED_INPUTS;
+        }else if($password != $cpassword){
             $ok = Issue::UNMATCHED_PASSWORD;
         }else{
             $resultUsed = isUsernameUsed($db,$username);
@@ -96,7 +98,7 @@ function ajoutUtilisateur($db,$username,$hashed_password){
             if($ok ==Issue::UNMATCHED_PASSWORD){
                 echo "<p class =\"error\">Les mots de passes ne correspondent pas.</p>";
             }else if($ok == Issue::MALFORMATED_INPUTS){
-                echo "<p class =\"error\">Erreur de format.</p>";
+                echo "<p class =\"error\">Erreur de format: Le nom d'utilisateur ne peut contenir que des caractères alphanumériques et des _.</p>";
             }else if($ok == Issue::REQUEST_ERROR){
                 echo "<p class =\"error\">Erreur de requête à la base de donnée.</p>";
             }else if($ok == Issue::ALREADY_USED_USERNAME){
@@ -106,7 +108,7 @@ function ajoutUtilisateur($db,$username,$hashed_password){
         <form action="signin.php" method="POST">
             <div class="form-group">
                 <label for="username">Nom d'Utilisateur:</label>
-                <input type="text" id="username" name="username" required>
+                <input type="text" id="username" name="username" pattern="^[a-zA-Z0-9_]{1,20}$" required>
             </div>
             <div class="form-group">
                 <label for="password">Mot de passe:</label>
