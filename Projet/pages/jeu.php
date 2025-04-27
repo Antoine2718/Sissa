@@ -1,16 +1,34 @@
 <?php
-require_once("../common/db.php");
-require_once("../common/utilisateur.php");
 session_start();
 
 // --- Connexion à la base de données ---
 // À adapter
-$pdo = connect();
+try {
+    $pdo = new PDO("mysql:host=localhost;dbname=projet_sissa_db;charset=utf8", "paula", "testmdp");
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("Erreur de connexion à la base de données : " . $e->getMessage());
+}
+
 
 // --- Sélection du mode de jeu ---
 if (!isset($_SESSION['mode'])) {
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['mode_selection'])) {
         $_SESSION['mode'] = $_POST['mode_selection'];
+        // On gère la difficulté uniquement pour le mode IA
+        if ($_SESSION['mode'] === 'computer' && isset($_POST['difficulty'])) {
+            $difficulty = intval($_POST['difficulty']);
+            $GLOBALS['difficulty'] = $difficulty;
+            if ($difficulty < 1) { 
+                $difficulty = 1; 
+            }
+            if ($difficulty > 10) { 
+                $difficulty = 10; 
+            }
+            $_SESSION['difficulty'] = $difficulty;
+        } else {
+            $_SESSION['difficulty'] = 10; // Valeur par défaut pour le mode 'human'
+        }
     } else {
         // Affichage du formulaire de choix de mode
         ?>
@@ -36,16 +54,72 @@ if (!isset($_SESSION['mode'])) {
             <h2>Choisissez le mode de jeu</h2>
             <form method="post">
                 <input type="radio" name="mode_selection" value="computer" id="computer">
-                <label for="computer">Jouer contre notre IA 🧠 </label><br>
+                <label for="computer"><h3>Jouer contre notre IA 🧠 </h3></label><br>
 
                 <input type="radio" name="mode_selection" value="human" id="human" required>
-                <label for="human">Jouer contre un ami</label><br><br>
-
-                <input type="submit" value="Commencer">
+                <label for="human"><h3>Jouer contre un ami</h3></label><br><br>
+        <!-- Contenu principal -->
+        <div class="content">
+        <?php /* if ($_SESSION["mode_selection"] === "computer"): */ ?>
+        <!-- Affichage de la liste des robots disponibles -->
+        <?php
+        // --- Si on joue en mode IA, on récupère tous les robots depuis la BDD ---
+            try {
+                $stmt = $pdo->query("SELECT idRobot, nomRobot, niveauRobot, lien_icone FROM robot");
+                $robots = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            } catch (PDOException $e) {
+                echo "Erreur lors de la récupération des robots : " . $e->getMessage();
+                $robots = [];
+            }
+        ?>
+    
+                <div id="difficulty-container" style="display: none;">
+                    <label for="difficulty">Niveau de difficulté pour l'IA : </label>
+                    <div class="robots">
+                        <h3>IA disponibles</h3>
+                        <?php if (!empty($robots)): ?>
+                            <ul>
+                                <form>
+                                <?php foreach ($robots as $robot): ?>
+                                        <img src="<?= $robot['lien_icone'] ?>" style="width:30px;height:30px; vertical-align: middle;">
+                                        <?= $robot['nomRobot'] ?> - Niveau : <?= $robot['niveauRobot'] ?>
+                                        <input id="difficulty" type="radio" name="difficulty" value="<?= $robot['niveauRobot'] ?>" required>
+                                        <br>
+                                <?php endforeach; ?>
+                                <input type="submit" value="Commencer">
+                                </form>
+                            </ul>
+                        <?php else: ?>
+                            <p>Aucun robot disponible.</p>
+                        <?php endif; ?>
+                    </div>
+                <?php /* endif; */ ?>
+                </div>
+                <br>
             </form>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var computerRadio = document.getElementById("computer");
+                    var humanRadio = document.getElementById("human");
+                    var difficultyContainer = document.getElementById("difficulty-container");
+                    
+                    function toggleDifficulty() {
+                        if (computerRadio.checked) {
+                            difficultyContainer.style.display = "block";
+                        } else {
+                            difficultyContainer.style.display = "none";
+                        }
+                    }
+                    computerRadio.addEventListener('change', toggleDifficulty);
+                    humanRadio.addEventListener('change', toggleDifficulty);
+                    toggleDifficulty();
+                });
+            </script>
+            <div>
             <?php
             include("../common/footer.php");
             ?>
+            </div>
         </body>
         </html>
         <?php
@@ -53,16 +127,7 @@ if (!isset($_SESSION['mode'])) {
     }
 }
 
-// --- Si on joue en mode IA, on récupère tous les robots depuis la BDD ---
-if ($_SESSION['mode'] === 'computer') {
-    try {
-        $stmt = $pdo->query("SELECT idRobot, nomRobot, niveauRobot, lien_icone FROM robot");
-        $robots = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } catch (PDOException $e) {
-        echo "Erreur lors de la récupération des robots : " . $e->getMessage();
-        $robots = [];
-    }
-}
+
 
 // --- Réinitialisation du jeu ---
 if (isset($_POST['reset'])) {
@@ -156,6 +221,8 @@ function best_move($board) {
     return $move;
 }
 
+require_once("../common/db.php");
+
 // Fonction qui enregistre un coup dans la base de données
 // Chaque coup est caractérisé par un code (ici, l'indice de la case) et un numéro de coup
 function logMove($cell) {
@@ -163,7 +230,21 @@ function logMove($cell) {
     $moveNumber = count($_SESSION['history_X']) + count($_SESSION['history_O']);
     $stmt = $pdo->prepare("INSERT INTO coup (code_coup, numero_coup) VALUES (:code, :numero)");
     $stmt->execute([':code' => $cell, ':numero' => $moveNumber]);
+
+    // $IDpartie et $IDmove a récupérer
+    $player = getUser();
+    $date = date('m-d-Y');
+    $stmt = $pdo->prepare("INSERT INTO joue_coup (idPartie, idCoup, date_coup) VALUES (:idPartie, :idCoup, :date_coup)");
+    $stmt->execute([':idPartie' => $IDpartie, ':idCoup' => $IDmove, ':date_coup' => $date]);
 }
+
+// Gestion nouvelle partie
+$player = getUser();
+global $pdo;
+$date = date('m-d-Y');
+$difficulty = $GLOBALS['difficulty'];
+$stmt = $pdo->prepare("INSERT INTO partie (date_premier_coup, premier_joueur, idRobot, idUtilisateur) VALUES (:date_pc, :firs, :id1, :id2)");
+$stmt->execute([':date_pc' => $date, ':firs' => $player, ':id1' => $difficulty, ':id2' => $player]);
 
 // --- Gestion du coup joué par l'humain ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cell'])) {
@@ -187,14 +268,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cell'])) {
 // Vérification du gagnant après le coup joué par l'humain
 $winner = checkWinner($_SESSION['board']);
 
-// --- Si le mode est "computer" et que c'est le tour de l'IA, jouer le coup de l'ordinateur ---
+// --- Si le mode est ordinateur et c'est le tour de l'IA, jouer le coup de l'ordinateur ---
 if ($_SESSION['mode'] === 'computer' && $_SESSION['current_player'] === 'O' && $winner === null) {
-    $aiMove = best_move($_SESSION['board']);
+    // Récupère le niveau de difficulté (1 = toujours aléatoire, 10 = toujours minimax)
+    $difficulty = isset($_SESSION['difficulty']) ? (int)$_SESSION['difficulty'] : 10;
+    // Calcul de la probabilité d'utiliser l'algorithme minimax :
+    // Pour le niveau 1 --> (1-1)/9 = 0 (coup aléatoire)
+    // Pour le niveau 10 --> (10-1)/9 = 1 (coup optimisé)
+    $minimaxProbability = ($difficulty - 1) / 9;
+    $rand = mt_rand(0, 100000) / 100000;
+    
+    if ($rand < $minimaxProbability) {
+        $aiMove = best_move($_SESSION['board']);
+    } else {
+        // Choix aléatoire parmi les coups disponibles
+        $available_moves = [];
+        foreach ($_SESSION['board'] as $i => $cell) {
+            if ($cell === ' ') {
+                $available_moves[] = $i;
+            }
+        }
+        $aiMove = $available_moves[array_rand($available_moves)];
+    }
     if ($aiMove !== -1 && $_SESSION['board'][$aiMove] === ' ') {
         $_SESSION['board'][$aiMove] = 'O';
         $_SESSION['history_O'][] = $aiMove;
-        // Envoi du coup de l'IA dans la BDD
-        logMove($aiMove);
         $_SESSION['current_player'] = 'X';
         $winner = checkWinner($_SESSION['board']);
     }
@@ -273,29 +371,7 @@ if ($_SESSION['mode'] === 'computer' && $_SESSION['current_player'] === 'O' && $
     ?>
     
 
-    <!-- Contenu principal -->
-    <div class="content">
-        <?php if ($_SESSION['mode'] === 'computer'): ?>
-    <!-- Affichage de la liste des robots disponibles -->
-    <div class="robots">
-        <h3>IA disponibles</h3>
-        <?php if (!empty($robots)): ?>
-            <ul>
-                <form>
-                <?php foreach ($robots as $robot): ?>
-                        <img src="<?= $robot['lien_icone'] ?>" style="width:30px;height:30px; vertical-align: middle;">
-                        <?= $robot['nomRobot'] ?> - Niveau : <?= $robot['niveauRobot'] ?>
-                        <input id="difficulty" type="checkbox" name="difficulty" values="<?= $robot['niveauRobot'] ?>">
-                        <br>
-                <?php endforeach; ?>
-                <input type="submit" value="Commencer">
-                </form>
-            </ul>
-        <?php else: ?>
-            <p>Aucun robot disponible.</p>
-        <?php endif; ?>
-    </div>
-    <?php endif; ?>
+    
 
     <div class="container">
         <div class="board">
