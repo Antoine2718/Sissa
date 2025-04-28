@@ -107,7 +107,7 @@
         <div class="contact-container">
             <div class="left">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Man_Silhouette.png" style="width:200px;height:200px; vertical-align: middle; border-radius: 40%;">
-                <h2> Paul A.</h2>
+                <h2> Bruno D. L.</h2>
             </div>
             <div class="right">
                 Etudiant en Licence d'Informatique, passionné d'informatique et de technologies.
