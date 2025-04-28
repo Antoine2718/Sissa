@@ -38,7 +38,7 @@ CREATE TABLE Robot(
    idRobot INT AUTO_INCREMENT,
    nomRobot VARCHAR(50) NOT NULL,
    niveauRobot TINYINT NOT NULL,
-   lien_icone VARCHAR(50),
+   lien_icone VARCHAR(100),
    PRIMARY KEY(idRobot)
 );
 
