@@ -91,14 +91,25 @@ if (!isset($_SESSION['mode'])) {
                         <?php if (!empty($robots)): ?>
                             <ul>
                                 <form>
-                                <?php foreach ($robots as $robot): ?>
+                                <table border="0">
+                                <tr>
+                                <?php $i = 0; 
+                                foreach ($robots as $robot): ?>
+                                        <th>
                                         <img src="<?= $robot['lien_icone'] ?>" style="width:200px;height:200px; vertical-align: middle; border-radius: 40%;">
                                         <br>
                                         <h3> <?= $robot['nomRobot'] ?> </h3> Niveau : <?= $robot['niveauRobot'] ?>
                                         <input id="difficulty" type="radio" name="difficulty" value="<?= $robot['niveauRobot'] ?>">
                                             <br>
-                                            <br>
+                                        </th>
+                                        <?php 
+                                        $i += 1;
+                                        if($i % 3 == 0) : ?>
+                                        </tr> <tr>
+                                        <?php endif; ?>
                                 <?php endforeach; ?>
+                                </tr>
+                                </table>
                                 </form>
                             </ul>
                         <?php else: ?>
