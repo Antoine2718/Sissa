@@ -151,12 +151,55 @@
             <br> Ainsi cela représente en réalité 2 puissance 64 - 1 grains de riz ce qui est énorme !
             <br> Nous avons choissis ce nom en référence a cette histoire (bien que probablement éronnée, mais illustrant l'astuce et l'ingéniosité.
             <h3> Comment puis-je réinitialiser mon mot de passe ? </h3>
-                Vous pouvez réinitialiser votre mot de passe en cliquant sur "Mot de passe oublié" sur la page de connexion. Un 
-            email vous sera envoyé avec les instructions pour créer un nouveau mot de passe.
-            <h3> Le jeu est-il disponible sur mobile ? </h3>
-                Oui, notre site est entièrement responsive et s'adapte à tous les appareils. Vous pouvez jouer au morpion sur 
-            votre smartphone ou tablette sans problème. Une application native est également en cours de 
-            développement.
+                Si vous êtes administrateur : <br>
+                Vous pouvez réinitialiser votre mot de passe en cliquant sur "Mot de passe oublié" sur la page de connexion.
+            <br> Si vous n'êtes pas utilisateur : <br> Utilisé(e) le formulaire de contact ci-dessus afin d'expliquer le problème à l'équipe technique de Sissa.
+            <h3> Comment fonctionne l'IA de Sissa ? </h3>
+            L'IA optimal de Sissa (niveau de jeu maximal), se base sur lalgorithme minimax appliqué au morpion.
+            <br>
+                L'algorithme Minimax est un algorithme de décision utilisé principalement dans les jeux à somme nulle comme le morpion 
+            (ou tic-tac-toe), permettant d'optimiser la stratégie de jeu d'un joueur face à un adversaire. Pour expliquer son fonctionnement, 
+            nous allons aborder les concepts fondamentaux qui le sous-tendent.
+<br>
+Représentation de l'état du jeu
+            <br>
+Le morpion se joue sur une grille 3x3, où chaque case peut être dans l’un des trois états : 
+    vide, occupée par le joueur X (maximisant), ou occupée par le joueur O (minimisant). Chaque configuration de la grille peut être représentée 
+            comme un nœud dans un arbre de recherche, où chaque nœud décrit un état possible du jeu. 
+            <br> Ainsi la grille de morpion peut-être répresenté comme une matrice de M_3 (IF_3).
+
+Évaluation des nœuds
+L'algorithme Minimax traverse cet arbre de recherche en évaluant les nœuds selon deux principes distincts :
+<br>
+Maximisation (pour le joueur X) - Le joueur X cherche à maximiser son score, qui peut être codé de manière à renvoyer des valeurs 
+            numériques positives lorsqu'il gagne, zéro en cas d'égalité, et des valeurs négatives lorsqu'il perd. <br>
+Minimisation (pour le joueur O) - Le joueur O, en revanche, cherche à minimiser le score, en essayant de forcer le joueur X à obtenir
+            le score le plus bas possible.
+            <br>
+Exploration des coups possibles
+            <br>
+L'algorithme fonctionne de manière récursive. Pour chaque état de jeu évalué, l'algorithme procède comme suit :
+
+Si l'état est terminal (c'est-à-dire qu'un joueur a gagné ou que la grille est pleine), la fonction d'évaluation renvoie la valeur correspondante (-1, 0, +1).
+Sinon, pour chaque coup possible (c'est-à-dire pour chaque case vide), un nœud est créé pour l'état résultant après le coup. 
+            Pour le joueur X, il évalue la valeur maximale entre tous les coups possibles, et pour O, il évalue la valeur minimale.
+            <br>
+Calcul récursif <br>
+Ce processus de maximisation et de minimisation se fait de manière récursive :
+
+Si c'est le tour de X (maximize), [ V(n) = \max{V(n') | n' \in \text{successeurs de } n } ]
+Si c'est le tour de O (minimize), [ V(n) = \min{V(n') | n' \in \text{successeurs de } n } ] <br>
+Profondeur de recherche et élagage
+Pour des jeux plus complexes, le facteur de profondeur joue un rôle crucial. Minimax peut être combiné avec des techniques comme 
+            l'élagage alpha-bêta pour réduire le nombre de nœuds évalués. L'élagage permet d'éviter d'explorer des branches de l'arbre 
+            qui ne peuvent pas influencer la décision finale, en maintenant deux valeurs : alpha (la meilleure valeur pour le joueur qui maximise) 
+            et bêta (la meilleure valeur pour le joueur qui minimise).
+            <br>
+Conclusion
+            <br>
+L'algorithme Minimax est donc une méthode récursive qui utilise la stratégie de maximisation et minimisation pour évaluer les résultats futurs 
+            d'un jeu, en prenant des décisions optimales basées sur les coups possibles et les réponses de l'adversaire. Sa simplicité et son efficacité 
+            en font un choix de premier plan pour les jeux à somme nulle tels que le morpion.
             <h3> Comment fonctionne le système de classement ? </h3>
                 Votre score est calculé en fonction de vos performances contre notre IA. Vous gagnez plus de points en battant 
             les niveaux de difficulté supérieurs. Le classement est mis à jour en temps réel.
