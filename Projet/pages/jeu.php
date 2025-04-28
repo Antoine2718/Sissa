@@ -324,6 +324,33 @@ if ($_SESSION['mode'] === 'computer' && $_SESSION['current_player'] === 'O' && $
 //TODO vérifie une victoire match null ou victoire bot ou victoire joueur
 //Uniquement lorsque la partie est terminée on affiche nouvelle partie bouton
 
+// Fonction Win pour comptage points
+function Win() {
+    $data = [];
+    $winner = checkWinner($_SESSION['board']);
+    // Parité :
+    /* 
+    Cout restant pair = > IA perdu
+    Cout restant impair = > IA gagné
+    */
+    if($winner) {
+        $data['win'] = True;
+    
+        if(count($available_moves) % 2 == 1) {
+            $data['winner'] = 'IA';
+            $data['IdWinner'] = $difficulty;
+        } else {
+            $player = getUser();
+            $data['IdWinner'] = $player->getID();
+        }
+    } else {
+        $data['win'] = False;
+    }
+
+    // Retouner : Bool gagné ou non, IA gagné ?, ID IA Gagnante sinon ID utilisateur
+    return $data;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -415,10 +442,13 @@ if ($_SESSION['mode'] === 'computer' && $_SESSION['current_player'] === 'O' && $
             <h2>Match nul !</h2>
         <?php endif; ?>
 
-        <!-- Bouton de réinitialisation visible à tout moment -->
-        <form method="post" class="reset-btn">
-            <input type="submit" name="reset" value="Nouvelle partie" />
-        </form>
+        <!-- Bouton de réinitialisation -->
+        <?php if ($winner): ?>
+            <form method="post" class="reset-btn">
+                <input type="submit" name="reset" value="Nouvelle partie" />
+            </form>
+        <?php endif; ?>
+
 
         <!-- Affichage de l'historique des coups -->
         <div class="history">
