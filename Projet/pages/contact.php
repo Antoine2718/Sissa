@@ -155,27 +155,27 @@
                 Vous pouvez réinitialiser votre mot de passe en cliquant sur "Mot de passe oublié" sur la page de connexion.
             <br> Si vous n'êtes pas utilisateur : <br> Utilisé(e) le formulaire de contact ci-dessus afin d'expliquer le problème à l'équipe technique de Sissa.
             <h3> Comment fonctionne l'IA de Sissa ? </h3>
-            L'IA optimal de Sissa (niveau de jeu maximal), se base sur lalgorithme minimax appliqué au morpion.
-            <br>
+            L'IA optimal de Sissa (niveau de jeu maximal) se base sur lalgorithme minimax appliqué au morpion.
+            <br> <br>
                 L'algorithme Minimax est un algorithme de décision utilisé principalement dans les jeux à somme nulle comme le morpion 
             (ou tic-tac-toe), permettant d'optimiser la stratégie de jeu d'un joueur face à un adversaire. Pour expliquer son fonctionnement, 
             nous allons aborder les concepts fondamentaux qui le sous-tendent.
-<br>
+<br> <br>
 Représentation de l'état du jeu
-            <br>
+            <br> <br>
 Le morpion se joue sur une grille 3x3, où chaque case peut être dans l’un des trois états : 
     vide, occupée par le joueur X (maximisant), ou occupée par le joueur O (minimisant). Chaque configuration de la grille peut être représentée 
             comme un nœud dans un arbre de recherche, où chaque nœud décrit un état possible du jeu. 
             <br> Ainsi la grille de morpion peut-être répresenté comme une matrice de M_3 (IF_3).
-
-Évaluation des nœuds
+<br> <br>
+Évaluation des nœuds <br>
 L'algorithme Minimax traverse cet arbre de recherche en évaluant les nœuds selon deux principes distincts :
 <br>
 Maximisation (pour le joueur X) - Le joueur X cherche à maximiser son score, qui peut être codé de manière à renvoyer des valeurs 
             numériques positives lorsqu'il gagne, zéro en cas d'égalité, et des valeurs négatives lorsqu'il perd. <br>
 Minimisation (pour le joueur O) - Le joueur O, en revanche, cherche à minimiser le score, en essayant de forcer le joueur X à obtenir
             le score le plus bas possible.
-            <br>
+            <br> <br>
 Exploration des coups possibles
             <br>
 L'algorithme fonctionne de manière récursive. Pour chaque état de jeu évalué, l'algorithme procède comme suit :
@@ -183,7 +183,7 @@ L'algorithme fonctionne de manière récursive. Pour chaque état de jeu évalu�
 Si l'état est terminal (c'est-à-dire qu'un joueur a gagné ou que la grille est pleine), la fonction d'évaluation renvoie la valeur correspondante (-1, 0, +1).
 Sinon, pour chaque coup possible (c'est-à-dire pour chaque case vide), un nœud est créé pour l'état résultant après le coup. 
             Pour le joueur X, il évalue la valeur maximale entre tous les coups possibles, et pour O, il évalue la valeur minimale.
-            <br>
+            <br> <br>
 Calcul récursif <br>
 Ce processus de maximisation et de minimisation se fait de manière récursive :
 
@@ -194,7 +194,7 @@ Pour des jeux plus complexes, le facteur de profondeur joue un rôle crucial. Mi
             l'élagage alpha-bêta pour réduire le nombre de nœuds évalués. L'élagage permet d'éviter d'explorer des branches de l'arbre 
             qui ne peuvent pas influencer la décision finale, en maintenant deux valeurs : alpha (la meilleure valeur pour le joueur qui maximise) 
             et bêta (la meilleure valeur pour le joueur qui minimise).
-            <br>
+            <br> <br>
 Conclusion
             <br>
 L'algorithme Minimax est donc une méthode récursive qui utilise la stratégie de maximisation et minimisation pour évaluer les résultats futurs 
