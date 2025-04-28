@@ -56,7 +56,9 @@ if (!isset($_SESSION['mode'])) {
 
                 <input type="radio" name="mode_selection" value="human" id="human" required>
                 <label for="human"><h3>Jouer contre un ami</h3></label><br><br>
-                <input type="submit" value="Commencer">
+                <div id="com-container" style="display: none;">
+                    <input type="submit" value="Commencer">
+                </div>
         <!-- Contenu principal -->
         
         <?php /* if ($_SESSION["mode_selection"] === "computer"): */ ?>
@@ -102,12 +104,15 @@ if (!isset($_SESSION['mode'])) {
                     var computerRadio = document.getElementById("computer");
                     var humanRadio = document.getElementById("human");
                     var difficultyContainer = document.getElementById("difficulty-container");
+                    var comContainer = document.getElementById("com-container");
                     
                     function toggleDifficulty() {
                         if (computerRadio.checked) {
                             difficultyContainer.style.display = "block";
+                            comContainer.style.display = "none";
                         } else {
                             difficultyContainer.style.display = "none";
+                            comContainer.style.display = "block";
                         }
                     }
                     computerRadio.addEventListener('change', toggleDifficulty);
