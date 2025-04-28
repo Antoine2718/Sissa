@@ -14,7 +14,6 @@ if (!isset($_SESSION['mode'])) {
         // On gère la difficulté uniquement pour le mode IA
         if ($_SESSION['mode'] === 'computer' && isset($_POST['difficulty'])) {
             $difficulty = intval($_POST['difficulty']);
-            $GLOBALS['difficulty'] = $difficulty;
             if ($difficulty < 1) { 
                 $difficulty = 1; 
             }
@@ -22,8 +21,10 @@ if (!isset($_SESSION['mode'])) {
                 $difficulty = 10; 
             }
             $_SESSION['difficulty'] = $difficulty;
+            $GLOBALS['difficulty'] = $difficulty;
         } else {
             $_SESSION['difficulty'] = 10; // Valeur par défaut pour le mode 'human'
+            $GLOBALS['difficulty'] = 10;
         }
     } else {
         // Affichage du formulaire de choix de mode
