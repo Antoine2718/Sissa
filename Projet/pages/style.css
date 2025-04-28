@@ -183,6 +183,7 @@ p{
     background: white;
     flex-direction: column;
     padding: 10px 25px;
+    box-shadow: 5px 5px 5px #e1e1e1;
 }
 .leaderboard-head{
     color: var(--sissa_light_blue);
