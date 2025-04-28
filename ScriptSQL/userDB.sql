@@ -11,16 +11,16 @@ ALTER TABLE Utilisateur MODIFY COLUMN mdp VARCHAR(250);
     Ajout des IA
 */
 INSERT INTO robot (idRobot,	nomRobot,	niveauRobot,	lien_icone) VALUES
-(1, "Alice","10", "example.com"),
-(2, "Bob","9", "example.com"),
-(3, "Cédric","8", "example.com"),
-(4, "Daniel","7", "example.com"),
-(5, "Eric","6", "example.com"),
-(6, "Francois","5", "example.com"),
-(7, "Gérard","4", "example.com"),
-(8, "Harold","3", "example.com"),
-(9, "Ivan","2", "example.com"),
-(10, "Jean","1", "example.com")
+(1, "Alice","10", "https://aaah0mnbncqtinas.public.blob.vercel-storage.com/9zMJ22qaje-no-background-YDPYz7EYIKq8PV1JBRW4wVOMxfPDNT.png"),
+(2, "Bob","9", "https://www.popsci.com/uploads/2020/01/07/WMD5M52LJFBEBIHNEEABHVB6LA.jpg?auto=webp&width=1440&height=864"),
+(3, "Cédric","8", "https://i.pinimg.com/736x/cf/f1/b0/cff1b00211b10b5e9820ef6494b28da3.jpg"),
+(4, "Daniel","7", "https://pbs.twimg.com/profile_images/1385724221406519300/PRJvcMCr_400x400.jpg"),
+(5, "Eric","6", "https://attic.sh/pbhjkckp5v4gta1pazoa3zjz8bha"),
+(6, "Francois","5", "https://thafd.bing.com/th/id/OIP.QccB1M1GLcdOM7jGDyxT6QAAAA?pid=ImgDet&w=184&h=184&c=7&dpr=1,3"),
+(7, "Gérard","4", "https://thafd.bing.com/th/id/OIP.9763FywczzmAfUPmng_shwAAAA?pid=ImgDet&w=184&h=184&c=7&dpr=1,3"),
+(8, "Harold","3", "https://cdn1.iconfinder.com/data/icons/facely-metapeople-3d-avatar-set/128/3._Black_Man.png"),
+(9, "Ivan","2", "https://images.squarespace-cdn.com/content/v1/60908318cfa0741ace5d53c2/1622671636760-O7MZ9RQ2KTVE0WA4U0U7/Fichier+3%402x.png?format=1500w"),
+(10, "Jean","1", "https://preview.redd.it/sfln9t4ddwt51.png?auto=webp&s=0a246cc8fc8036921d303863061660ac7fa8a5f1")
 ;
 
 /*
