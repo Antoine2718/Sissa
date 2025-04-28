@@ -5,6 +5,7 @@ session_start();
 
 // --- Connexion à la base de données ---
 // À adapter
+// fonction connect() de db.php
 $pdo = connect();
 
 // --- Sélection du mode de jeu ---
@@ -20,12 +21,15 @@ if (!isset($_SESSION['mode'])) {
             if ($difficulty > 10) { 
                 $difficulty = 10; 
             }
+            // Mettre difficulty dans Session et globals
             $_SESSION['difficulty'] = $difficulty;
             $GLOBALS['difficulty'] = $difficulty;
         } else {
+            // Sinon, par defaut, algo optimal
             $_SESSION['difficulty'] = 10; // Valeur par défaut pour le mode 'human'
             $GLOBALS['difficulty'] = 10;
         }
+        // Si l'utilisateur n'est pas connecté
         if(!isConnected()){
             header("Location: ../pages/login.php");
             exit();
@@ -62,6 +66,7 @@ if (!isset($_SESSION['mode'])) {
                 <input type="radio" name="mode_selection" value="human" id="human" required>
                 <label for="human"><h3>Jouer contre un ami</h3></label><br><br>
                 <div id="com-container" style="display: none;">
+                    // Ce container sert dans la gestion dynamique en JS ci-dessous
                     <input type="submit" value="Commencer">
                 </div>
         <!-- Contenu principal -->
@@ -106,7 +111,10 @@ if (!isset($_SESSION['mode'])) {
                 <br>
             </form>
             </div>
+            // JS qui permet d'eviter d'avoir deux commencer dans le formulaire
+            // Pour ce faire, gestion dynamique en fonction de la selection
             <script>
+                
                 document.addEventListener('DOMContentLoaded', function() {
                     var computerRadio = document.getElementById("computer");
                     var humanRadio = document.getElementById("human");
@@ -140,6 +148,7 @@ if (!isset($_SESSION['mode'])) {
 }
 // --- Réinitialisation du jeu ---
 if (isset($_POST['reset'])) {
+    // unset tout ce qui doit l'être (ont evite d'arreter la session
     unset($_SESSION['partie']);
     unset($_SESSION['board']);
     unset($_SESSION['difficulty']);
@@ -242,6 +251,7 @@ function logMove($cell) {
     $moveNumber = count($_SESSION['history_X']) + count($_SESSION['history_O']);
     $stmt = $pdo->prepare("INSERT INTO coup (code_coup, numero_coup) VALUES (:code, :numero)");
     $stmt->execute([':code' => $cell, ':numero' => $moveNumber]);
+    // Dernier ID inseret dans la base pour recuperer idcoup
     $idCoup = $pdo->lastInsertId();
     if(isset($_SESSION['partie'])){
         $idPartie = $_SESSION['partie'];
@@ -303,6 +313,7 @@ if ($_SESSION['mode'] === 'computer' && $_SESSION['current_player'] === 'O' && $
     // Calcul de la probabilité d'utiliser l'algorithme minimax :
     // Pour le niveau 1 --> (1-1)/9 = 0 (coup aléatoire)
     // Pour le niveau 10 --> (10-1)/9 = 1 (coup optimisé)
+    // Pour la selection de l'IA, tout ce passe dans minimaxProbability
     $minimaxProbability = ($difficulty - 1) / 9;
     $rand = mt_rand(0, 100000) / 100000;
     
@@ -443,6 +454,7 @@ function Win() {
         <?php endif; ?>
 
         <!-- Bouton de réinitialisation -->
+        // Uniquement en fin de partie
         <?php if ($winner): ?>
             <form method="post" class="reset-btn">
                 <input type="submit" name="reset" value="Nouvelle partie" />
