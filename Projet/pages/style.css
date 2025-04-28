@@ -170,3 +170,48 @@ p{
     color: var(--sissa_error_red);
     text-align: center;
 }
+.leaderboard-wrapper{
+    position: absolute;
+    width: fit-content;
+}
+.leaderboard{
+    display: grid;
+    height: fit-content;
+    border: 1px solid #e1e1e1;
+    border-radius: 10px;
+    position: relative;
+    background: white;
+    flex-direction: column;
+    padding: 10px 25px;
+}
+.leaderboard-head{
+    color: var(--sissa_light_blue);
+    grid-row: 1;
+    text-align: left;
+}
+.leaderboard-content{
+    grid-row: 2;
+}
+.hide-button{
+    background-color: var(--sissa_light_blue); 
+    color: white;
+    border: none;
+    padding: 7px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 20px; /* Coins arrondis */
+}
+.leaderboard-element{
+    border-bottom: #e1e1e1 solid 1px;
+    justify-content: space-between;
+    display: flex;
+    width: 12vw;
+    font-size: medium;
+}
+.leaderboard-pts{
+    color: #ff3300;
+    font-weight: bold;
+}
