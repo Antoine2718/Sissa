@@ -82,10 +82,12 @@ if (!isset($_SESSION['mode'])) {
                             <ul>
                                 <form>
                                 <?php foreach ($robots as $robot): ?>
-                                        <img src="<?= $robot['lien_icone'] ?>" style="width:30px;height:30px; vertical-align: middle;">
-                                        <?= $robot['nomRobot'] ?> - Niveau : <?= $robot['niveauRobot'] ?>
-                                        <input id="difficulty" type="radio" name="difficulty" value="<?= $robot['niveauRobot'] ?>">
+                                        <img src="<?= $robot['lien_icone'] ?>" style="width:200px;height:200px; vertical-align: middle; border-radius: 40%;">
                                         <br>
+                                        <h3> <?= $robot['nomRobot'] ?> </h3> Niveau : <?= $robot['niveauRobot'] ?>
+                                        <input id="difficulty" type="radio" name="difficulty" value="<?= $robot['niveauRobot'] ?>">
+                                            <br>
+                                            <br>
                                 <?php endforeach; ?>
                                 </form>
                             </ul>
