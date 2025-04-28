@@ -26,6 +26,11 @@ if (!isset($_SESSION['mode'])) {
             $_SESSION['difficulty'] = 10; // Valeur par défaut pour le mode 'human'
             $GLOBALS['difficulty'] = 10;
         }
+        if(!isConnected()){
+            header("Location: ../pages/login.php");
+            exit();
+        }
+        
     } else {
         // Affichage du formulaire de choix de mode
         ?>
@@ -133,12 +138,13 @@ if (!isset($_SESSION['mode'])) {
         exit();
     }
 }
-
-
-
 // --- Réinitialisation du jeu ---
 if (isset($_POST['reset'])) {
-    session_destroy();
+    unset($_SESSION['partie']);
+    unset($_SESSION['board']);
+    unset($_SESSION['difficulty']);
+    unset($GLOBALS['difficulty']);
+    unset($_SESSION['mode']);
     header('Location: ' . $_SERVER['PHP_SELF']);
     exit();
 }
@@ -229,7 +235,6 @@ function best_move($board) {
 }
 
 require_once("../common/db.php");
-
 // Fonction qui enregistre un coup dans la base de données
 // Chaque coup est caractérisé par un code (ici, l'indice de la case) et un numéro de coup
 function logMove($cell) {
@@ -237,27 +242,33 @@ function logMove($cell) {
     $moveNumber = count($_SESSION['history_X']) + count($_SESSION['history_O']);
     $stmt = $pdo->prepare("INSERT INTO coup (code_coup, numero_coup) VALUES (:code, :numero)");
     $stmt->execute([':code' => $cell, ':numero' => $moveNumber]);
-
-    /*
+    $idCoup = $pdo->lastInsertId();
+    if(isset($_SESSION['partie'])){
+        $idPartie = $_SESSION['partie'];
+    }else{
+        //crée une nouvelle partie 
+        //insere dans la base de donnée
+        $difficulty = $_SESSION['difficulty'];
+        $player = getUser();
+        global $pdo;
+        $date = date('m-d-Y');
+        $char = 'X';
+        $id = $player->getID();
+        $stmt = $pdo->prepare("INSERT INTO partie (date_premier_coup, premier_joueur, idRobot, idUtilisateur) VALUES (:date_pc, :firs, :id1, :id2)");
+        $stmt->execute([':date_pc' => $date, ':firs' => $char, ':id1' => $difficulty, ':id2' => $id]);
+        $idPartie = $pdo->lastInsertId();
+        $_SESSION['partie'] = $idPartie;
+    }
     // $IDpartie et $IDmove a récupérer
-    $IDpartie = 1;
-    $IDmove = 1;
-
     $player = getUser();
     $date = date('m-d-Y');
     $stmt = $pdo->prepare("INSERT INTO joue_coup (idPartie, idCoup, date_coup) VALUES (:idPartie, :idCoup, :date_coup)");
-    $stmt->execute([':idPartie' => $IDpartie, ':idCoup' => $IDmove, ':date_coup' => $date]);
-    */
+    $stmt->execute([':idPartie' => $idPartie, ':idCoup' => $idCoup, ':date_coup' => $date]);
 }
 
 /*
 // Gestion nouvelle partie
-$player = getUser();
-global $pdo;
-$date = date('m-d-Y');
-$difficulty = 1;
-$stmt = $pdo->prepare("INSERT INTO partie (date_premier_coup, premier_joueur, idRobot, idUtilisateur) VALUES (:date_pc, :firs, :id1, :id2)");
-$stmt->execute([':date_pc' => $date, ':firs' => $player, ':id1' => $difficulty, ':id2' => $player]);
+
 */
 // --- Gestion du coup joué par l'humain ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cell'])) {
@@ -273,16 +284,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cell'])) {
         }
         // Envoi du coup dans la BDD
         logMove($cell);
-        
         $_SESSION['current_player'] = $_SESSION['current_player'] === 'X' ? 'O' : 'X';
     }
 }
 
 // Vérification du gagnant après le coup joué par l'humain
 $winner = checkWinner($_SESSION['board']);
-
+$available_moves = [];
+foreach ($_SESSION['board'] as $i => $cell) {
+    if ($cell === ' ') {
+        $available_moves[] = $i;
+    }
+}
 // --- Si le mode est ordinateur et c'est le tour de l'IA, jouer le coup de l'ordinateur ---
-if ($_SESSION['mode'] === 'computer' && $_SESSION['current_player'] === 'O' && $winner === null) {
+if ($_SESSION['mode'] === 'computer' && $_SESSION['current_player'] === 'O' && $winner == null && count($available_moves)!=0) {
     // Récupère le niveau de difficulté (1 = toujours aléatoire, 10 = toujours minimax)
     $difficulty = isset($_SESSION['difficulty']) ? (int)$_SESSION['difficulty'] : 10;
     // Calcul de la probabilité d'utiliser l'algorithme minimax :
@@ -295,14 +310,10 @@ if ($_SESSION['mode'] === 'computer' && $_SESSION['current_player'] === 'O' && $
         $aiMove = best_move($_SESSION['board']);
     } else {
         // Choix aléatoire parmi les coups disponibles
-        $available_moves = [];
-        foreach ($_SESSION['board'] as $i => $cell) {
-            if ($cell === ' ') {
-                $available_moves[] = $i;
-            }
-        }
+        
         $aiMove = $available_moves[array_rand($available_moves)];
     }
+    logMove($aiMove);
     if ($aiMove !== -1 && $_SESSION['board'][$aiMove] === ' ') {
         $_SESSION['board'][$aiMove] = 'O';
         $_SESSION['history_O'][] = $aiMove;
@@ -310,6 +321,9 @@ if ($_SESSION['mode'] === 'computer' && $_SESSION['current_player'] === 'O' && $
         $winner = checkWinner($_SESSION['board']);
     }
 }
+//TODO vérifie une victoire match null ou victoire bot ou victoire joueur
+//Uniquement lorsque la partie est terminée on affiche nouvelle partie bouton
+
 ?>
 
 <!DOCTYPE html>
