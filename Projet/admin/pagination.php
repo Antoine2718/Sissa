@@ -32,7 +32,7 @@ function generatePagination($phppage,$page_courante,$nombre_pages,$action,$total
 }
 function getUpdateForm(){
     if(empty($_GET) || !isAdmin() || !isset($_GET['id'])){
-        header("Location: ../pages/error_pages.php");
+        header("Location: ../pages/error_page.php");
         exit();
     }
     $db = connect();
@@ -46,7 +46,7 @@ function getUpdateForm(){
     <form action="../admin/updateUser.php" method="POST">
     <div class="form-group">
         <label for="username">Nom d'Utilisateur:</label>
-        <input type="text" id="username" name="username" value= <?php echo"$username" ?> required>
+        <input type="text" id="username" name="username" value= <?php echo"$username" ?> pattern="^[a-zA-Z0-9_]{1,20}$" required>
     </div>
     <div class="form-group">
         <label for="points">Points:</label>
@@ -70,6 +70,44 @@ function getUpdateForm(){
     </form>
 </div>
 <?php 
+signout($db);
+}
+function getStockForm(){
+    if(empty($_GET) || !isAdmin() || !isset($_GET['id'])){
+        header("Location: ../pages/error_page.php");
+        exit();
+    }
+    $db = connect();
+    $id = $_GET['id'];
+    try{
+        $stmt = $db->prepare("
+        select a.nom as name, a.stock as qte from article a where idArticle = ?
+        ");
+        $stmt->bindParam(1,$id, PDO::PARAM_INT);
+        $stmt->execute();
+        $produit = $stmt->fetch(PDO::FETCH_ASSOC);
+    }catch(PDOException $e){
+        header("Location: ../pages/error_page.php");
+        exit();
+    }
+    $stock =$produit['qte'];
+    $name = $produit['name'];
+?>
+<div class="login-container">
+    <h1>Modifier stock</h1>
+    <h2><?php echo $name ?></h2>
+    <form action="../admin/updateStock.php" method="POST">
+    <div class="form-group">
+        <label for="qte">Nouveau stock:</label>
+        <input type="text" id="qte" name="qte" value= <?php echo"$stock" ?> pattern="^[0-9]{1,10}$" required>
+    </div>
+    <div class ="form-group">
+        <button class ="color-button" type="submit">Modifier le stock</button>
+    </div>
+    <input hidden type="text" id="id" name ="id" value= <?php echo $id; ?>>
+    </form>
+</div>
+<?php
 signout($db);
 }
 ?>

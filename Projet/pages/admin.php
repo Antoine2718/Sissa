@@ -23,6 +23,9 @@
     <div class="content">
         <div class="admin-nav">
             <div class="admin-nav-element">
+                <a class ="color-button" href="admin.php?action=STK">Gestion du Stock</a>
+            </div>
+            <div class="admin-nav-element">
                 <a class ="color-button" href="admin.php?action=USR">Liste des utilisateurs</a>
             </div>
             <div class="admin-nav-element">
@@ -36,6 +39,7 @@
         <?php 
         if(isset($_SESSION['message'])){
             echo $_SESSION['message'];
+            unset($_SESSION['message']);
         }
         $db = connect();
         if(!empty($_GET) && isset($_GET['action'])){
@@ -65,7 +69,15 @@
                 }
             }else if($action=='HSH'){
                 include("../admin/listPurchases.php");
-                
+            }else if($action =='STK'){
+                include("../admin/listArticles.php");
+            }else if($action =="MPS"){
+                if(isset($_GET['id'])&&preg_match("/^[0-9]+$/",$_GET['id'])){
+                    getStockForm();
+                }else{
+                    header("Location: error_page.php");
+                    exit();
+                }
             }
         }
     ?>

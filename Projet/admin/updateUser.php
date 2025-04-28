@@ -3,7 +3,7 @@ require_once("../common/db.php");
 $db = connect();
 //On vérifie qu'il n'y a aucune erreurs
 if(empty($_POST)|| !isset($_POST['username'])|| !isset($_POST['points']) || !isset($_POST['id']) || !isset($_POST['type'])){
-    header("Location: ../pages/error_pages.php");
+    header("Location: ../pages/error_page.php");
     exit();
 }
 
@@ -21,7 +21,8 @@ if(!isset($_POST['password']) || empty($_POST['password'])){
         $stmt->bindParam(4, $id, PDO::PARAM_INT);
         $stmt->execute();
         $stmt->fetch(PDO::FETCH_ASSOC);
-        $_SESSION['message'] = "<p class =\"sucess\">Modification terminée</p>";
+        session_start();
+        $_SESSION['message'] = "<p class =\"success\">Modification terminée</p>";
     }catch(PDOException $e){
         die("Erreur dans la requete.");
     }
@@ -37,7 +38,8 @@ if(!isset($_POST['password']) || empty($_POST['password'])){
         $stmt->bindParam(5, $id, PDO::PARAM_INT);
         $stmt->execute();
         $stmt->fetch(PDO::FETCH_ASSOC);
-        $_SESSION['message'] = "<p class =\"sucess\">Modification terminée</p>";
+        session_start();
+        $_SESSION['message'] = "<p class =\"success\">Modification terminée</p>";
     }catch(PDOException $e){
         die("Erreur dans la requete. $e");
     }

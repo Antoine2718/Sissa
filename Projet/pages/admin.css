@@ -46,6 +46,9 @@
     background-color: #d4edda;
     color: #155724;
     border:1px solid #c3e6cb;
+    display: inline;
+    padding: 10px;
+    margin-top: 10px;
 }
 .commande-card {
     background: white;
@@ -136,12 +139,6 @@
     padding: 10px 15px;
     border-radius: 5px;
     margin-bottom: 20px;
-}
-
-.success {
-    background-color: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
 }
 
 .error {

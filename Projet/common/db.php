@@ -149,6 +149,18 @@ function getNumberOfPurchases($db){
         exit();
     }
 }
+function getNumberOfProducts($db){
+    try{
+        $stmt = $db->prepare("SELECT COUNT(*) as cs FROM article ");
+        
+        $stmt->execute();
+        $count = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $count['cs'];
+    }catch(PDOException $e){
+        header("Location: ../pages/error_page.php");
+        exit();
+    }
+}
 function getPurchaseHistory($pdo,$idUtilisateur){
     try{
         $stmt = $pdo->prepare("
@@ -198,5 +210,22 @@ function groupPurchasesPerDay($commandes){
         $commandesParDate[$date][] = $commande;// On ajoute la commande à la date correspondante
     }
     return $commandesParDate;
+}
+function getProducts($pdo,$page,$page_size){
+    try{
+        $stmt = $pdo->prepare('
+        SELECT a.idArticle as id,a.nom as name, a.prix as prix, a.stock as stk, a.categorie as ctg from article a
+        limit ?,?
+        ');
+        $debut =($page-1) * $page_size;
+        $stmt->bindParam(1,$debut, PDO::PARAM_INT);
+        $stmt->bindParam(2,$page_size, PDO::PARAM_INT);
+        $stmt->execute();
+        $commandes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $commandes;
+    }catch(PDOException $e){
+        header("Location: ../pages/error_page.php");
+        exit();
+    }
 }
 ?>
