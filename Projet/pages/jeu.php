@@ -230,21 +230,27 @@ function logMove($cell) {
     $stmt = $pdo->prepare("INSERT INTO coup (code_coup, numero_coup) VALUES (:code, :numero)");
     $stmt->execute([':code' => $cell, ':numero' => $moveNumber]);
 
+    /*
     // $IDpartie et $IDmove a récupérer
+    $IDpartie = 1;
+    $IDmove = 1;
+
     $player = getUser();
     $date = date('m-d-Y');
     $stmt = $pdo->prepare("INSERT INTO joue_coup (idPartie, idCoup, date_coup) VALUES (:idPartie, :idCoup, :date_coup)");
     $stmt->execute([':idPartie' => $IDpartie, ':idCoup' => $IDmove, ':date_coup' => $date]);
+    */
 }
 
+/*
 // Gestion nouvelle partie
 $player = getUser();
 global $pdo;
 $date = date('m-d-Y');
-$difficulty = $GLOBALS['difficulty'];
+$difficulty = 1;
 $stmt = $pdo->prepare("INSERT INTO partie (date_premier_coup, premier_joueur, idRobot, idUtilisateur) VALUES (:date_pc, :firs, :id1, :id2)");
 $stmt->execute([':date_pc' => $date, ':firs' => $player, ':id1' => $difficulty, ':id2' => $player]);
-
+*/
 // --- Gestion du coup joué par l'humain ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cell'])) {
     $cell = intval($_POST['cell']);
