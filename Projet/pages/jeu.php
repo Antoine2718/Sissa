@@ -47,6 +47,7 @@ if (!isset($_SESSION['mode'])) {
             require_once("../common/db.php");
             include("../common/nav.php")
         ?>
+        <div class="content">
             <h2>Choisissez le mode de jeu</h2>
             <form method="post">
                 <input type="radio" name="mode_selection" value="computer" id="computer">
@@ -55,7 +56,7 @@ if (!isset($_SESSION['mode'])) {
                 <input type="radio" name="mode_selection" value="human" id="human" required>
                 <label for="human"><h3>Jouer contre un ami</h3></label><br><br>
         <!-- Contenu principal -->
-        <div class="content">
+        
         <?php /* if ($_SESSION["mode_selection"] === "computer"): */ ?>
         <!-- Affichage de la liste des robots disponibles -->
         <?php
@@ -93,6 +94,7 @@ if (!isset($_SESSION['mode'])) {
                 </div>
                 <br>
             </form>
+            </div>
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     var computerRadio = document.getElementById("computer");
@@ -111,11 +113,11 @@ if (!isset($_SESSION['mode'])) {
                     toggleDifficulty();
                 });
             </script>
-            <div>
+            
             <?php
             include("../common/footer.php");
             ?>
-            </div>
+            
         </body>
         </html>
         <?php
@@ -365,10 +367,6 @@ if ($_SESSION['mode'] === 'computer' && $_SESSION['current_player'] === 'O' && $
         require_once("../common/db.php");
         include("../common/nav.php")
     ?>
-    
-
-    
-
     <div class="container">
         <div class="board">
             <?php foreach ($_SESSION['board'] as $index => $value): ?>
