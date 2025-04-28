@@ -187,6 +187,39 @@ function checkWinner($board) {
 
 // Implémentation de l'algorithme Minimax
 // 'O' est joué par l'ordinateur et 'X' par l'humain
+/* 
+Lorsqu'un joueur effectue un coup, cet acte génère un nouvel état du 
+jeu, entraînant une ramification dans l'arbre de décision. Chaque nœud de cet 
+arbre est évalué en fonction de la stratégie gagnante du joueur courant, qui peut 
+être soit le joueur maximiseur, soit le joueur minimiseur.
+
+Joueur Maximiseur : Cherche à maximiser son score. Cela se produit lors du 
+tour d’un joueur qui cherche à gagner.
+Joueur Minimiseur : Cherche à minimiser le score du joueur maximiseur. Cela se produit 
+lors du tour de l'adversaire, qui essaie d'éviter que le joueur maximiseur ne gagne.
+Algorithme Minimax
+
+L'algorithme Minimax fonctionne de manière récursive comme suit :
+
+Évaluation des Positions Terminales : À chaque feuille de l'arbre (état final du jeu), on 
+calcule une valeur d'évaluation. Cela peut être :
++1 si le joueur maximiseur gagne.
+-1 si le joueur minimiseur gagne.
+0 si c'est une égalité.
+Propagation des Valeurs : Pour chaque nœud interne, on évalue le score en fonction du tour du joueur :
+Si c'est le tour du joueur maximiseur, on prend le maximum des valeurs des nœuds enfants.
+Si c'est le tour du joueur minimiseur, on prend le minimum.
+Ceci se traduit par les relations suivantes :
+[
+V(n) = \max { V(child_1), V(child_2), \ldots, V(child_k) } \quad \text{(pour le joueur maximiseur)}
+]
+[
+V(n) = \min { V(child_1), V(child_2), \ldots, V(child_k) } \quad \text{(pour le joueur minimiseur)}
+]
+Sélection du Meilleur Coup : Le processus s’arrête une fois que la recherche atteint une profondeur 
+déterminée, ou un état terminal. Le joueur choisit le coup correspondant au nœud avec la valeur 
+d’évaluation optimale.
+*/
 function minimax($board, $depth, $is_maximizing) {
     $winner = checkWinner($board);
     if ($winner !== null) {
