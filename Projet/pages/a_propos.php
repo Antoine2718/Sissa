@@ -55,7 +55,7 @@
         .lucas, .andrieu, .dl, .Owen {
             padding: 20px;
 
-            background-color: white;
+            background-color: #007BFF;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             max-width: 800px;
@@ -98,16 +98,16 @@
                 <br>
                 <div class="equipe-container">
                     <div class="lucas">
-                        Antoine L.
+                        <a class ="page_selected" href="lucas.php">Antoine L.</a>
                     </div>
                     <div class="andrieu">
-                        Paul A.
+                        <a class ="page_selected" href="andrieu.php">Paul A.</a>
                     </div>
                     <div class="dl">
-                        Bruno D. L.
+                        <a class ="page_selected" href="dl.php">Bruno D. L. </a>
                     </div>
                     <div class="Owen">
-                        Owen
+                        <a class ="page_selected" href="example.com">Owen</a>
                     </div>
                 </div>
             </div>
