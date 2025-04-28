@@ -55,6 +55,7 @@ if (!isset($_SESSION['mode'])) {
 
                 <input type="radio" name="mode_selection" value="human" id="human" required>
                 <label for="human"><h3>Jouer contre un ami</h3></label><br><br>
+                <input type="submit" value="Commencer">
         <!-- Contenu principal -->
         
         <?php /* if ($_SESSION["mode_selection"] === "computer"): */ ?>
@@ -80,10 +81,9 @@ if (!isset($_SESSION['mode'])) {
                                 <?php foreach ($robots as $robot): ?>
                                         <img src="<?= $robot['lien_icone'] ?>" style="width:30px;height:30px; vertical-align: middle;">
                                         <?= $robot['nomRobot'] ?> - Niveau : <?= $robot['niveauRobot'] ?>
-                                        <input id="difficulty" type="radio" name="difficulty" value="<?= $robot['niveauRobot'] ?>" required>
+                                        <input id="difficulty" type="radio" name="difficulty" value="<?= $robot['niveauRobot'] ?>">
                                         <br>
                                 <?php endforeach; ?>
-                                <input type="submit" value="Commencer">
                                 </form>
                             </ul>
                         <?php else: ?>
@@ -91,6 +91,7 @@ if (!isset($_SESSION['mode'])) {
                         <?php endif; ?>
                     </div>
                 <?php /* endif; */ ?>
+                <input type="submit" value="Commencer">   
                 </div>
                 <br>
             </form>
