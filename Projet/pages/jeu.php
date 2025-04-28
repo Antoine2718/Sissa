@@ -334,7 +334,7 @@ if ($_SESSION['mode'] === 'computer' && $_SESSION['current_player'] === 'O' && $
     <title>Sissa</title>
     <!--Ajoute les pages de styles-->
     <style>
-                body { font-family: Helvetica, sans-serif; }
+        body { font-family: Helvetica, sans-serif; }
         .container {  
             align-items: center;
             justify-content: center;

@@ -190,6 +190,9 @@ p{
     grid-row: 1;
     text-align: left;
 }
+.leaderboard-head h1{
+    color: var(--sissa_light_blue);
+}
 .leaderboard-content{
     grid-row: 2;
 }
