@@ -222,9 +222,8 @@ INSERT INTO `article` (`idArticle`, `prix`, `nom`, `stock`, `description`, `lien
 (7, 11.99, 'Mug \"Game On\"', 100, 'Mug 325ml - idéal pour un latte - en céramique blanche et brillante avec grille de morpion imprimée.', '..\\images\\Shop-images\\game-on-tasse.png', 'accessoires'),
 (8, 9.99, 'Calendrier stratégique 2025', 70, 'Un mois = une citation + une grille de morpion.\r\nChaque calendrier comporte une reliure à anneaux, 26 pages et une finition qualité satinée. Parfait pour être accroché à votre mur.', '..\\images\\Shop-images\\calendrier-strat.png', 'accessoires'),
 (9, 22.49, 'Gourde \"Masterr\"', 120, 'Gourde Masterr, double R pour un DOUBLE RESULTAT !\r\nChaque gourde est fabriquée en acier inoxydable alimentaire et est livrée avec un bouchon à vis.\r\nGarde vos boissons fraîches pendant 24h et chaudes pendant 12h ( faut bien hydrater votre cerveau, ce génial instrument de bataille !).', '..\\images\\Shop-images\\gourde-masterr.png', 'accessoires'),
-(10, 14.99, 'Tapis de souris \"Morpion\"', 80, 'Tapis de souris avec une grille de morpion imprimée.', 'tapis-souris-morpion.jpg', 'accessoires'),
-(11, 7.99, 'Porte-clés \"X et O\"', 150, 'Porte-clés en métal avec X et O entrelacés.', 'porte-cles-xo.jpg', 'accessoires'),
-(12, 5.50, 'Carnet \"Stratégies gagnantes\"', 90, 'Carnet de notes avec couverture morpion.', 'carnet-strategies.jpg', 'accessoires'),
+(10, 22, 'Sous-verres \"Morpion\"', 80, 'Sous-verres avec une grille de morpion imprimée.\r\nChaque sous-verre se compose de :\r\n-Un recto en bois.\r\n-Un verso en liège.\r\nPar lot de quatre.', '..\\images\\Shop-images\\sous-verre.png', 'accessoires'),
+(12, 5.50, 'Carnet \"Stratégies gagnantes\"', 90, 'Carnet de notes à spirales avec une couverture en carton épais, mais souple.\r\nPages lignées à espacement réduit pour une prise de notes compactes.\r\nContient 160 pages.', '..\\images\\Shop-images\\carnet-strat-win.png', 'accessoires'),
 (13, 8.99, 'Sac \"Tactique Morpion\"', 50, 'Sac en toile avec une grille de morpion imprimée.', 'sac-tactique.jpg', 'accessoires');
 
 -- Insérer des articles dans la catégorie 'goodies'
