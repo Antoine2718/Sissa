@@ -185,3 +185,66 @@ tr td {
     white-space: nowrap;
     width: max-content;
 }
+/* Styles supplémentaires pour la gestion des promotions */
+.form-control {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-top: 5px;
+}
+
+.color-button {
+    background: #003366;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    margin: 5px 0;
+}
+
+.color-button:hover {
+    background: #00254d;
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* Améliorations pour les tableaux de promotions */
+.list-table th, .list-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.list-table th {
+    font-weight: bold;
+}
+
+.list-table tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Message container pour les notifications */
+.message-container {
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    display: block;
+}
+
+/* Style pour les dates de promotion */
+.date-promotion {
+    font-size: 0.9em;
+    color: #666;
+}
+
+/* Style pour le pourcentage de réduction */
+.promotion-reduction {
+    font-weight: bold;
+    color: #c00;
+}

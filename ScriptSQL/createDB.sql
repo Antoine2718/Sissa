@@ -230,7 +230,7 @@ INSERT INTO `article` (`idArticle`, `prix`, `nom`, `stock`, `description`, `lien
 (14, 1.50, 'Sticker \"Je joue X\"', 200, 'Sticker à mettre partout pour afficher ton allégeance à X.\r\nFinition glacée.', '..\\images\\Shop-images\\x-sticker.png', 'goodies'),
 (15, 1.50, 'Sticker \"Je joue O\"', 200, 'Sticker à mettre partout pour afficher ton allégeance à O.\r\nFinition glacée', '..\\images\\Shop-images\\o-sticker.png', 'goodies'),
 (17, 3.99, 'Sticker \"Morpion\"', 300, 'Lot de 10 stickers avec des grilles de morpion.\r\nFinition glacée', '..\\images\\Shop-images\\morpion-sticker.png', 'goodies'),
-(18, 6.99, 'Bracelet \"X ou O\"', 150, 'Bracelet en silicone avec motifs X et O.', 'bracelet-xo.jpg', 'goodies'),
+(18, 6.99, 'Bracelet \"X ou O\"', 150, 'Bracelet en silicone avec motifs X et O.', '..\\images\\Shop-images\\bracelet-xo.png', 'goodies'),
 (19, 4.50, 'Aimant \"Grille Morpion\"', 100, 'Aimant pour frigo avec une grille de morpion.', 'aimant-morpion.jpg', 'goodies'),
 (20, 2.99, 'Marque-page \"Stratégie\"', 80, 'Marque-page avec des astuces de morpion.', 'marque-page.jpg', 'goodies'),
 (21, 5.99, 'Écusson \"Champion Morpion\"', 70, 'Écusson brodé pour les fans de morpion.', 'ecusson-champion.jpg', 'goodies');
