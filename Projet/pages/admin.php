@@ -34,6 +34,9 @@
             <div class="admin-nav-element">
                 <a class ="color-button" href="admin.php?action=HSH">Historique du Shop</a>
             </div>
+            <div class="admin-nav-element">
+                <a class ="color-button" href="admin.php?action=PRM">Gestion des Promotions</a>
+            </div>
         </div>
         <div class="data">
         <?php 
@@ -74,6 +77,16 @@
             }else if($action =="MPS"){
                 if(isset($_GET['id'])&&preg_match("/^[0-9]+$/",$_GET['id'])){
                     getStockForm();
+                }else{
+                    header("Location: error_page.php");
+                    exit();
+                }
+            }
+            else if($action == "PRM"){
+                include("../admin/listPromotions.php");
+            }else if($action == "UPP"){
+                if(isset($_GET['id']) && preg_match("/^[0-9]+$/", $_GET['id'])){
+                    include("../admin/updatePromotionForm.php");
                 }else{
                     header("Location: error_page.php");
                     exit();
