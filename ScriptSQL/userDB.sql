@@ -11,10 +11,10 @@ ALTER TABLE Utilisateur MODIFY COLUMN mdp VARCHAR(250);
     Ajout des IA
 */
 INSERT INTO robot (idRobot,	nomRobot,	niveauRobot,	lien_icone) VALUES
-(1, "Alice","10", "https://aaah0mnbncqtinas.public.blob.vercel-storage.com/9zMJ22qaje-no-background-YDPYz7EYIKq8PV1JBRW4wVOMxfPDNT.png"),
-(2, "Bob","9", "https://www.popsci.com/uploads/2020/01/07/WMD5M52LJFBEBIHNEEABHVB6LA.jpg?auto=webp&width=1440&height=864"),
+(1, "Alice","10", "https://docmed.ru/upload/iblock/49c/49cf137831eefc72f330fdaae639ee0b.png"),
+(2, "Bob","9", "https://pbs.twimg.com/profile_images/1385724221406519300/PRJvcMCr_400x400.jpg"),
 (3, "Cédric","8", "https://i.pinimg.com/736x/cf/f1/b0/cff1b00211b10b5e9820ef6494b28da3.jpg"),
-(4, "Daniel","7", "https://pbs.twimg.com/profile_images/1385724221406519300/PRJvcMCr_400x400.jpg"),
+(4, "Daniel","7", "https://www.popsci.com/uploads/2020/01/07/WMD5M52LJFBEBIHNEEABHVB6LA.jpg?auto=webp&width=1440&height=864"),
 (5, "Eric","6", "https://attic.sh/pbhjkckp5v4gta1pazoa3zjz8bha"),
 (6, "Francois","5", "https://thafd.bing.com/th/id/OIP.QccB1M1GLcdOM7jGDyxT6QAAAA?pid=ImgDet&w=184&h=184&c=7&dpr=1,3"),
 (7, "Gérard","4", "https://thafd.bing.com/th/id/OIP.9763FywczzmAfUPmng_shwAAAA?pid=ImgDet&w=184&h=184&c=7&dpr=1,3"),
