@@ -45,7 +45,8 @@ if (!isset($_SESSION['mode'])) {
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Sissa - Choix du mode</title>
             <style>
-                body { font-family: Helvetica, sans-serif; text-align: center; }
+                body { font-family: Helvetica, sans-serif; text-align: center; 
+                }
                 h2 { color: #005eff; }
             </style>
                 <?php //Ajoute la barre de navigation
@@ -66,7 +67,7 @@ if (!isset($_SESSION['mode'])) {
                 <input type="radio" name="mode_selection" value="human" id="human" required>
                 <label for="human"><h3>Jouer contre un ami</h3></label><br><br>
                 <div id="com-container" style="display: none;">
-                    // Ce container sert dans la gestion dynamique en JS ci-dessous
+                    <!-- Ce container sert dans la gestion dynamique en JS ci-dessous -->
                     <input type="submit" value="Commencer">
                 </div>
         <!-- Contenu principal -->
@@ -91,12 +92,12 @@ if (!isset($_SESSION['mode'])) {
                         <?php if (!empty($robots)): ?>
                             <ul>
                                 <form>
-                                <table border="0">
+                                <table style="border: 0px; border-collapse: collapse; max-width : 80%; margin-left: auto, margin-right : auto;">
                                 <tr>
                                 <?php $i = 0; 
                                 foreach ($robots as $robot): ?>
                                         <th>
-                                        <img src="<?= $robot['lien_icone'] ?>" style="width:200px;height:200px; vertical-align: middle; border-radius: 40%;">
+                                        <img src="<?= $robot['lien_icone'] ?>" style="width:200px;height:200px; vertical-align: middle; border-radius: 40%; border: 1px solid lightgray;">
                                         <br>
                                         <h3> <?= $robot['nomRobot'] ?> </h3> Niveau : <?= $robot['niveauRobot'] ?>
                                         <input id="difficulty" type="radio" name="difficulty" value="<?= $robot['niveauRobot'] ?>">
@@ -122,8 +123,8 @@ if (!isset($_SESSION['mode'])) {
                 <br>
             </form>
             </div>
-            // JS qui permet d'eviter d'avoir deux commencer dans le formulaire
-            // Pour ce faire, gestion dynamique en fonction de la selection
+            <!-- JS qui permet d'eviter d'avoir deux commencer dans le formulaire
+            Pour ce faire, gestion dynamique en fonction de la selection -->
             <script>
                 
                 document.addEventListener('DOMContentLoaded', function() {
