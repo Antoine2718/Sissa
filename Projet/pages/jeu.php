@@ -46,6 +46,8 @@ if (!isset($_SESSION['mode'])) {
             <title>Sissa - Choix du mode</title>
             <style>
                 body { font-family: Helvetica, sans-serif; text-align: center; 
+                    position: relative;
+                    text-align: center;
                 }
                 h2 { color: #005eff; }
             </style>
@@ -86,13 +88,13 @@ if (!isset($_SESSION['mode'])) {
         ?>
     
                 <div id="difficulty-container" style="display: none;">
-                    <label for="difficulty">Niveau de difficulté pour l'IA : </label>
+                    <label for="difficulty"> <h4> Niveau de difficulté pour l'IA : </h4> </label>
                     <div class="robots">
-                        <h3>IA disponibles</h3>
+                        <h2>IA disponibles</h2>
                         <?php if (!empty($robots)): ?>
                             <ul>
                                 <form>
-                                <table style="border: 0px; border-collapse: collapse; max-width : 80%; margin-left: auto, margin-right : auto;">
+                                <table style="border: 0px; border-spacing: 10px; border-collapse: collapse; max-width : 80%; margin-left: auto, margin-right : auto;">
                                 <tr>
                                 <?php $i = 0; 
                                 foreach ($robots as $robot): ?>
@@ -101,11 +103,11 @@ if (!isset($_SESSION['mode'])) {
                                         <br>
                                         <h3> <?= $robot['nomRobot'] ?> </h3> Niveau : <?= $robot['niveauRobot'] ?>
                                         <input id="difficulty" type="radio" name="difficulty" value="<?= $robot['niveauRobot'] ?>">
-                                            <br>
+                                            <br><br><br>
                                         </th>
                                         <?php 
                                         $i += 1;
-                                        if($i % 3 == 0) : ?>
+                                        if($i % 5 == 0) : ?>
                                         </tr> <tr>
                                         <?php endif; ?>
                                 <?php endforeach; ?>
@@ -355,6 +357,7 @@ foreach ($_SESSION['board'] as $i => $cell) {
 if ($_SESSION['mode'] === 'computer' && $_SESSION['current_player'] === 'O' && $winner == null && count($available_moves)!=0) {
     // Récupère le niveau de difficulté (1 = toujours aléatoire, 10 = toujours minimax)
     $difficulty = isset($_SESSION['difficulty']) ? (int)$_SESSION['difficulty'] : 10;
+    $GLOBALS['difficulty'] = $difficulty;
     // Calcul de la probabilité d'utiliser l'algorithme minimax :
     // Pour le niveau 1 --> (1-1)/9 = 0 (coup aléatoire)
     // Pour le niveau 10 --> (10-1)/9 = 1 (coup optimisé)
@@ -477,7 +480,7 @@ function Win() {
 <body>
     <?php //Ajoute la barre de navigation
         require_once("../common/db.php");
-        include("../common/nav.php")
+        include("../common/nav.php");
     ?>
     <div class="container">
         <div class="board">
@@ -498,8 +501,8 @@ function Win() {
             <h2>Match nul !</h2>
         <?php endif; ?>
 
-        <!-- Bouton de réinitialisation -->
-        // Uniquement en fin de partie
+        <!-- Bouton de réinitialisation 
+        Uniquement en fin de partie -->
         <?php if ($winner): ?>
             <form method="post" class="reset-btn">
                 <input type="submit" name="reset" value="Nouvelle partie" />
