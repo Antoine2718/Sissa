@@ -283,3 +283,61 @@ p{
 .content-carte:hover{
     transform: scale(1.02);
 }
+.result{
+    background-color: #eceff4;
+    box-shadow: 0px 1px 1px;
+    border-radius: 15px;
+    position: fixed;
+    align-items: center;
+    height: fit-content;
+    width: 30vw;
+    padding: 2em;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+}
+.result-content h3{
+    text-align: center;
+}
+.result-content{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.statistique{
+    grid-column: 1;
+    grid-row: 1;
+}
+.statistique p {
+    text-align: center;
+}
+.resultat{
+    grid-column: 2;
+    grid-row: 1;
+}
+.resultat p {
+    text-align: center;
+}
+.result button{
+    position: absolute;
+    bottom: 0;
+}
+.buttons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.win{
+    color: #099268;
+}
+.defeat{
+    color: var(--sissa_error_red);
+}
+.result-pts{
+    color:#ff3300;
+}
+.lead{
+    display: grid;
+    grid-column: 1 / span 2;
+    grid-row: 2;
+    justify-content: center;
+}

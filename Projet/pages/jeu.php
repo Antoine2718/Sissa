@@ -153,7 +153,8 @@ if (isset($_POST['reset'])) {
 // --- Initialisation du plateau et des données de session ---
 if (!isset($_SESSION['board'])) {
     $_SESSION['board'] = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
-    $_SESSION['current_player'] = 'X';
+    $first_player = array('X','O');
+    $_SESSION['current_player'] = $first_player[array_rand($first_player)];
     $_SESSION['history_X'] = []; // Historique des coups du joueur X (humain)
     $_SESSION['history_O'] = []; // Historique des coups du joueur O (humain ou IA)
 }
@@ -294,7 +295,7 @@ function logMove($cell) {
         $player = getUser();
         global $pdo;
         $date = date('Y-m-d H:i:s');
-        $char = 'X';
+        $char = $_SESSION['current_player'];
         $id = $player->getID();
         $stmt = $pdo->prepare("INSERT INTO partie (date_premier_coup, premier_joueur, idRobot, idUtilisateur) VALUES (:date_pc, :firs, :id1, :id2)");
         $stmt->execute([':date_pc' => $date, ':firs' => $char, ':id1' => $difficulty, ':id2' => $id]);
@@ -306,11 +307,7 @@ function logMove($cell) {
     $date = date('Y-m-d H:i:s');
     $stmt = $pdo->prepare("INSERT INTO joue_coup (idPartie, idCoup, date_coup) VALUES (:idPartie, :idCoup, :date_coup)");
     $stmt->execute([':idPartie' => $idPartie, ':idCoup' => $idCoup, ':date_coup' => $date]);
-    $state = Win();
-    if($state['win']){
-        //TODO afficher le rapport partie
-
-    }
+    
 }
 
 /*
@@ -371,9 +368,8 @@ if ($_SESSION['mode'] === 'computer' && $_SESSION['current_player'] === 'O' && $
 }
 //TODO vérifie une victoire match null ou victoire bot ou victoire joueur
 //Uniquement lorsque la partie est terminée on affiche nouvelle partie bouton
-
 // Fonction Win pour comptage points
-function Win() {
+function Win(){
     $data = [];
     $winner = checkWinner($_SESSION['board']);
     $available_moves = [];
@@ -387,19 +383,20 @@ function Win() {
     Cout restant pair = > IA perdu
     Cout restant impair = > IA gagné
     */
-    if(count($available_moves)==0){
-        $data['win'] = true;
-        $data['draw'] = true;
-    }else if($winner) {
+    if($winner) {
         $data['win'] = True;
         if(count($available_moves) % 2 == 1) {
             $data['winner'] = 'IA';
-            $data['IdWinner'] = $difficulty;
+            $data['IdWinner'] = $difficulty??10;
         } else {
+            $data['winner'] = 'Player';
             $player = getUser();
             $data['IdWinner'] = $player->getID();
         }
-    } else {
+    } else if(count($available_moves)==0){
+        $data['win'] = true;
+        $data['draw'] = true;
+    }else {
         $data['win'] = False;
     }
     // Retouner : Bool gagné ou non, IA gagné ?, ID IA Gagnante sinon ID utilisateur
@@ -473,6 +470,14 @@ function Win() {
         </div>
     </div>
     </div>
+    <?php 
+    $state = Win();
+    if($state['win']&&$_SESSION['mode']=="computer"){
+        //TODO afficher le rapport partie
+        require_once("result.php");
+        getResultForm($state,$_SESSION['board'],$_SESSION['difficulty']??-1);
+    }
+    ?>
     <?php
         include("../common/footer.php");
     ?>

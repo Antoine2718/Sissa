@@ -131,6 +131,7 @@ function updateRank($db,$idUser){
         $stmt->bindParam(2, $idUser, PDO::PARAM_INT);
         $stmt->execute();
         $stmt->fetch(PDO::FETCH_ASSOC);
+        updateUser($db);
         return true;
     }catch(PDOException $e){
         header("Location: ../pages/error_page.php");
@@ -187,7 +188,7 @@ function getNumberOfProducts($db){
 function getPurchaseHistory($pdo,$idUtilisateur){
     try{
         $stmt = $pdo->prepare("
-    select a.idArticle, a.nom, ac.quantité_achat, ac.date_achat, a.prix 
+    select a.idArticle, a.nom, ac.quantité_achat, ac.date_achat, a.prix, a.lien_image
     from achete ac
     join article a on ac.idArticle = a.idArticle
     where ac.idUtilisateur = ?
@@ -201,8 +202,47 @@ function getPurchaseHistory($pdo,$idUtilisateur){
         exit();
     }
 }
-function calculatePoints($difficulty){
-    
+// $win vaut 1 0 -1 en fonction de si c'est une victoire/nulle/défaite
+function calculatePoints($win,$difficulty,$move_to_win){
+    //on calcule le nombre de points gagné ou perdu
+    if($win==1){
+        return floor(33 * $difficulty / $move_to_win);
+    }else if($win==0){
+        return floor(15* ($difficulty-6)/$move_to_win);
+    }else{
+        return -floor(33 * (10-$difficulty) / $move_to_win);
+    }
+}
+function updateUser($db){
+    if(isConnected()){
+        $user = $_SESSION['user'];
+        $_SESSION['user']=getUserWithId($db,$user->getID());
+    }
+}
+function updatePoints($db,$idUtilisateur,$delta){
+    try{
+        //on récupère le nombre de points actuel
+        $stmt = $db->prepare("SELECT u.points as pts FROM utilisateur u where u.idUtilisateur = ?");
+        $stmt->bindParam(1, $idUtilisateur, PDO::PARAM_INT);
+        $stmt->execute();
+        $pts = $stmt->fetch(PDO::FETCH_ASSOC);
+        $pts = $pts['pts'];
+        $new_pts = $pts+$delta;
+        if($new_pts<0){
+            $new_pts =0;
+        }
+        //on met à jour le nombre de points
+        $stmt = $db->prepare("UPDATE utilisateur u set u.points = ? where u.idUtilisateur = ?");
+        $stmt->bindParam(1, $new_pts, PDO::PARAM_INT);
+        $stmt->bindParam(2, $idUtilisateur, PDO::PARAM_INT);
+        $stmt->execute();
+        //on met à jour le rang
+        updateRank($db,$idUtilisateur);
+    }catch(PDOException $e){
+        echo $e;
+        header("Location: ../pages/error_page.php");
+        exit();
+    }
 }
 function getPurchases($pdo,$page,$page_size){
     try{
@@ -271,6 +311,39 @@ function getProducts($pdo,$page,$page_size){
         $stmt->execute();
         $commandes = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $commandes;
+    }catch(PDOException $e){
+        header("Location: ../pages/error_page.php");
+        exit();
+    }
+}
+function getNumberOfGames($db){
+    try{
+        $stmt = $db->prepare("SELECT COUNT(*) as cs FROM partie ");
+        $stmt->execute();
+        $count = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $count['cs'];
+    }catch(PDOException $e){
+        header("Location: ../pages/error_page.php");
+        exit();
+    }
+}
+function getPartie($pdo,$page,$page_size){
+    try{
+        $stmt = $pdo->prepare('
+        SELECT p.idPartie as id,p.date_premier_coup as first_coup,p.premier_joueur as first_player, r.niveauRobot as lvl, r.nomRobot robot_name, u.identifiant as player,count(j.idCoup) as nb_coup from partie p
+        inner join robot r on p.idRobot = r.idRobot
+        inner join utilisateur u on u.idUtilisateur = p.idUtilisateur
+        inner join joue_coup j on j.idPartie = p.idPartie
+        group by 1
+        order by p.idPartie
+        limit ?,?
+        ');
+        $debut =($page-1) * $page_size;
+        $stmt->bindParam(1,$debut, PDO::PARAM_INT);
+        $stmt->bindParam(2,$page_size, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
     }catch(PDOException $e){
         header("Location: ../pages/error_page.php");
         exit();

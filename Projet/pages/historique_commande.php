@@ -36,7 +36,6 @@ $title="Historique de vos commandes";
             include("../cart/afficherHistoriqueCommande.php");
         ?>
     </div>
-    
     <?php include("../common/footer.php"); ?>
 </body>
 </html>

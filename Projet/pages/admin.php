@@ -49,6 +49,12 @@
             header("Location: ../pages/error_page.php");
             exit();
         }
+        if(isset($_GET['page'])){
+            if(!preg_match("/^[0-9]+$/", $_GET['page'])){
+                header("Location: ../pages/error_page.php");
+                exit();
+            }
+        }
         if(!empty($_GET) && isset($_GET['action'])){
             $action = $_GET['action'];
             if($action == "USR"){
@@ -97,6 +103,8 @@
                 }
             }else if($action == "HPD"){
                 include("../admin/listPurchasesProduct.php");
+            }else if($action == "HGM"){
+                include("../admin/listPartie.php");
             }
         }
     ?>
