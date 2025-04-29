@@ -497,13 +497,15 @@ function Win() {
         <!-- Affichage du gagnant ou du match nul -->
         <?php if ($winner): ?>
             <h2 class="winner"><?= $winner ?> a gagné !</h2>
-        <?php elseif (!in_array(' ', $_SESSION['board'])): ?>
+        <?php elseif (!in_array(' ', $_SESSION['board'])): 
+            $winner = 'N';
+            ?>
             <h2>Match nul !</h2>
         <?php endif; ?>
 
         <!-- Bouton de réinitialisation 
         Uniquement en fin de partie -->
-        <?php if ($winner): ?>
+        <?php if ($winner OR $winner == 'N'): ?>
             <form method="post" class="reset-btn">
                 <input type="submit" name="reset" value="Nouvelle partie" />
             </form>
