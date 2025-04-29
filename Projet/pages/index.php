@@ -15,7 +15,7 @@
         require_once("../common/db.php");
         include("../common/nav.php")
     ?>
-
+    
     <!-- Contenu principal -->
     <div class="content">
         <h2>Bienvenue sur Sissa</h2>
