@@ -183,6 +183,43 @@
     text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
     margin-bottom: 1rem;
 }
+/* Style pour le sous-titre des produits vedettes */
+.sous-titre-vedette {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #4a5568;
+    margin: 0 auto 30px;
+    max-width: 800px;
+    line-height: 1.5;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-style: italic;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+/* Ajoute un élément décoratif sous le sous-titre */
+.sous-titre-vedette::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 2px;
+    background: rgba(0, 51, 102, 0.3);
+    border-radius: 1px;
+}
+
+/* Ajoute un peu d'espace entre le titre principal et le sous-titre */
+.produits-vedettes h2 {
+    margin-bottom: 15px;
+}
+
+/* Assure que la section des produits vedettes a un alignement cohérent */
+.produits-vedettes {
+    text-align: center;
+}
 
 /* Style pour les filtres*/
 .filtres-categories {
@@ -334,5 +371,34 @@
 @media (max-width: 768px) {
     .controles-pagination {
         flex-direction: column;
+    }
+}
+/* Style pour le wrapper des produits vedettes */
+.wrapper-vedettes {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+/* Ajuste la taille des cartes produits vedettes pour qu'elles soient égales */
+.wrapper-vedettes .carte-produit {
+    width: 300px; /* Taille fixe pour chaque carte */
+    margin-bottom: 20px;
+}
+
+
+@media (max-width: 992px) {
+    .wrapper-vedettes {
+        justify-content: center;
+    }
+}
+
+/* Pour les très petits écrans, on peut ajuster la taille des cartes */
+@media (max-width: 350px) {
+    .wrapper-vedettes .carte-produit {
+        width: 100%;
     }
 }

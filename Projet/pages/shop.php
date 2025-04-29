@@ -253,7 +253,7 @@
             $produits_vedettes = $stmt->fetchAll(PDO::FETCH_ASSOC);
             ?>
 
-            <div class="grille-produits">
+            <div class="wrapper-vedettes">
             <?php foreach ($produits_vedettes as $produit): ?>
             <div class="carte-produit carte-vedette">
                 <div class="badge-vedette">Vedette</div>
