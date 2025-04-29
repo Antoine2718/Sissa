@@ -15,10 +15,9 @@
         require_once("../common/db.php");
         include("../common/nav.php")
     ?>
-
+    
     <!-- Contenu principal -->
     <div class="content">
-        <?php include("../common/leaderboard.php");?>
         <h1>Contactez-nous</h1>
         <div class="contact-container">
             <div class="left">
