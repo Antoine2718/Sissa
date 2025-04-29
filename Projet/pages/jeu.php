@@ -448,7 +448,7 @@ function Win() {
         Uniquement en fin de partie -->
         <?php if ($winner OR $winner == 'N'): ?>
             <form method="post" class="reset-btn">
-                <input type="submit" name="reset" value="Nouvelle partie" />
+                <input type="submit" name="reset" value="Nouvelle partie" class="color-button"/>
             </form>
         <?php endif; ?>
 
