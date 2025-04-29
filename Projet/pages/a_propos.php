@@ -107,7 +107,7 @@
                         <a class ="page_selected" href="dl.php">Bruno D. L. </a>
                     </div>
                     <div class="Owen">
-                        <a class ="page_selected" href="example.com">Owen</a>
+                        <a class ="page_selected" href="error_page.php">Owen</a>
                     </div>
                 </div>
             </div>

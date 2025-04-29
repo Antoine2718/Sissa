@@ -51,6 +51,17 @@ function connectUser($db,$username){
         return $user;
     }
 }
+function getRang($db,$idUtilisateur){
+    try{
+        $stmt = $db->prepare("SELECT r.nomRang as name, r.couleur_rang as color FROM utilisateur u inner join rang r on r.idRang = u.idRang where idUtilisateur = ?");
+        $stmt->bindParam(1, $idUtilisateur, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }catch(PDOException $e){
+        return "Error";
+    }
+}
 function getUserWithId($db,$id){
     $stmt = $db->prepare("SELECT idUtilisateur as id,identifiant as idf, points as pts, idrang as idr, type FROM utilisateur WHERE idUtilisateur = ?");
     $stmt->bindParam(1, $id, PDO::PARAM_INT);

@@ -45,6 +45,10 @@
             unset($_SESSION['message']);
         }
         $db = connect();
+        if(!isAdmin()){
+            header("Location: ../pages/error_page.php");
+            exit();
+        }
         if(!empty($_GET) && isset($_GET['action'])){
             $action = $_GET['action'];
             if($action == "USR"){

@@ -29,7 +29,7 @@ body {
     background-color: var(--sissa_dark_blue); /* Couleur bleu */
     overflow: hidden;
     display: grid;
-    grid-template-columns: 1fr 2fr 3fr;
+    grid-template-columns: 1fr 2fr 4fr;
     border-bottom: 1px solid grey; /*Petit détail*/
 }
 /*CCS Pour la partie déconnexion*/
@@ -37,13 +37,14 @@ body {
     grid-column: 1;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
 }
 /*CSS pour le titre*/
 .title-navbar{
     grid-column: 2;
     display: flex;
     justify-content: left;
+    align-items: center;
 }
 /*CSS pour la partie navigation*/
 .inner-navbar{
@@ -74,7 +75,7 @@ p{
     border-radius: 10px;
 }
 /* Change la couleur au survol */
-.navbar a:hover:not(.page_selected):not(.color-button){
+.navbar a:hover:not(.page_selected):not(.color-button):not(.profile-button){
     background-color: var(--sissa_night_sky);
     transition: all 0.1s ease;
     
@@ -246,4 +247,35 @@ p{
     display: inline-block;
     margin-top: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.connect{
+    border: 1px solid black;
+    height: 75%;
+    font-size: small;
+    padding: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+    background-color: var(--sissa_night_sky);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.navbar .profile-button{
+    padding: 0px;
+}
+.sub-content{
+    display: flex;
+    justify-content: center;
+}
+.content-carte{
+    justify-content: center;
+    width: 15vw;
+    margin: 33px;
+    margin-top: 10vh;
+    background-color: white;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.content-carte p{
+    text-align: center;
 }

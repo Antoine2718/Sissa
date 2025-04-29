@@ -7,7 +7,6 @@ session_start();
 // À adapter
 // fonction connect() de db.php
 $pdo = connect();
-
 // --- Sélection du mode de jeu ---
 if (!isset($_SESSION['mode'])) {
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['mode_selection'])) {
@@ -16,9 +15,9 @@ if (!isset($_SESSION['mode'])) {
         if ($_SESSION['mode'] === 'computer' && isset($_POST['difficulty'])) {
             $difficulty = intval($_POST['difficulty']);
             if ($difficulty < 1) { 
-                $difficulty = 1; 
+                $difficulty = 1;
             }
-            if ($difficulty > 10) { 
+            if ($difficulty > 10) {
                 $difficulty = 10; 
             }
             // Mettre difficulty dans Session et globals
@@ -317,13 +316,13 @@ function logMove($cell) {
     $stmt->execute([':idPartie' => $idPartie, ':idCoup' => $idCoup, ':date_coup' => $date]);
     $state = Win();
     if($state['win']){
-        echo "test";
+        //TODO afficher le rapport partie
+
     }
 }
 
 /*
 // Gestion nouvelle partie
-
 */
 // --- Gestion du coup joué par l'humain ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cell'])) {
@@ -396,7 +395,10 @@ function Win() {
     Cout restant pair = > IA perdu
     Cout restant impair = > IA gagné
     */
-    if($winner) {
+    if(count($available_moves)==0){
+        $data['win'] = true;
+        $data['draw'] = true;
+    }else if($winner) {
         $data['win'] = True;
         if(count($available_moves) % 2 == 1) {
             $data['winner'] = 'IA';

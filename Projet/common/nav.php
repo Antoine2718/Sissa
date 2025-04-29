@@ -20,14 +20,36 @@ if(!isset($_SESSION))session_start();
 ?>
 <div class="navbar">
     <div class = "connect-navbar">
+        <?php 
+            if(isConnected()){
+                $db = connect();
+                $user= getUser();
+                $id =$user->getID();
+                $rank = getRang($db,$id);
+                $name = $rank['name']??"";
+                $color = $rank['color']??"";
+                ?>
+                <div class="connect">
+                    <a class ="profile-button" href="profile.php">
+                        <p><?php echo $user->getIdentifiant();?></p>
+                        <?php echo "<p style =\"color:$color;\">$name<p>";?>
+                    </a>
+                </div>
+        <?php 
+            signout($db);  
+            }
+            
+        ?>
         <?php
             if(isConnected()){
                 echo "<a class =\"color-button disconnect-button\" href = \"deconnexion.php\">Deconnexion</a>";
             }else echo "<a class =\"color-button\" href = \"login.php\">Connexion</a>";
         ?>
+
     </div>
     <div class ="title-navbar">
         <h1 id="titre">Sissa</h1>
+        
     </div>
     <div class= "inner-navbar">
         <?php
