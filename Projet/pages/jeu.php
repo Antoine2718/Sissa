@@ -444,9 +444,7 @@ function Win() {
             <form method="post" class="reset-btn">
                 <input type="submit" name="reset" value="Nouvelle partie" class="color-button"/>
             </form>
-        <?php endif; ?>
-
-
+        <?php endif;?>
         <!-- Affichage de l'historique des coups -->
         <div class="history">
             <div>

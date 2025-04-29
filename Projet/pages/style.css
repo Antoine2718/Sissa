@@ -262,7 +262,7 @@ p{
 .navbar .profile-button{
     padding: 0px;
 }
-.sub-content{
+.index-content{
     display: flex;
     justify-content: center;
 }
@@ -276,6 +276,7 @@ p{
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
-.content-carte p{
+.content-carte p,h2{
     text-align: center;
+    color: black;
 }

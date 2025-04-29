@@ -201,10 +201,6 @@ INSERT INTO utilisateur (points,identifiant,mdp,type,idRang) VALUES
 (253,"BraveLava","$2y$10$qgsA4FPow6oLrM5OX9dfo.Wzk0DxnFx8tAd2Rnl3NZX/QNo0o3dMK","user",2), /*Mot de passe: test */
 (1125,"Epiccc","$2y$10$qgsA4FPow6oLrM5OX9dfo.Wzk0DxnFx8tAd2Rnl3NZX/QNo0o3dMK","user",5) /*Mot de passe: test */
 ;
-ALTER TABLE achete DROP PRIMARY KEY;
--- Ce changement est fait afin de permettre au même utilisateur d'acheter le même article plusieurs fois à des dates différentes.
--- On ajoute une clé primaire composite sur idUtilisateur, idArticle et date_achat
-ALTER TABLE achete ADD PRIMARY KEY(idUtilisateur, idArticle, date_achat);
 
 ALTER TABLE Article
 -- Ajouter une colonne 'categorie' à la table 'Article'

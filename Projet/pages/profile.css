@@ -1,0 +1,27 @@
+.profile-nav{
+    grid-column: 1;
+    float: left;
+    height: fit-content;
+    width: fit-content;
+    margin-left: 5%;
+    display: table;
+    background-color: #d8dee9;
+    border: solid 1px grey;
+    border-radius: 15px;
+    border-spacing: 10px; /*On sépare les boutons entre eux*/
+    margin-left: 30px;
+    margin-top: 30px;
+}
+.profile-nav-element{
+    display: table-row;
+}
+.profile-content{
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+}
+.data{
+    grid-column: 2;
+    width: 95%;
+    margin: 30px;
+    margin-top: 0;
+}
