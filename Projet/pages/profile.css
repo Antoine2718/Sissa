@@ -9,7 +9,7 @@
     border: solid 1px grey;
     border-radius: 15px;
     border-spacing: 10px; /*On sépare les boutons entre eux*/
-    margin-left: 30px;
+    margin-left: calc(40% - 100px);
     margin-top: 30px;
 }
 .profile-nav-element{
@@ -17,13 +17,14 @@
 }
 .profile-content{
     display: grid;
-    grid-template-columns: 1fr 5fr;
+    grid-template-columns: 1fr 3fr;
 }
 .data{
     grid-column: 2;
-    width: 95%;
+    width: 90%;
     margin: 30px;
     margin-top: 0;
+    margin-left: 0;
 }
 .profile-container{
     margin-top: 7.5%;
