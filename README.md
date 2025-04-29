@@ -1,4 +1,4 @@
-# Documentation du Projet Sissa
+# Projet Sissa
 
 ## Présentation du projet
 
