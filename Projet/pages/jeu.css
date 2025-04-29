@@ -1,0 +1,49 @@
+body { font-family: Helvetica, sans-serif; }
+        .container {  
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+            position: relative;
+            text-align: center;
+            width: 306px;
+        }
+        .board { 
+            display: grid; 
+            grid-template-columns: repeat(3, 100px); 
+            gap: 5px; 
+            margin-top: 10px; 
+        }
+        .cell {
+            width: 100px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2em;
+            background-color: white;
+            border: 2px solid #e1e1e1;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .cell:hover {
+            color: white;
+            background-color: #005eff;
+        }
+        .winner { color: blue; font-weight: bold; }
+        .history { margin-top: 10px; }
+        .history ul { list-style-type: none; padding: 0; }
+        .history li { background: #eee; margin: 4px 0; padding: 4px 8px; border-radius: 4px; }
+        .reset-btn { margin-top: 10px; }
+        .robots {
+            
+            
+        }
+        .robots ul {
+            list-style: none;
+            padding: 0;
+            display:flex;
+            justify-content:center;
+        }
+        .robots li {
+            margin: 5px 0;
+        }

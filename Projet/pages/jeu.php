@@ -44,13 +44,7 @@ if (!isset($_SESSION['mode'])) {
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Sissa - Choix du mode</title>
-            <style>
-                body { font-family: Helvetica, sans-serif; text-align: center; 
-                    position: relative;
-                    text-align: center;
-                }
-                h2 { color: #005eff; }
-            </style>
+            <link rel="stylesheet" href="jeu.css">
                 <?php //Ajoute la barre de navigation
                 include("../common/styles.php")
                 ?>
@@ -419,60 +413,7 @@ function Win() {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sissa</title>
     <!--Ajoute les pages de styles-->
-    <style>
-        body { font-family: Helvetica, sans-serif; }
-        .container {  
-            align-items: center;
-            justify-content: center;
-            margin: auto;
-            position: relative;
-            text-align: center;
-            width: 306px;
-        }
-        .board { 
-            display: grid; 
-            grid-template-columns: repeat(3, 100px); 
-            gap: 5px; 
-            margin-top: 10px; 
-        }
-        .cell {
-            width: 100px;
-            height: 100px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 2em;
-            background-color: white;
-            border: 2px solid #e1e1e1;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .cell:hover {
-            color: white;
-            background-color: #005eff;
-        }
-        .winner { color: blue; font-weight: bold; }
-        .history { margin-top: 10px; }
-        .history ul { list-style-type: none; padding: 0; }
-        .history li { background: #eee; margin: 4px 0; padding: 4px 8px; border-radius: 4px; }
-        .reset-btn { margin-top: 10px; }
-        .robots {
-            margin: 20px auto;
-            width: 306px;
-            text-align: left;
-            background-color: #f5f5f5;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-        }
-        .robots ul {
-            list-style: none;
-            padding: 0;
-        }
-        .robots li {
-            margin: 5px 0;
-        }
-    </style>
+    <link rel="stylesheet" href="jeu.css">
     <?php //Ajoute la barre de navigation
         include("../common/styles.php")
     ?>
