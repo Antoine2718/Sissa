@@ -1,463 +1,491 @@
-/* Styles pour la bannière du produit - harmonisé avec shop.css */
-.banniere-produit {
-    background: rgba(224, 240, 255, 0.95); /* Bleu clair très légèrement transparent comme dans shop.css */
-    padding: 80px 20px 60px;
-    text-align: center;
-    margin-bottom: 40px;
-    position: relative;
-    backdrop-filter: blur(2px); /* Effet de flou doux derrière */
-    border-bottom: 2px solid rgba(0, 51, 102, 0.1); /* Très fine bordure basse */
-}
-
-.banniere-produit h1 {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 2.5rem;
-    color: #003366;
-    margin-bottom: 1.5rem;
-    letter-spacing: -0.5px;
-    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5); /* Ombre portée claire */
-    position: relative;
-}
-
-.banniere-produit p {
-    font-size: 1.15rem;
-    max-width: 800px;
-    margin: 0 auto;
-    line-height: 1.6;
-    color: #2d3748; /* Gris-bleu légèrement plus foncé pour meilleur contraste */
-    padding: 0 20px;
-    position: relative;
-}
-/* Style pour le message introductif dans la bannière */
-.banniere-produit .intro-produit {
-    font-style: italic;
-    line-height: 1.8;
-    max-width: 800px;
-    margin: 0 auto;
-    background: rgba(255, 255, 255, 0.5);
-    padding: 15px 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 51, 102, 0.1);
-    position: relative;
-}
-/* Ajout de guillemets décoratifs autour du message introductif */
-.banniere-produit .intro-produit::before {
-    content: "“";
-    font-size: 3rem;
-    position: absolute;
-    left: -10px;
-    top: -15px;
-    color: rgba(0, 51, 102, 0.2);
-    font-family: Georgia, serif;
-}
-/* Ajout de guillemets décoratifs autour du message introductif */
-.banniere-produit .intro-produit::after {
-    content: "”";
-    font-size: 3rem;
-    position: absolute;
-    right: -10px;
-    bottom: -35px;
-    color: rgba(0, 51, 102, 0.2);
-    font-family: Georgia, serif;
-}
-/* Style pour le nom du produit dans la bannière */
-.banniere-produit .nom-produit {
-    font-weight: 600;
-    color: #003366;
-}
-/* Soulignement décoratif sous le titre */
-.banniere-produit h1::after {
-    content: "";
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60px;
-    height: 3px;
-    background: #003366;
-    border-radius: 2px;
-}
-
-/* Ajout d'une texture subtile en arrière-plan */
-.banniere-produit::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-}
-
-@media (max-width: 768px) {
+    /* Styles pour la bannière du produit - harmonisé avec shop.css */
     .banniere-produit {
-        padding: 50px 15px 40px;
+        background: rgba(224, 240, 255, 0.95); /* Bleu clair très légèrement transparent comme dans shop.css */
+        padding: 80px 20px 60px;
+        text-align: center;
+        margin-bottom: 40px;
+        position: relative;
+        backdrop-filter: blur(2px); /* Effet de flou doux derrière */
+        border-bottom: 2px solid rgba(0, 51, 102, 0.1); /* Très fine bordure basse */
     }
-    
+
     .banniere-produit h1 {
-        font-size: 2rem;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 700;
+        font-size: 2.5rem;
+        color: #003366;
+        margin-bottom: 1.5rem;
+        letter-spacing: -0.5px;
+        text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5); /* Ombre portée claire */
+        position: relative;
     }
-    
+
     .banniere-produit p {
-        font-size: 1rem;
+        font-size: 1.15rem;
+        max-width: 800px;
+        margin: 0 auto;
+        line-height: 1.6;
+        color: #2d3748; /* Gris-bleu légèrement plus foncé pour meilleur contraste */
+        padding: 0 20px;
+        position: relative;
     }
-}
-
-.error-message {
-    color: var(--sissa_error_red);
-    text-align: center;
-    margin: 50px 0;
-    font-size: 1.2rem;
-    background: #fff5f5;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    border-left: 4px solid var(--sissa_error_red);
-}
-
-/* Nouveau design pour la page produit */
-.produit-container {
-    display: flex;
-    flex-direction: column;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-    margin: 30px auto;
-    max-width: 1200px;
-    overflow: hidden;
-}
-
-.produit-header {
-    position: relative;
-    padding-bottom: 30px;
-}
-
-.badge-produit {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: #ffd700;
-    color: var(--sissa_night_sky);
-    padding: 8px 20px;
-    font-weight: bold;
-    border-radius: 30px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    z-index: 1;
-}
-
-.produit-contenu {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    padding: 0 20px 30px;
-}
-
-@media (min-width: 768px) {
-    .produit-contenu {
-        flex-direction: row;
+    /* Style pour le message introductif dans la bannière */
+    .banniere-produit .intro-produit {
+        font-style: italic;
+        line-height: 1.8;
+        max-width: 800px;
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0.5);
+        padding: 15px 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 51, 102, 0.1);
+        position: relative;
     }
-}
+    /* Ajout de guillemets décoratifs autour du message introductif */
+    .banniere-produit .intro-produit::before {
+        content: "“";
+        font-size: 3rem;
+        position: absolute;
+        left: -10px;
+        top: -15px;
+        color: rgba(0, 51, 102, 0.2);
+        font-family: Georgia, serif;
+    }
+    /* Ajout de guillemets décoratifs autour du message introductif */
+    .banniere-produit .intro-produit::after {
+        content: "”";
+        font-size: 3rem;
+        position: absolute;
+        right: -10px;
+        bottom: -35px;
+        color: rgba(0, 51, 102, 0.2);
+        font-family: Georgia, serif;
+    }
+    /* Style pour le nom du produit dans la bannière */
+    .banniere-produit .nom-produit {
+        font-weight: 600;
+        color: #003366;
+    }
+    /* Soulignement décoratif sous le titre */
+    .banniere-produit h1::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 3px;
+        background: #003366;
+        border-radius: 2px;
+    }
 
-.produit-image-wrapper {
-    flex: 1;
-    border-radius: 8px;
-    overflow: hidden;
-    position: relative;
-    box-shadow: 0 3px 15px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
-}
+    /* Ajout d'une texture subtile en arrière-plan */
+    .banniere-produit::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+    }
 
-.produit-image-wrapper:hover {
-    transform: translateY(-5px);
-}
+    @media (max-width: 768px) {
+        .banniere-produit {
+            padding: 50px 15px 40px;
+        }
+        
+        .banniere-produit h1 {
+            font-size: 2rem;
+        }
+        
+        .banniere-produit p {
+            font-size: 1rem;
+        }
+    }
 
-.produit-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.5s ease;
-}
+        .error-message {
+            color: var(--sissa_error_red);
+            text-align: center;
+            margin: 50px 0;
+            font-size: 1.2rem;
+            background: #fff5f5;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-left: 4px solid var(--sissa_error_red);
+        }
 
-.produit-image-wrapper:hover .produit-image {
-    transform: scale(1.03);
-}
+        /* Nouveau design pour la page produit */
+        .produit-container {
+            display: flex;
+            flex-direction: column;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            margin: 30px auto;
+            max-width: 1200px;
+            overflow: hidden;
+        }
 
-.produit-details {
-    flex: 1;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
+        .produit-header {
+            position: relative;
+            padding-bottom: 30px;
+        }
 
-.produit-titre {
-    font-size: 2.2rem;
-    color: var(--sissa_night_sky);
-    margin-top: 0;
-    padding-bottom: 15px;
-    border-bottom: 2px solid #f1f5f9;
-    position: relative;
-}
+        .badge-produit {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #ffd700;
+            color: var(--sissa_night_sky);
+            padding: 8px 20px;
+            font-weight: bold;
+            border-radius: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
 
-.produit-titre::after {
-    content: "";
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 60px;
-    height: 2px;
-    background-color: var(--sissa_night_sky);
-}
+        .produit-contenu {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            padding: 0 20px 30px;
+        }
 
-.produit-prix {
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: var(--sissa_night_sky);
-    display: inline-block;
-    background: #f1f5f9;
-    padding: 10px 25px;
-    border-radius: 30px;
-}
+        @media (min-width: 768px) {
+            .produit-contenu {
+                flex-direction: row;
+            }
+        }
 
-.produit-description {
-    font-size: 1.1rem;
-    line-height: 1.7;
-    color: #444;
-    background: #f8f9fa;
-    padding: 20px;
-    border-radius: 8px;
-    border-left: 3px solid var(--sissa_night_sky);
-}
+        .produit-image-wrapper {
+            flex: 1;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
 
-.produit-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    margin-top: 10px;
-}
+        .produit-image-wrapper:hover {
+            transform: translateY(-5px);
+        }
 
-.meta-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: white;
-    padding: 10px 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    border: 1px solid #e1e7ef;
-}
+        .produit-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
 
-.meta-label {
-    font-weight: 600;
-    color: var(--sissa_night_sky);
-}
+        .produit-image-wrapper:hover .produit-image {
+            transform: scale(1.03);
+        }
 
-.stock-disponible {
-    color: #28a745;
-    font-weight: 600;
-}
+        .produit-details {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
 
-.stock-rupture {
-    color: #dc3545;
-    font-weight: 600;
-}
+        .produit-titre {
+            font-size: 2.2rem;
+            color: var(--sissa_night_sky);
+            margin-top: 0;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f1f5f9;
+            position: relative;
+        }
 
-.action-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin-top: 20px;
-}
+        .produit-titre::after {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background-color: var(--sissa_night_sky);
+        }
 
-.bouton-retour {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 25px;
-    border-radius: 30px;
-    text-decoration: none;
-    font-weight: 500;
-    border: 2px solid var(--sissa_night_sky);
-    color: var(--sissa_night_sky);
-    background: transparent;
-    transition: all 0.3s ease;
-}
+        .produit-prix {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--sissa_night_sky);
+            display: inline-block;
+            background: #f1f5f9;
+            padding: 10px 25px;
+            border-radius: 30px;
+        }
 
-.bouton-retour:hover {
-    background: #e6f0ff;
-}
+        .produit-description {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #444;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 3px solid var(--sissa_night_sky);
+        }
 
-.bouton-panier {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 30px;
-    border-radius: 30px;
-    text-decoration: none;
-    font-weight: 600;
-    background: var(--sissa_night_sky);
-    color: white;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0,51,102,0.2);
-}
+        .produit-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 10px;
+        }
 
-.bouton-panier:hover {
-    background: #00254d;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0,51,102,0.3);
-}
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border: 1px solid #e1e7ef;
+        }
 
-/* Recommandations de produits similaires */
-.produits-similaires {
-    margin-top: 60px;
-    padding-top: 40px;
-    border-top: 3px solid #f1f5f9;
-}
+        .meta-label {
+            font-weight: 600;
+            color: var(--sissa_night_sky);
+        }
 
-.produits-similaires h2 {
-    text-align: center;
-    color: var(--sissa_night_sky);
-    font-size: 1.8rem;
-    margin-bottom: 30px;
-    position: relative;
-}
+        .stock-disponible {
+            color: #28a745;
+            font-weight: 600;
+        }
 
-.produits-similaires h2::after {
-    content: "";
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 3px;
-    background-color: var(--sissa_night_sky);
-}
+        .stock-rupture {
+            color: #dc3545;
+            font-weight: 600;
+        }
 
-.section-produits-similaires {
-    width: 100%;
-    max-width: 1200px;
-    margin: 60px auto; /* Centrer la section */
-    padding: 40px 20px;
-    background: #f8f9fa;
-    border-radius: 12px;
-    box-sizing: border-box; /* Pour s'assurer que le padding ne s'ajoute pas à la largeur */
-}
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
 
-/* Centrer le contenu à l'intérieur */
-.section-produits-similaires > * {
-    max-width: 1160px; /* 1200px - 20px padding de chaque côté */
-    margin-left: auto;
-    margin-right: auto;
-}
+        .bouton-retour {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            border: 2px solid var(--sissa_night_sky);
+            color: var(--sissa_night_sky);
+            background: transparent;
+            transition: all 0.3s ease;
+        }
 
-.section-produits-similaires h2 {
-    text-align: center;
-    color: #003366;
-    font-size: 1.8rem;
-    margin-bottom: 30px;
-    position: relative;
-    padding-bottom: 15px;
-}
+        .bouton-retour:hover {
+            background: #e6f0ff;
+        }
 
-.section-produits-similaires h2::after {
-    content: "";
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 3px;
-    background-color: #003366;
-}
+        .bouton-panier {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            background: var(--sissa_night_sky);
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,51,102,0.2);
+        }
 
-.section-produits-similaires {
-    width: 100%;
-    max-width: 1200px;
-    margin: 60px auto; /* Centrer la section */
-    padding: 40px 20px;
-    background: #f8f9fa;
-    border-radius: 12px;
-    box-sizing: border-box; /* Pour s'assurer que le padding ne s'ajoute pas à la largeur */
-}
+        .bouton-panier:hover {
+            background: #00254d;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,51,102,0.3);
+        }
 
-/* Centrer le contenu à l'intérieur */
-.section-produits-similaires > * {
-    max-width: 1160px; /* 1200px - 20px padding de chaque côté */
-    margin-left: auto;
-    margin-right: auto;
-}
+        /* Recommandations de produits similaires */
+        .produits-similaires {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 3px solid #f1f5f9;
+        }
 
-.section-produits-similaires h2 {
-    text-align: center;
-    color: #003366;
-    font-size: 1.8rem;
-    margin-bottom: 30px;
-    position: relative;
-    padding-bottom: 15px;
-}
+        .produits-similaires h2 {
+            text-align: center;
+            color: var(--sissa_night_sky);
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            position: relative;
+        }
 
-.section-produits-similaires h2::after {
-    content: "";
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 3px;
-    background-color: #003366;
-}
+        .produits-similaires h2::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--sissa_night_sky);
+        }
 
-/* S'assurer que la liste de produits utilise tout l'espace disponible */
-.liste-produits {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
-    width: 100%;
-}
+        .section-produits-similaires {
+            width: 100%;
+            max-width: 1200px;
+            margin: 60px auto; /* Centrer la section */
+            padding: 40px 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            box-sizing: border-box; /* Pour s'assurer que le padding ne s'ajoute pas à la largeur */
+        }
 
-.produit-similaire {
-    border: 1px solid #e1e1e1;
-    border-radius: 10px;
-    overflow: hidden;
-    transition: transform 0.3s, box-shadow 0.3s;
-    position: relative;
-    background: white;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    padding-bottom: 15px;
-}
+        /* Centrer le contenu à l'intérieur */
+        .section-produits-similaires > * {
+            max-width: 1160px; /* 1200px - 20px padding de chaque côté */
+            margin-left: auto;
+            margin-right: auto;
+        }
 
-.produit-similaire:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-}
+        .section-produits-similaires h2 {
+            text-align: center;
+            color: #003366;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 15px;
+        }
 
-.produit-similaire img {
-    height: 200px;
-    object-fit: cover;
-    width: 100%;
-}
+        .section-produits-similaires h2::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: #003366;
+        }
 
-.produit-similaire h3 {
-    padding: 15px 15px 5px;
-    font-size: 1.2rem;
-    color: #003366;
-}
+        .section-produits-similaires {
+            width: 100%;
+            max-width: 1200px;
+            margin: 60px auto; /* Centrer la section */
+            padding: 40px 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            box-sizing: border-box; /* Pour s'assurer que le padding ne s'ajoute pas à la largeur */
+        }
 
-.produit-similaire .prix-produit {
-    padding: 0 15px;
-    font-weight: bold;
-    color: #003366;
-}
+        /* Centrer le contenu à l'intérieur */
+        .section-produits-similaires > * {
+            max-width: 1160px; /* 1200px - 20px padding de chaque côté */
+            margin-left: auto;
+            margin-right: auto;
+        }
 
-.produit-similaire .description-courte {
-    padding: 5px 15px;
-    font-size: 0.9rem;
-    color: #666;
-    line-height: 1.4;
-}
+        .section-produits-similaires h2 {
+            text-align: center;
+            color: #003366;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-produits-similaires h2::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: #003366;
+        }
+
+        /* S'assurer que la liste de produits utilise tout l'espace disponible */
+        .liste-produits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            width: 100%;
+        }
+
+        .produit-similaire {
+            border: 1px solid #e1e1e1;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding-bottom: 15px;
+        }
+
+        .produit-similaire:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .produit-similaire img {
+            height: 200px;
+            object-fit: cover;
+            width: 100%;
+        }
+
+        .produit-similaire h3 {
+            padding: 15px 15px 5px;
+            font-size: 1.2rem;
+            color: #003366;
+        }
+
+        .produit-similaire .prix-produit {
+            padding: 0 15px;
+            font-weight: bold;
+            color: #003366;
+        }
+
+        .produit-similaire .description-courte {
+            padding: 5px 15px;
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        /* Badge best-seller */
+        .badge-bestseller {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #f39c12;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+            z-index: 1;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Produits similaires styles */
+        .produit-similaire .badge-bestseller {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            font-size: 0.7em;
+            padding: 3px 8px;
+        }
+        
+        .produit-similaire {
+            position: relative;
+        }

@@ -14,6 +14,60 @@
     <!-- Ajoute Montserrat depuis Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="shop.css">
+    <style>
+        /* Badge promotion */
+.badge-promotion {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #e74c3c;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    font-weight: bold;
+    z-index: 1;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Badge best-seller */
+.badge-bestseller {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #f39c12;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    font-weight: bold;
+    z-index: 1;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Prix en promotion */
+.prix-original {
+    text-decoration: line-through;
+    color: #888;
+    font-size: 0.9em;
+    margin-right: 8px;
+}
+
+.prix-promotion {
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+/* Ajuster le positionnement quand les deux badges sont présents */
+.carte-produit .badge-promotion + .badge-bestseller {
+    top: 50px; /* Décaler le badge best-seller vers le bas si une promo est présente */
+}
+
+/* Si la carte a déjà un badge vedette, décaler le badge promo */
+.carte-vedette .badge-promotion {
+    top: 50px;
+}
+</style>
 </head>
 <body>
     <?php 
@@ -68,24 +122,104 @@
     $params[] = $articles_par_page;
 
     // Construction de la requête SQL
-    $sql = "select * from Article where " . $where_clause . " limit ?, ?";
+        // Récupération des best-sellers des 30 derniers jours (les 3 produits les plus vendus)
+    $sql_bestsellers = "SELECT a.idArticle, SUM(ac.quantité_achat) as total_ventes
+    FROM Article a
+    JOIN achete ac ON a.idArticle = ac.idArticle
+    WHERE ac.date_achat >= DATE_SUB(NOW(), INTERVAL 30 DAY)
+    GROUP BY a.idArticle
+    ORDER BY total_ventes DESC
+    LIMIT 3";
+    $stmt_bestsellers = $pdo->query($sql_bestsellers);
+    $bestSellers = $stmt_bestsellers->fetchAll(PDO::FETCH_COLUMN, 0); // Récupère seulement les IDs
+
+    // Construction de la requête SQL avec information sur les promotions actives
+    $sql = "SELECT a.*, 
+    (SELECT MAX(p.proportion_promotion) FROM Promotion p 
+    JOIN a_la_promotion ap ON p.idPromotion = ap.idPromotion 
+    WHERE ap.idArticle = a.idArticle 
+    AND p.debut_promotion <= NOW() 
+    AND p.fin_promotion >= NOW()) as promotion_active,
+    (SELECT p.nom_promotion FROM Promotion p 
+    JOIN a_la_promotion ap ON p.idPromotion = ap.idPromotion 
+    WHERE ap.idArticle = a.idArticle 
+    AND p.debut_promotion <= NOW() 
+    AND p.fin_promotion >= NOW() 
+    ORDER BY p.proportion_promotion DESC LIMIT 1) as nom_promotion
+    FROM Article a WHERE " . $where_clause . " LIMIT ?, ?";
 
     // Préparation et exécution
     $stmt = $pdo->prepare($sql);
 
     // Liaison des paramètres avec gestion des types
     foreach ($params as $key => $value) {
-        $param_type = PDO::PARAM_STR; // Type par défaut
-        // Si c'est un paramètre de limit, forcer le type int
-        if ($key >= count($params) - 2) { // Les 2 derniers paramètres
-            $param_type = PDO::PARAM_INT;
-        }
-        $stmt->bindValue($key + 1, $value, $param_type);
+    $param_type = PDO::PARAM_STR; // Type par défaut
+    // Si c'est un paramètre de limit, forcer le type int
+    if ($key >= count($params) - 2) { // Les 2 derniers paramètres
+    $param_type = PDO::PARAM_INT;
+    }
+    $stmt->bindValue($key + 1, $value, $param_type);
     }
 
     $stmt->execute();
     $articles = $stmt->fetchAll();
+
+    // === Fonction pour récupérer les best-sellers ===
+    // Cette fonction récupère les articles les plus vendus sur une période donnée (30 jours par défaut)
+    function getBestSellers($pdo, $days = 30, $limit = 5) {
+        $sql = "select a.idArticle, a.nom, SUM(ac.quantité_achat) as total_ventes
+                from Article a
+                join achete ac on a.idArticle = ac.idArticle
+                where ac.date_achat >= DATE_SUB(NOW(), INTERVAL ? DAY)
+                group by a.idArticle, a.nom
+                order by total_ventes DESC
+                limit ?";
+        
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindValue(1, $days, PDO::PARAM_INT);
+        $stmt->bindValue(2, $limit, PDO::PARAM_INT);
+        $stmt->execute();
+        
+        return array_column($stmt->fetchAll(PDO::FETCH_ASSOC), 'idArticle');
+    }
+
+    // === Fonction pour récupérer les promotions actives ===
+    // Cette fonction récupère les promotions actives pour un article donné
+    function getActivePromotions($pdo, $idArticle) {
+        $now = date('Y-m-d H:i:s');
+        $sql = "select p.* from Promotion p 
+                join a_la_promotion ap on p.idPromotion = ap.idPromotion 
+                where ap.idArticle = ? 
+                and p.debut_promotion <= ? 
+                and p.fin_promotion >= ?";
+        
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$idArticle, $now, $now]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    // === Fonction pour récupérer le meilleur prix promotionnel ===
+    // Cette fonction calcule le meilleur prix après application des promotions
+    function getBestPromotionPrice($pdo, $article) {
+        $promotions = getActivePromotions($pdo, $article['idArticle']);
+        
+        if (empty($promotions)) {
+            return $article['prix'];
+        }
+        
+        // Trouver la meilleure réduction
+        $best_reduction = 0;
+        foreach ($promotions as $promo) {
+            if ($promo['proportion_promotion'] > $best_reduction) {
+                $best_reduction = $promo['proportion_promotion'];
+            }
+        }
+        
+        return $article['prix'] * (1 - $best_reduction);
+    }
+
+    $bestSellers = getBestSellers($pdo, 30, 3);
 ?>
+
     <!-- Bannière principale de la boutique -->
     <div class="banniere-principale">
         <h1>Boutique Sissa</h1>
@@ -99,31 +233,59 @@
             <p class="sous-titre-vedette">Découvrez les meilleurs articles de notre collection</p>
             
             <?php
+            $stmt = $pdo->prepare("SELECT a.*, 
+            (SELECT MAX(p.proportion_promotion) FROM Promotion p 
+             JOIN a_la_promotion ap ON p.idPromotion = ap.idPromotion 
+             WHERE ap.idArticle = a.idArticle 
+             AND p.debut_promotion <= NOW() 
+             AND p.fin_promotion >= NOW()) as promotion_active,
+            (SELECT p.nom_promotion FROM Promotion p 
+             JOIN a_la_promotion ap ON p.idPromotion = ap.idPromotion 
+             WHERE ap.idArticle = a.idArticle 
+             AND p.debut_promotion <= NOW() 
+             AND p.fin_promotion >= NOW() 
+             ORDER BY p.proportion_promotion DESC LIMIT 1) as nom_promotion
+            FROM article a WHERE stock > 0 order by stock asc limit 3");
             // Récupération des 3 derniers produits en stock, choix arbitraire des 3 articles avec le moins de stock
             // pour mettre en avant les produits qui se vendent le mieux
             // On pourrait aussi faire un tri par date d'ajout ou par popularité, mais ici on reste sur le stock
-            $stmt = $pdo->prepare("select * from article where stock > 0 order by stock asc limit 3");
             $stmt->execute();
             $produits_vedettes = $stmt->fetchAll(PDO::FETCH_ASSOC);
             ?>
 
             <div class="grille-produits">
-                <?php foreach ($produits_vedettes as $produit): ?>
-                <div class="carte-produit carte-vedette">
-                    <div class="badge-vedette">Vedette</div>
-                    <img src="<?= htmlspecialchars($produit['lien_image']) ?>" 
-                         alt="<?= htmlspecialchars($produit['nom']) ?>" 
-                         class="image-produit">
-                    <div class="info-produit">
-                        <h3><?= htmlspecialchars($produit['nom']) ?></h3>
-                        <p><?= htmlspecialchars($produit['description']) ?></p>
-                        <div class="prix-produit">
+            <?php foreach ($produits_vedettes as $produit): ?>
+            <div class="carte-produit carte-vedette">
+                <div class="badge-vedette">Vedette</div>
+                
+                <?php if (!empty($produit['promotion_active'])): ?>
+                    <div class="badge-promotion">-<?= round($produit['promotion_active'] * 100) ?>%</div>
+                <?php endif; ?>
+                
+                <?php if (in_array($produit['idArticle'], $bestSellers)): ?>
+                    <div class="badge-bestseller">Best-seller</div>
+                <?php endif; ?>
+                
+                <img src="<?= htmlspecialchars($produit['lien_image']) ?>" 
+                    alt="<?= htmlspecialchars($produit['nom']) ?>" 
+                    class="image-produit">
+                <div class="info-produit">
+                    <h3><?= htmlspecialchars($produit['nom']) ?></h3>
+                    <p><?= htmlspecialchars($produit['description']) ?></p>
+                    <div class="prix-produit">
+                        <?php if (!empty($produit['promotion_active'])): ?>
+                            <span class="prix-original"><?= number_format($produit['prix'], 2, ',', ' ') ?> €</span>
+                            <span class="prix-promotion">
+                                <?= number_format($produit['prix'] * (1 - $produit['promotion_active']), 2, ',', ' ') ?> €
+                            </span>
+                        <?php else: ?>
                             <?= number_format($produit['prix'], 2, ',', ' ') ?> €
-                        </div>
-                        <a href="produit.php?id=<?= $produit['idArticle'] ?>" class="color-button">Voir le produit</a>
+                        <?php endif; ?>
                     </div>
+                    <a href="produit.php?id=<?= $produit['idArticle'] ?>" class="color-button">Voir le produit</a>
                 </div>
-                <?php endforeach; ?>
+            </div>
+            <?php endforeach; ?>
             </div>
         </section>
 
@@ -177,10 +339,24 @@
                              alt="<?= htmlspecialchars($produit['nom']) ?>" 
                              class="image-produit">
                         <div class="info-produit">
+                        <?php if (!empty($produit['promotion_active'])): ?>
+                            <div class="badge-promotion">-<?= round($produit['promotion_active'] * 100) ?>%</div>
+                        <?php endif; ?>
+
+                        <?php if (in_array($produit['idArticle'], $bestSellers)): ?>
+                            <div class="badge-bestseller">Best-seller</div>
+                        <?php endif; ?>
                             <h3><?= htmlspecialchars($produit['nom']) ?></h3>
                             <p><?= htmlspecialchars($produit['description']) ?></p>
                             <div class="prix-produit">
-                                <?= number_format($produit['prix'], 2, ',', ' ') ?> €
+                                <?php if (!empty($produit['promotion_active'])): ?>
+                                    <span class="prix-original"><?= number_format($produit['prix'], 2, ',', ' ') ?> €</span>
+                                    <span class="prix-promotion">
+                                        <?= number_format($produit['prix'] * (1 - $produit['promotion_active']), 2, ',', ' ') ?> €
+                                    </span>
+                                <?php else: ?>
+                                    <?= number_format($produit['prix'], 2, ',', ' ') ?> €
+                                <?php endif; ?>
                             </div>
                             <a href="produit.php?id=<?= $produit['idArticle'] ?>" class="color-button">Voir le produit</a>
                         </div>

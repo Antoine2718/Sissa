@@ -20,8 +20,32 @@
             require_once '../common/db.php';
             try {
                 $pdo = connect();
+                
+                // Récupération des best-sellers des 30 derniers jours
+                $sql_bestsellers = "SELECT a.idArticle, SUM(ac.quantité_achat) as total_ventes
+                    FROM Article a
+                    JOIN achete ac ON a.idArticle = ac.idArticle
+                    WHERE ac.date_achat >= DATE_SUB(NOW(), INTERVAL 30 DAY)
+                    GROUP BY a.idArticle
+                    ORDER BY total_ventes DESC
+                    LIMIT 3";
+                $stmt_bestsellers = $pdo->query($sql_bestsellers);
+                $bestSellers = $stmt_bestsellers->fetchAll(PDO::FETCH_COLUMN, 0); // Récupère seulement les IDs
+                
                 // Requête unique pour récupérer toutes les données
-                $stmt = $pdo->prepare("select * from Article where idArticle = :id");
+                $stmt = $pdo->prepare("SELECT a.*,
+                    (SELECT MAX(p.proportion_promotion) FROM Promotion p 
+                    JOIN a_la_promotion ap ON p.idPromotion = ap.idPromotion 
+                    WHERE ap.idArticle = a.idArticle 
+                    AND p.debut_promotion <= NOW() 
+                    AND p.fin_promotion >= NOW()) as promotion_active,
+                    (SELECT p.nom_promotion FROM Promotion p 
+                    JOIN a_la_promotion ap ON p.idPromotion = ap.idPromotion 
+                    WHERE ap.idArticle = a.idArticle 
+                    AND p.debut_promotion <= NOW() 
+                    AND p.fin_promotion >= NOW() 
+                    ORDER BY p.proportion_promotion DESC LIMIT 1) as nom_promotion
+                    FROM Article a WHERE idArticle = :id");
                 $stmt->bindParam(':id', $id, PDO::PARAM_INT);
                 $stmt->execute();
                 $product = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -45,6 +69,9 @@
     ?>
     <?php include("../common/styles.php"); ?>
     <link rel ="stylesheet" href="produit.css">
+    <style>
+
+    </style>
 </head>
 <body>
     <?php 
@@ -84,6 +111,9 @@
                 
                 <div class="produit-contenu">
                     <div class="produit-image-wrapper">
+                        <?php if (in_array($product['idArticle'], $bestSellers)): ?>
+                            <div class="badge-bestseller">Best-seller</div>
+                        <?php endif; ?>
                         <img src="<?= htmlspecialchars($product['lien_image']) ?>" 
                              alt="<?= htmlspecialchars($product['nom']) ?>" 
                              class="produit-image">
@@ -93,7 +123,15 @@
                         <h1 class="produit-titre"><?= htmlspecialchars($product['nom']) ?></h1>
                         
                         <div class="produit-prix">
-                            <?= number_format($product['prix'], 2, ',', ' ') ?> €
+                            <?php if (!empty($product['promotion_active'])): ?>
+                                <span class="prix-original"><?= number_format($product['prix'], 2, ',', ' ') ?> €</span>
+                                <span class="prix-promotion">
+                                    <?= number_format($product['prix'] * (1 - $product['promotion_active']), 2, ',', ' ') ?> €
+                                </span>
+                                <div class="badge-promo">-<?= round($product['promotion_active'] * 100) ?>% <?= htmlspecialchars($product['nom_promotion']) ?></div>
+                            <?php else: ?>
+                                <?= number_format($product['prix'], 2, ',', ' ') ?> €
+                            <?php endif; ?>
                         </div>
                         
                         <p class="produit-description">
@@ -128,8 +166,11 @@
                                 <form method="post" action="../cart/ajouter_au_panier.php">
                                     <input type="hidden" name="idArticle" value="<?= $product['idArticle'] ?>">
                                     <input type="hidden" name="nom" value="<?= htmlspecialchars($product['nom']) ?>">
-                                    <input type="hidden" name="prix" value="<?= $product['prix'] ?>">
-                                    <input type="hidden" name="quantite" value="1"> <!-- On peut ajouter un champ pour la quantité si besoin -->
+                                    <input type="hidden" name="prix" value="<?= !empty($product['promotion_active']) ? $product['prix'] * (1 - $product['promotion_active']) : $product['prix'] ?>">
+                                    <input type="hidden" name="prix_original" value="<?= $product['prix'] ?>">
+                                    <input type="hidden" name="promotion_active" value="<?= $product['promotion_active'] ?? '' ?>">
+                                    <input type="hidden" name="nom_promotion" value="<?= $product['nom_promotion'] ?? '' ?>">
+                                    <input type="hidden" name="quantite" value="1">
                                     <button type="submit" class="bouton-panier">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                                             <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
@@ -156,7 +197,19 @@
                     $categorie = $product['categorie'];
                     $id = $product['idArticle'];
                     
-                    $stmt = $pdo->prepare("select * from Article where categorie = :categorie and idArticle != :id and stock > 0 order by RAND() limit 3");
+                    $stmt = $pdo->prepare("SELECT a.*, 
+                        (SELECT MAX(p.proportion_promotion) FROM Promotion p 
+                        JOIN a_la_promotion ap ON p.idPromotion = ap.idPromotion 
+                        WHERE ap.idArticle = a.idArticle 
+                        AND p.debut_promotion <= NOW() 
+                        AND p.fin_promotion >= NOW()) as promotion_active,
+                        (SELECT p.nom_promotion FROM Promotion p 
+                        JOIN a_la_promotion ap ON p.idPromotion = ap.idPromotion 
+                        WHERE ap.idArticle = a.idArticle 
+                        AND p.debut_promotion <= NOW() 
+                        AND p.fin_promotion >= NOW() 
+                        ORDER BY p.proportion_promotion DESC LIMIT 1) as nom_promotion
+                        FROM Article a WHERE categorie = :categorie AND idArticle != :id AND stock > 0 ORDER BY RAND() LIMIT 3");
                     $stmt->bindParam(':categorie', $categorie, PDO::PARAM_STR);
                     $stmt->bindParam(':id', $id, PDO::PARAM_INT);
                     $stmt->execute();
@@ -170,15 +223,26 @@
             <div class="liste-produits">
                 <?php foreach ($produits_similaires as $produit): ?>
                 <div class="produit-similaire">
+                    <?php if (in_array($produit['idArticle'], $bestSellers)): ?>
+                        <div class="badge-bestseller">Best-seller</div>
+                    <?php endif; ?>
                     <a href="produit.php?id=<?= $produit['idArticle'] ?>">
                         <img src="<?= htmlspecialchars($produit['lien_image']) ?>" 
                             alt="<?= htmlspecialchars($produit['nom']) ?>">
                     </a>
                     <h3 class="nom-produit"><?= htmlspecialchars($produit['nom']) ?></h3>
-                        <div class="prix-produit">
+                    <div class="prix-produit">
+                        <?php if (!empty($produit['promotion_active'])): ?>
+                            <span class="prix-original"><?= number_format($produit['prix'], 2, ',', ' ') ?> €</span>
+                            <span class="prix-promotion">
+                                <?= number_format($produit['prix'] * (1 - $produit['promotion_active']), 2, ',', ' ') ?> €
+                            </span>
+                            <div class="badge-promo">-<?= round($produit['promotion_active'] * 100) ?>%</div>
+                        <?php else: ?>
                             <?= number_format($produit['prix'], 2, ',', ' ') ?> €
-                        </div>
-                        <p class="description-courte"><?= htmlspecialchars(substr($produit['description'], 0, 80)) ?>...</p>
+                        <?php endif; ?>
+                    </div>
+                    <p class="description-courte"><?= htmlspecialchars(substr($produit['description'], 0, 80)) ?>...</p>
                 </div>
                 <?php endforeach; ?>
             </div>

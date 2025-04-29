@@ -35,9 +35,6 @@ $title="Historique de vos commandes";
         <?php //Centralisation de l'affichage de l'historique de commande
             include("../cart/afficherHistoriqueCommande.php");
         ?>
-        <div class="retour-wrapper">
-                <a href="shop.php" class="bouton-retour">Retourner à la boutique</a>
-        </div>
     </div>
     
     <?php include("../common/footer.php"); ?>

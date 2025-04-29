@@ -12,17 +12,37 @@ if (!empty($panier)) {
     $ids = array_keys($panier);
     $placeholders = implode(',', array_fill(0, count($ids), '?'));
     
-    $stmt = $pdo->prepare("select * from Article where idArticle IN ($placeholders)");
+    $stmt = $pdo->prepare("SELECT a.*, 
+    (SELECT MAX(p.proportion_promotion) FROM Promotion p 
+    JOIN a_la_promotion ap ON p.idPromotion = ap.idPromotion 
+    WHERE ap.idArticle = a.idArticle 
+    AND p.debut_promotion <= NOW() 
+    AND p.fin_promotion >= NOW()) as promotion_active,
+    (SELECT p.nom_promotion FROM Promotion p 
+    JOIN a_la_promotion ap ON p.idPromotion = ap.idPromotion 
+    WHERE ap.idArticle = a.idArticle 
+    AND p.debut_promotion <= NOW() 
+    AND p.fin_promotion >= NOW()
+    ORDER BY p.proportion_promotion DESC LIMIT 1) as nom_promotion
+    FROM Article a WHERE a.idArticle IN ($placeholders)");
     $stmt->execute($ids);
     
     while ($article = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $quantite = $panier[$article['idArticle']]['quantite'];
+        $prix_unitaire = !empty($article['promotion_active']) ? 
+            $article['prix'] * (1 - $article['promotion_active']) : 
+            $article['prix'];
+        
         $articles[] = [
             'infos' => $article,
             'quantite' => $quantite,
-            'total' => $quantite * $article['prix']
+            'prix_unitaire' => $prix_unitaire,
+            'prix_original' => $article['prix'],
+            'promotion_active' => $article['promotion_active'] ?? null,
+            'nom_promotion' => $article['nom_promotion'] ?? '',
+            'total' => $quantite * $prix_unitaire
         ];
-        $total += $quantite * $article['prix'];
+        $total += $quantite * $prix_unitaire;
     }
 }
 
@@ -94,7 +114,15 @@ unset($_SESSION['message'], $_SESSION['erreur']);
                                 </div>
                             </div>
                         </td>
-                        <td><?= number_format($item['infos']['prix'], 2, ',', ' ') ?> €</td>
+                        <td>
+                            <?php if (!empty($item['promotion_active'])): ?>
+                                <span class="prix-original"><?= number_format($item['prix_original'], 2, ',', ' ') ?> €</span>
+                                <span class="prix-promotion"><?= number_format($item['prix_unitaire'], 2, ',', ' ') ?> €</span>
+                                <div class="badge-promo">-<?= round($item['promotion_active'] * 100) ?>%</div>
+                            <?php else: ?>
+                                <?= number_format($item['prix_unitaire'], 2, ',', ' ') ?> €
+                            <?php endif; ?>
+                        </td>
                         <td>
                             <div class="quantite-container">
                                 <!-- Formulaire pour la diminution -->
