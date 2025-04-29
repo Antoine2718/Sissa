@@ -255,30 +255,30 @@ INSERT INTO Promotion (nom_promotion, proportion_promotion, debut_promotion, fin
 INSERT INTO a_la_promotion (idArticle, idPromotion) VALUES
 (1, 1), -- T-shirt "Morpion Master"
 (2, 1), -- Hoodie "Think Like a Cross"
-(4, 1), -- T-shirt "X Marks the Spot"
-(5, 1); -- Hoodie "O Strategy"
+(3, 1), -- T-shirt "X Marks the Spot"
+(4, 1); -- Hoodie "O Strategy"
 
 -- Offre spéciale weekend pour les accessoires
 INSERT INTO a_la_promotion (idArticle, idPromotion) VALUES
-(7, 2),  -- Mug "Game On"
-(8, 2),  -- Calendrier stratégique 2025
-(10, 2), -- Tapis de souris "Morpion"
-(12, 2); -- Carnet "Stratégies gagnantes"
+(5, 2),  -- Mug "Game On"
+(6, 2),  -- Calendrier stratégique 2025
+(8, 2), -- Dessous de verre "Morpion"
+(9, 2); -- Carnet "Stratégies gagnantes"
 
 -- Déstockage pour les jeux
 INSERT INTO a_la_promotion (idArticle, idPromotion) VALUES
-(29, 3), -- Jeu de société "Morpion Deluxe"
-(31, 3), -- Puzzle "Grille géante"
-(34, 3), -- Jeu "Mini Morpion"
-(35, 3); -- Jeu "Morpion XXL"
+(15, 3), -- Jeu de société "Morpion Deluxe"
+(17, 3), -- Puzzle "Grille géante"
+(20, 3), -- Jeu "Mini Morpion"
+(21, 3); -- Jeu "Morpion XXL"
 
 -- Black Friday pour tous les produits populaires
 INSERT INTO a_la_promotion (idArticle, idPromotion) VALUES
 (2, 4),  -- Hoodie "Think Like a Cross"
-(7, 4),  -- Mug "Game On" 
-(14, 4), -- Badge "Je joue X"
-(15, 4), -- Badge "Je joue O"
-(29, 4); -- Jeu de société "Morpion Deluxe"
+(5, 4),  -- Mug "Game On" 
+(11, 4), -- Badge "Je joue X"
+(12, 4), -- Badge "Je joue O"
+(15, 4); -- Jeu de société "Morpion Deluxe"
 
 -- Modifie la table achete pour un suivi des prix d'achat
 ALTER TABLE achete
@@ -290,8 +290,8 @@ ADD nom_promotion VARCHAR(50) AFTER promotion_appliquee;
 -- Ajouter quelques achats pour tester les best-sellers
 -- Note: prix_achat et prix_original représentent les prix UNITAIRES (et non le total pour la quantité)
 INSERT INTO achete (idUtilisateur, idArticle, date_achat, quantité_achat, prix_achat, prix_original, promotion_appliquee, nom_promotion) VALUES 
-(1, 7, '2025-04-01 10:15:00', 3, 10.19, 11.99, 0.15, 'Offre spéciale weekend'),  -- 3 Mugs "Game On" - avec promotion weekend (15%)
-(1, 2, '2025-04-02 14:30:00', 1, 27.92, 34.90, 0.20, 'Soldes d\'été'),  -- 1 Hoodie "Think Like a Cross" - avec soldes d'été (20%)
-(1, 14, '2025-04-03 09:45:00', 5, 1.50, 1.50, NULL, NULL), -- 5 Stickers "Je joue X" - pas de promotion
-(1, 15, '2025-04-03 09:45:00', 4, 1.50, 1.50, NULL, NULL), -- 4 Stickers "Je joue O" - pas de promotion
-(1, 29, '2025-04-05 16:20:00', 2, 17.49, 24.99, 0.30, 'Déstockage'); -- 2 Jeux "Morpion Deluxe" - avec déstockage (30%)
+(1, 5, '2025-04-01 10:15:00', 3, 10.19, 11.99, 0.15, 'Offre spéciale weekend'),  -- 3 Mugs "Game On" - avec promotion weekend (15%)
+(3, 2, '2025-04-02 14:30:00', 1, 27.92, 34.90, 0.20, 'Soldes d\'été'),  -- 1 Hoodie "Think Like a Cross" - avec soldes d'été (20%)
+(5, 10, '2025-04-03 09:45:00', 5, 1.50, 1.50, NULL, NULL), -- 5 Stickers "Je joue X" - pas de promotion
+(33, 11, '2025-04-03 09:45:00', 4, 1.50, 1.50, NULL, NULL), -- 4 Stickers "Je joue O" - pas de promotion
+(33, 15, '2025-04-05 16:20:00', 2, 17.49, 24.99, 0.30, 'Déstockage'); -- 2 Jeux "Morpion Deluxe" - avec déstockage (30%)
