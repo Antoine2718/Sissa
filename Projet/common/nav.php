@@ -7,7 +7,7 @@ if (isset($_SESSION['panier']) && !empty($_SESSION['panier'])) {
         }
     }
 }//On compte le nombre d'articles dans le panier
-$nav_pages = array("index.php"=>"Accueil","jeu.php"=>"Jeu","contact.php"=>"Nous Contacter","a_propos.php"=>"À Propos","shop.php"=>"Boutique","panier.php"=>"Panier");
+$nav_pages = array("index.php"=>"Accueil","jeu.php"=>"Jeu","classement.php"=>"Classement","contact.php"=>"Nous Contacter","a_propos.php"=>"À Propos","shop.php"=>"Boutique","panier.php"=>"Panier");
 $current_page = $_SERVER['REQUEST_URI'];
 //Trouve le fichier de la page courrante en manipulant le path vers le fichier actuel
 $page = explode("/",$current_page);
@@ -27,7 +27,7 @@ if(!isset($_SESSION))session_start();
         ?>
     </div>
     <div class ="title-navbar">
-        <h1 id="titre"> Sissa </h1>
+        <h1 id="titre">Sissa</h1>
     </div>
     <div class= "inner-navbar">
         <?php
