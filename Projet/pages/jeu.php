@@ -253,6 +253,9 @@ function minimax($board, $depth, $is_maximizing) {
 }
 
 // Détermine le meilleur coup pour l'ordinateur
+/* Effectuer un appel recursif sur chaques nœuds 
+de l'arbre 
+*/
 function best_move($board) {
     $bestScore = -INF;
     $move = -1;
