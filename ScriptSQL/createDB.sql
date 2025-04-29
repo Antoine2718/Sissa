@@ -287,3 +287,10 @@ INSERT INTO achete (idUtilisateur, idArticle, date_achat, quantité_achat) VALUE
 (1, 14, '2025-04-03 09:45:00', 5), -- 5 Badges "Je joue X"
 (1, 15, '2025-04-03 09:45:00', 4), -- 4 Badges "Je joue O"
 (1, 29, '2025-04-05 16:20:00', 2); -- 2 Jeux "Morpion Deluxe"
+
+-- Modifie la table achete pour un suivi des prix d'achat
+ALTER TABLE achete
+ADD prix_achat DECIMAL(8,2) AFTER quantité_achat,
+ADD prix_original DECIMAL(8,2) AFTER prix_achat,
+ADD promotion_appliquee DECIMAL(2,2) AFTER prix_original,
+ADD nom_promotion VARCHAR(50) AFTER promotion_appliquee;
