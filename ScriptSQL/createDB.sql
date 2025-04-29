@@ -219,9 +219,9 @@ INSERT INTO `article` (`idArticle`, `prix`, `nom`, `stock`, `description`, `lien
 
 -- Insérer des articles dans la catégorie 'accessoires'
 INSERT INTO `article` (`idArticle`, `prix`, `nom`, `stock`, `description`, `lien_image`, `categorie`) VALUES
-(7, 11.99, 'Mug \"Game On\"', 100, 'Mug 325ml - idéal pour un latte - en céramique blanche et brillante avec grille de morpion imprimée.', '..\\images\\Shop-images\\game-on-tasse.png', 'accessoires'),
+(7, 11.99, 'Mug \"Game On\"', 20, 'Mug 325ml - idéal pour un latte - en céramique blanche et brillante avec grille de morpion imprimée.', '..\\images\\Shop-images\\game-on-tasse.png', 'accessoires'),
 (8, 9.99, 'Calendrier stratégique 2025', 70, 'Un mois = une citation + une grille de morpion.\r\nChaque calendrier comporte une reliure à anneaux, 26 pages et une finition qualité satinée. Parfait pour être accroché à votre mur.', '..\\images\\Shop-images\\calendrier-strat.png', 'accessoires'),
-(9, 22.49, 'Gourde \"Masterr\"', 120, 'Gourde Masterr, double R pour un DOUBLE RESULTAT !\r\nChaque gourde est fabriquée en acier inoxydable alimentaire et est livrée avec un bouchon à vis.\r\nGarde vos boissons fraîches pendant 24h et chaudes pendant 12h ( faut bien hydrater votre cerveau, ce génial instrument de bataille !).', '..\\images\\Shop-images\\gourde-masterr.png', 'accessoires'),
+(9, 22.49, 'Gourde \"Masterr\"', 30, 'Gourde Masterr, double R pour un DOUBLE RESULTAT !\r\nChaque gourde est fabriquée en acier inoxydable alimentaire et est livrée avec un bouchon à vis.\r\nGarde vos boissons fraîches pendant 24h et chaudes pendant 12h ( faut bien hydrater votre cerveau, ce génial instrument de bataille !).', '..\\images\\Shop-images\\gourde-masterr.png', 'accessoires'),
 (10, 22, 'Sous-verres \"Morpion\"', 80, 'Sous-verres avec une grille de morpion imprimée.\r\nChaque sous-verre se compose de :\r\n-Un recto en bois.\r\n-Un verso en liège.\r\nPar lot de quatre.', '..\\images\\Shop-images\\sous-verre.png', 'accessoires'),
 (12, 5.50, 'Carnet \"Stratégies gagnantes\"', 90, 'Carnet de notes à spirales avec une couverture en carton épais, mais souple.\r\nPages lignées à espacement réduit pour une prise de notes compactes.\r\nContient 160 pages.', '..\\images\\Shop-images\\carnet-strat-win.png', 'accessoires');
 
@@ -230,28 +230,20 @@ INSERT INTO `article` (`idArticle`, `prix`, `nom`, `stock`, `description`, `lien
 (14, 1.50, 'Sticker \"Je joue X\"', 200, 'Sticker à mettre partout pour afficher ton allégeance à X.\r\nFinition glacée.', '..\\images\\Shop-images\\x-sticker.png', 'goodies'),
 (15, 1.50, 'Sticker \"Je joue O\"', 200, 'Sticker à mettre partout pour afficher ton allégeance à O.\r\nFinition glacée', '..\\images\\Shop-images\\o-sticker.png', 'goodies'),
 (17, 3.99, 'Sticker \"Morpion\"', 300, 'Lot de 10 stickers avec des grilles de morpion.\r\nFinition glacée', '..\\images\\Shop-images\\morpion-sticker.png', 'goodies'),
-(20, 2.99, 'Secret \"How to Always Win\"', 80, 'Dépliant haute qualité ( 300-350 g/m2 ) finition mate avec toutes les astuces pour ne jamais perdre.', '..\\images\\Shop-images\\depliant-win.png', 'goodies'),
-(21, 5.99, 'Écusson \"Champion Morpion\"', 70, 'Écusson brodé pour les fans de morpion.', 'ecusson-champion.jpg', 'goodies');
+(20, 13.87, 'Secret \"How to Always Win\"', 20, 'Dépliant haute qualité ( 300-350 g/m2 ) finition mate avec toutes les astuces pour ne jamais perdre.', '..\\images\\Shop-images\\depliant-win.png', 'goodies');
 
 -- Insérer des articles dans la catégorie 'posters'
 INSERT INTO `article` (`idArticle`, `prix`, `nom`, `stock`, `description`, `lien_image`, `categorie`) VALUES
-(22, 12.99, 'Poster \"Stratégie gagnante\"', 40, 'Poster avec une grille de morpion et les meilleures stratégies.', 'poster-strategie.jpg', 'posters'),
-(23, 15.99, 'Poster \"X vs O\"', 30, 'Poster artistique représentant un duel entre X et O.', 'poster-x-vs-o.jpg', 'posters'),
-(24, 10.99, 'Poster \"Grille classique\"', 50, 'Poster minimaliste avec une grille de morpion.', 'poster-grille.jpg', 'posters'),
-(25, 14.50, 'Poster \"Morpion Vintage\"', 25, 'Poster au style rétro avec une grille de morpion.', 'poster-vintage.jpg', 'posters'),
-(26, 13.99, 'Poster \"Championnat Morpion\"', 35, 'Poster commémoratif d’un tournoi fictif.', 'poster-championnat.jpg', 'posters'),
-(27, 11.50, 'Poster \"Tactique X\"', 30, 'Poster avec des astuces pour jouer X.', 'poster-tactique-x.jpg', 'posters'),
-(28, 11.50, 'Poster \"Tactique O\"', 30, 'Poster avec des astuces pour jouer O.', 'poster-tactique-o.jpg', 'posters');
-
+(22, 49.30, 'Poster \"Stratégie gagnante\"', 20, 'Poster avec une grille de morpion.\r\nFournit avec un cadre noir.\r\nPapier non couché de qualité musée, épais et durable, A3.', '..\\images\\Shop-images\\poster-strat.png', 'posters');
 -- Insérer des articles dans la catégorie 'jeux'
 INSERT INTO `article` (`idArticle`, `prix`, `nom`, `stock`, `description`, `lien_image`, `categorie`) VALUES
-(29, 24.99, 'Jeu de société \"Morpion Deluxe\"', 20, 'Version deluxe du morpion avec plateau en bois.', 'jeu-deluxe.jpg', 'jeux'),
+(29, 24.99, 'Jeu de société \"Morpion Deluxe\"', 67, 'Version deluxe du morpion avec plateau en bois.', 'jeu-deluxe.jpg', 'jeux'),
 (30, 19.99, 'Jeu de cartes \"Stratégie Morpion\"', 50, 'Jeu de cartes basé sur les stratégies du morpion.', 'jeu-cartes.jpg', 'jeux'),
-(31, 29.99, 'Puzzle \"Grille géante\"', 14, 'Puzzle de 1000 pièces avec une grille de morpion.', 'puzzle-grille.jpg', 'jeux'),
-(32, 34.99, 'Kit \"Morpion 3D\"', 10, 'Jeu de morpion en 3D avec pièces en plastique.', 'kit-3d.jpg', 'jeux'),
+(31, 29.99, 'Puzzle \"Grille géante\"', 140, 'Puzzle de 1000 pièces avec une grille de morpion.', 'puzzle-grille.jpg', 'jeux'),
+(32, 34.99, 'Kit \"Morpion 3D\"', 1000, 'Jeu de morpion en 3D avec pièces en plastique.', 'kit-3d.jpg', 'jeux'),
 (33, 22.50, 'Jeu \"Morpion électronique\"', 25, 'Version électronique du morpion avec sons et lumières.', 'jeu-electronique.jpg', 'jeux'),
-(34, 17.99, 'Jeu \"Mini Morpion\"', 40, 'Version portable du morpion pour jouer partout.', 'jeu-mini.jpg', 'jeux'),
-(35, 26.99, 'Jeu \"Morpion XXL\"', 15, 'Version géante du morpion pour jouer en extérieur.', 'jeu-xxl.jpg', 'jeux');
+(34, 17.99, 'Jeu \"Mini Morpion\"', 400, 'Version portable du morpion pour jouer partout.', 'jeu-mini.jpg', 'jeux'),
+(35, 26.99, 'Jeu \"Morpion XXL\"', 150, 'Version géante du morpion pour jouer en extérieur.', 'jeu-xxl.jpg', 'jeux');
 
 -- Insertion de données de test pour les promotions
 

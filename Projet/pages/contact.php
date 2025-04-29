@@ -101,8 +101,8 @@ Sinon, pour chaque coup possible (c'est-à-dire pour chaque case vide), un nœud
 Calcul récursif <br>
 Ce processus de maximisation et de minimisation se fait de manière récursive :
 
-Si c'est le tour de X (maximize), [ V(n) = max{V(n') | n' \in successeurs de n } ]
-Si c'est le tour de O (minimize), [ V(n) = min{V(n') | n' \in successeurs de n } ] <br>
+Si c'est le tour de X (maximize), [ V(n) = max{V(n') | n' dans les successeurs de n } ]
+Si c'est le tour de O (minimize), [ V(n) = min{V(n') | n' dans les successeurs de n } ] <br>
 Profondeur de recherche et élagage
 Pour des jeux plus complexes, le facteur de profondeur joue un rôle crucial. Minimax peut être combiné avec des techniques comme 
             l'élagage alpha-bêta pour réduire le nombre de nœuds évalués. L'élagage permet d'éviter d'explorer des branches de l'arbre 
