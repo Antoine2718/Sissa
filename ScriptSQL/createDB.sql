@@ -280,10 +280,18 @@ INSERT INTO a_la_promotion (idArticle, idPromotion) VALUES
 (15, 4), -- Badge "Je joue O"
 (29, 4); -- Jeu de société "Morpion Deluxe"
 
+-- Modifie la table achete pour un suivi des prix d'achat
+ALTER TABLE achete
+ADD prix_achat DECIMAL(8,2) AFTER quantité_achat,
+ADD prix_original DECIMAL(8,2) AFTER prix_achat,
+ADD promotion_appliquee DECIMAL(2,2) AFTER prix_original,
+ADD nom_promotion VARCHAR(50) AFTER promotion_appliquee;
+
 -- Ajouter quelques achats pour tester les best-sellers
-INSERT INTO achete (idUtilisateur, idArticle, date_achat, quantité_achat) VALUES
-(1, 7, '2025-04-01 10:15:00', 3),  -- 3 Mugs "Game On"
-(1, 2, '2025-04-02 14:30:00', 1),  -- 1 Hoodie "Think Like a Cross"
-(1, 14, '2025-04-03 09:45:00', 5), -- 5 Badges "Je joue X"
-(1, 15, '2025-04-03 09:45:00', 4), -- 4 Badges "Je joue O"
-(1, 29, '2025-04-05 16:20:00', 2); -- 2 Jeux "Morpion Deluxe"
+-- Note: prix_achat et prix_original représentent les prix UNITAIRES (et non le total pour la quantité)
+INSERT INTO achete (idUtilisateur, idArticle, date_achat, quantité_achat, prix_achat, prix_original, promotion_appliquee, nom_promotion) VALUES 
+(1, 7, '2025-04-01 10:15:00', 3, 10.19, 11.99, 0.15, 'Offre spéciale weekend'),  -- 3 Mugs "Game On" - avec promotion weekend (15%)
+(1, 2, '2025-04-02 14:30:00', 1, 27.92, 34.90, 0.20, 'Soldes d\'été'),  -- 1 Hoodie "Think Like a Cross" - avec soldes d'été (20%)
+(1, 14, '2025-04-03 09:45:00', 5, 1.50, 1.50, NULL, NULL), -- 5 Stickers "Je joue X" - pas de promotion
+(1, 15, '2025-04-03 09:45:00', 4, 1.50, 1.50, NULL, NULL), -- 4 Stickers "Je joue O" - pas de promotion
+(1, 29, '2025-04-05 16:20:00', 2, 17.49, 24.99, 0.30, 'Déstockage'); -- 2 Jeux "Morpion Deluxe" - avec déstockage (30%)
