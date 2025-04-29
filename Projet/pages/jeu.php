@@ -226,6 +226,7 @@ function minimax($board, $depth, $is_maximizing) {
     }
     
     if ($is_maximizing) {
+        /* 0 de l'Algèbre Max Plus*/
         $bestScore = -INF;
         for ($i = 0; $i < count($board); $i++) {
             if ($board[$i] === ' ') {
@@ -237,6 +238,7 @@ function minimax($board, $depth, $is_maximizing) {
         }
         return $bestScore;
     } else {
+        /* 0 de l'Algèbre Min Plus */
         $bestScore = INF;
         for ($i = 0; $i < count($board); $i++) {
             if ($board[$i] === ' ') {
@@ -256,10 +258,12 @@ function best_move($board) {
     $move = -1;
     for ($i = 0; $i < count($board); $i++) {
         if ($board[$i] === ' ') {
+            /* Si le coef de la matrice est null alors : */
             $board[$i] = 'O';
             $score = minimax($board, 0, false);
             $board[$i] = ' ';
             if ($score > $bestScore) {
+                /* Si on trouve mieux que $bestScore, alors : */
                 $bestScore = $score;
                 $move = $i;
             }
