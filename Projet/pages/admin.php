@@ -95,6 +95,8 @@
                     header("Location: error_page.php");
                     exit();
                 }
+            }else if($action == "HPD"){
+                include("../admin/listPurchasesProduct.php");
             }
         }
     ?>

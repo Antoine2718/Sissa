@@ -24,18 +24,21 @@
         <div class ="index-content">
             <div class ="content-carte">
                 <a href="jeu.php?mode_selection=computer">
+                    <img src="../images/robot.png" alt="ai">
                     <h2>Mode IA</h2>
                     <p>Affrontez notre IA à différents niveaux pour monter dans le classement</p>
                 </a>
             </div>
             <div class ="content-carte">
                 <a href="jeu.php?mode_selection=human">
+                    <img src="../images/multiplayer.png" alt="multiplayer">
                     <h2>Mode Multijoueur Local</h2>
                     <p>Jouez avec vos amis sur le même appareil et montrez qui est le meilleur</p>
                 </a>
             </div>
             <div class ="content-carte">
                 <a href="classement.php">
+                    <img src="../images/leaderboard.png" alt="leaderboard">
                     <h2>Classement</h2>
                     <p>Grimpez dans notre classement et devenez une légende du morpion</p>
                 </a>
