@@ -160,6 +160,18 @@ function getNumberOfPurchases($db){
         exit();
     }
 }
+function getNumberOfPurchasesForProduct($db,$idProduit){
+    try{
+        $stmt = $db->prepare("SELECT COUNT(*) as cs FROM achete where idArticle = ?");
+        $stmt->bindParam(1, $idProduit, PDO::PARAM_INT);
+        $stmt->execute();
+        $count = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $count['cs'];
+    }catch(PDOException $e){
+        header("Location: ../pages/error_page.php");
+        exit();
+    }
+}
 function getNumberOfProducts($db){
     try{
         $stmt = $db->prepare("SELECT COUNT(*) as cs FROM article ");
@@ -204,6 +216,28 @@ function getPurchases($pdo,$page,$page_size){
         $debut =($page-1) * $page_size;
         $stmt->bindParam(1,$debut, PDO::PARAM_INT);
         $stmt->bindParam(2,$page_size, PDO::PARAM_INT);
+        $stmt->execute();
+        $commandes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $commandes;
+    }catch(PDOException $e){
+        header("Location: ../pages/error_page.php");
+        exit();
+    }
+}
+function getPurchasesForProduct($pdo,$page,$page_size,$idProduit){
+    try{
+        $stmt = $pdo->prepare("
+    select u.idUtilisateur as id,u.identifiant as identifiant, a.nom as produit, a.idArticle as idP, ac.quantité_achat as qte, ac.date_achat as date
+    from achete ac
+    inner join article a on ac.idArticle = a.idArticle
+    inner join utilisateur u on ac.idUtilisateur = u.idUtilisateur
+    where a.idArticle = ?
+    order by ac.date_achat desc limit ?,?
+        ");
+        $debut =($page-1) * $page_size;
+        $stmt->bindParam(1,$idProduit, PDO::PARAM_INT);
+        $stmt->bindParam(2,$debut, PDO::PARAM_INT);
+        $stmt->bindParam(3,$page_size, PDO::PARAM_INT);
         $stmt->execute();
         $commandes = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $commandes;

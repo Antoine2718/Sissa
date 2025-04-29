@@ -25,3 +25,29 @@
     margin: 30px;
     margin-top: 0;
 }
+.profile-container{
+    margin-top: 7.5%;
+    background-color: white;
+    box-shadow: 0px 1px 1px;
+    border-radius: 15px;
+    margin-left: calc(40% - 165px);
+    height: fit-content;
+    width: 330px;
+}
+.profile-container h1{
+    text-align: center;
+    font-size: xx-large;
+}
+.profile-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+.profile-group p,h2{
+    margin-top: 0px;
+}
+.profile-container hr{
+    width: 95%;
+}
