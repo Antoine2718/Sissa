@@ -302,7 +302,7 @@ function logMove($cell) {
         $difficulty = $_SESSION['difficulty'];
         $player = getUser();
         global $pdo;
-        $date = date('m-d-Y');
+        $date = date('Y-m-d H:i:s');
         $char = 'X';
         $id = $player->getID();
         $stmt = $pdo->prepare("INSERT INTO partie (date_premier_coup, premier_joueur, idRobot, idUtilisateur) VALUES (:date_pc, :firs, :id1, :id2)");
@@ -312,7 +312,7 @@ function logMove($cell) {
     }
     // $IDpartie et $IDmove a récupérer
     $player = getUser();
-    $date = date('m-d-Y');
+    $date = date('Y-m-d H:i:s');
     $stmt = $pdo->prepare("INSERT INTO joue_coup (idPartie, idCoup, date_coup) VALUES (:idPartie, :idCoup, :date_coup)");
     $stmt->execute([':idPartie' => $idPartie, ':idCoup' => $idCoup, ':date_coup' => $date]);
 }
