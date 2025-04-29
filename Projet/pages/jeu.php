@@ -9,8 +9,8 @@ session_start();
 $pdo = connect();
 // --- Sélection du mode de jeu ---
 if (!isset($_SESSION['mode'])) {
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['mode_selection'])) {
-        $_SESSION['mode'] = $_POST['mode_selection'];
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['mode_selection'])) {
+        $_SESSION['mode'] = $_GET['mode_selection'];
         // On gère la difficulté uniquement pour le mode IA
         if ($_SESSION['mode'] === 'computer' && isset($_POST['difficulty'])) {
             $difficulty = intval($_POST['difficulty']);
@@ -54,17 +54,17 @@ if (!isset($_SESSION['mode'])) {
             include("../common/nav.php")
         ?>
         <div class="content">
-            <h2>Choisissez le mode de jeu</h2>
-            <form method="post">
-                <input type="radio" name="mode_selection" value="computer" id="computer">
-                <label for="computer"><h3>Jouer contre notre IA 🧠 </h3></label><br>
-
-                <input type="radio" name="mode_selection" value="human" id="human" required>
-                <label for="human"><h3>Jouer contre un ami</h3></label><br><br>
-                <div id="com-container" style="display: none;">
-                    <!-- Ce container sert dans la gestion dynamique en JS ci-dessous -->
-                    <input type="submit" value="Commencer" class="color-button">
+            <div class="selection">
+                <div class="selection-title">
+                    <h2>Choisissez le mode de jeu</h2>
                 </div>
+                <div class ="selection-content">
+                    <a class="color-button" href="jeu.php?mode_selection=computer">Jouer contre notre IA 🧠</a>
+                    <a class="color-button" href="jeu.php?mode_selection=human">Jouer contre un ami</a>
+                </div>
+                
+            </div>
+            
         <!-- Contenu principal -->
         
         <?php /* if ($_SESSION["mode_selection"] === "computer"): */ ?>
@@ -78,74 +78,59 @@ if (!isset($_SESSION['mode'])) {
                 echo "Erreur lors de la récupération des robots : " . $e->getMessage();
                 $robots = [];
             }
+            $display ="none";
+            if(isset($_GET)&&isset($_GET['mode_selection'])){
+                if($_GET['mode_selection']=="computer"){
+                    $display = 'block';
+                }
+            }
         ?>
-    
-                <div id="difficulty-container" style="display: none;">
-                    <label for="difficulty"> <h4> Niveau de difficulté pour l'IA : </h4> </label>
-                    <div class="robots">
-                        <h2>IA disponibles</h2>
-                        <?php if (!empty($robots)): ?>
-                            <ul>
-                                <form>
-                                <table style="border: 0px; border-spacing: 10px; border-collapse: collapse; max-width : 80%; margin-left: auto, margin-right : auto;">
-                                <tr>
-                                <?php $i = 0; 
-                                foreach ($robots as $robot): ?>
-                                        <th>
-                                        <img src="<?= $robot['lien_icone'] ?>" style="width:200px;height:200px; vertical-align: middle; border-radius: 40%; border: 1px solid lightgray;">
-                                        <br>
-                                        <h3> <?= $robot['nomRobot'] ?> </h3> Niveau : <?= $robot['niveauRobot'] ?>
-                                        <input id="difficulty" type="radio" name="difficulty" value="<?= $robot['niveauRobot'] ?>">
-                                            <br><br><br>
-                                        </th>
-                                        <?php 
-                                        $i += 1;
-                                        if($i % 5 == 0) : ?>
-                                        </tr> <tr>
-                                        <?php endif; ?>
-                                <?php endforeach; ?>
-                                </tr>
-                                </table>
-                                </form>
-                            </ul>
-                        <?php else: ?>
-                            <p>Aucun robot disponible.</p>
-                        <?php endif; ?>
-                    </div>
-                <?php /* endif; */ ?>
-                <input type="submit" value="Commencer" class="color-button">   
+        <form method="post">
+            <div id="difficulty-container" <?php echo"style=\"display: $display;\";"?>>
+                <label for="difficulty"> <h4> Niveau de difficulté pour l'IA : </h4> </label>
+                <div class="robots">
+                    <h2>IA disponibles</h2>
+                    <?php if (!empty($robots)): ?>
+                        <ul>
+                                
+                            <table style="border: 0px; border-spacing: 10px; border-collapse: collapse; max-width : 80%; margin-left: auto, margin-right : auto;">
+                            <tr>
+                            <?php $i = 0; 
+                            foreach ($robots as $robot): ?>
+                                <th>
+                                <img src="<?= $robot['lien_icone'] ?>" style="width:200px;height:200px; vertical-align: middle; border-radius: 40%; border: 1px solid lightgray;">
+                                <br>
+                                <h3> <?= $robot['nomRobot'] ?> </h3> Niveau : <?= $robot['niveauRobot'] ?>
+                                <input id="difficulty" type="radio" name="difficulty" value="<?= $robot['niveauRobot'] ?>">
+                                <br><br><br>
+                                </th>
+                                <?php 
+                                $i += 1;
+                                if($i % 5 == 0) : ?>
+                                    </tr> <tr>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                            </tr>
+                            </table>
+                                
+                        </ul>
+                    <?php else: ?>
+                        <p>Aucun robot disponible.</p>
+                    <?php endif; ?>
                 </div>
-                <br>
-            </form>
+            <?php /* endif; */ ?>
+
             </div>
-            <!-- JS qui permet d'eviter d'avoir deux commencer dans le formulaire
-            Pour ce faire, gestion dynamique en fonction de la selection -->
-            <script>
-                
-                document.addEventListener('DOMContentLoaded', function() {
-                    var computerRadio = document.getElementById("computer");
-                    var humanRadio = document.getElementById("human");
-                    var difficultyContainer = document.getElementById("difficulty-container");
-                    var comContainer = document.getElementById("com-container");
-                    
-                    function toggleDifficulty() {
-                        if (computerRadio.checked) {
-                            difficultyContainer.style.display = "block";
-                            comContainer.style.display = "none";
-                        } else {
-                            difficultyContainer.style.display = "none";
-                            comContainer.style.display = "block";
-                        }
-                    }
-                    computerRadio.addEventListener('change', toggleDifficulty);
-                    humanRadio.addEventListener('change', toggleDifficulty);
-                    toggleDifficulty();
-                });
-            </script>
+            <?php if (isset($_GET)&&isset($_GET['mode_selection'])) :?>
+                <input type="submit" value="Commencer" class="color-button">
+            <?php endif ?>
+            <br>
+            </div>
+        </form>
             
-            <?php
-            include("../common/footer.php");
-            ?>
+        <?php
+        include("../common/footer.php");
+        ?>
             
         </body>
         </html>
