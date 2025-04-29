@@ -223,15 +223,13 @@ INSERT INTO `article` (`idArticle`, `prix`, `nom`, `stock`, `description`, `lien
 (8, 9.99, 'Calendrier stratégique 2025', 70, 'Un mois = une citation + une grille de morpion.\r\nChaque calendrier comporte une reliure à anneaux, 26 pages et une finition qualité satinée. Parfait pour être accroché à votre mur.', '..\\images\\Shop-images\\calendrier-strat.png', 'accessoires'),
 (9, 22.49, 'Gourde \"Masterr\"', 120, 'Gourde Masterr, double R pour un DOUBLE RESULTAT !\r\nChaque gourde est fabriquée en acier inoxydable alimentaire et est livrée avec un bouchon à vis.\r\nGarde vos boissons fraîches pendant 24h et chaudes pendant 12h ( faut bien hydrater votre cerveau, ce génial instrument de bataille !).', '..\\images\\Shop-images\\gourde-masterr.png', 'accessoires'),
 (10, 22, 'Sous-verres \"Morpion\"', 80, 'Sous-verres avec une grille de morpion imprimée.\r\nChaque sous-verre se compose de :\r\n-Un recto en bois.\r\n-Un verso en liège.\r\nPar lot de quatre.', '..\\images\\Shop-images\\sous-verre.png', 'accessoires'),
-(12, 5.50, 'Carnet \"Stratégies gagnantes\"', 90, 'Carnet de notes à spirales avec une couverture en carton épais, mais souple.\r\nPages lignées à espacement réduit pour une prise de notes compactes.\r\nContient 160 pages.', '..\\images\\Shop-images\\carnet-strat-win.png', 'accessoires'),
-(13, 8.99, 'Sac \"Tactique Morpion\"', 50, 'Sac en toile avec une grille de morpion imprimée.', 'sac-tactique.jpg', 'accessoires');
+(12, 5.50, 'Carnet \"Stratégies gagnantes\"', 90, 'Carnet de notes à spirales avec une couverture en carton épais, mais souple.\r\nPages lignées à espacement réduit pour une prise de notes compactes.\r\nContient 160 pages.', '..\\images\\Shop-images\\carnet-strat-win.png', 'accessoires');
 
 -- Insérer des articles dans la catégorie 'goodies'
 INSERT INTO `article` (`idArticle`, `prix`, `nom`, `stock`, `description`, `lien_image`, `categorie`) VALUES
-(14, 1.50, 'Badge \"Je joue X\"', 200, 'Badge à épingler pour afficher ton allégeance à X.', 'badge-x.jpg', 'goodies'),
-(15, 1.50, 'Badge \"Je joue O\"', 200, 'Version O du badge.', 'badge-o.jpg', 'goodies'),
-(16, 7.50, 'Pochette stratégique', 60, 'Pochette noire avec plateau brodé.', 'pochette-strategique.jpg', 'goodies'),
-(17, 3.99, 'Sticker \"Morpion\"', 300, 'Lot de 10 stickers avec des grilles de morpion.', 'sticker-morpion.jpg', 'goodies'),
+(14, 1.50, 'Sticker \"Je joue X\"', 200, 'Sticker à mettre partout pour afficher ton allégeance à X.\r\nFinition glacée.', '..\\images\\Shop-images\\x-sticker.png', 'goodies'),
+(15, 1.50, 'Sticker \"Je joue O\"', 200, 'Sticker à mettre partout pour afficher ton allégeance à O.\r\nFinition glacée', '..\\images\\Shop-images\\o-sticker.png', 'goodies'),
+(17, 3.99, 'Sticker \"Morpion\"', 300, 'Lot de 10 stickers avec des grilles de morpion.\r\nFinition glacée', '..\\images\\Shop-images\\morpion-sticker.png', 'goodies'),
 (18, 6.99, 'Bracelet \"X ou O\"', 150, 'Bracelet en silicone avec motifs X et O.', 'bracelet-xo.jpg', 'goodies'),
 (19, 4.50, 'Aimant \"Grille Morpion\"', 100, 'Aimant pour frigo avec une grille de morpion.', 'aimant-morpion.jpg', 'goodies'),
 (20, 2.99, 'Marque-page \"Stratégie\"', 80, 'Marque-page avec des astuces de morpion.', 'marque-page.jpg', 'goodies'),
