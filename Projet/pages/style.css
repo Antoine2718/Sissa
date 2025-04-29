@@ -210,12 +210,15 @@ p{
 }
 .leaderboard-element{
     border-bottom: #e1e1e1 solid 1px;
-    justify-content: space-between;
-    display: flex;
+    display: table-row;
     width: 12vw;
     font-size: medium;
 }
 .leaderboard-pts{
     color: #ff3300;
     font-weight: bold;
+}
+.leaderboard-global-wrapper{
+    display: flex;
+    justify-content: center;
 }
