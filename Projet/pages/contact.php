@@ -4,93 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sissa</title>
-    <style>
-        body {
-            font-family: Helvetica, sans-serif;
-            margin: 0;
-            padding: 20px;
-        }
-
-        .contact-container {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            max-width: 800px;
-            margin: auto;
-            padding: 20px;
-        }
-
-        .questions-container {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            max-width: 800px;
-            margin: auto;
-            padding: 20px;
-        }
-
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #555;
-        }
-
-        input[type="text"],
-        input[type="email"],
-        textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
-        }
-
-        textarea {
-            height: 100px;
-        }
-
-        button {
-            background-color: #007BFF;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            width: 25%;
-        }
-
-        button:hover {
-            background-color: #3b4252;
-        }
-
-        #Message_bleu {
-            color: #007BFF;
-        }
-
-        .contact-container {
-            display: grid;
-            grid-template-columns: 50% 50%; /* Définir les largeurs des colonnes */
-            height: fit-content;
-        }
-        .left {
-            padding: 20px;
-        }
-
-        .right {
-            padding: 20px;
-        }
-
-    </style>
+    <link rel="stylesheet" href="style_contact.css">
     <?php //Ajoute la barre de navigation
         include("../common/styles.php")
     ?>
@@ -167,7 +81,7 @@ Représentation de l'état du jeu
 Le morpion se joue sur une grille 3x3, où chaque case peut être dans l’un des trois états : 
     vide, occupée par le joueur X (maximisant), ou occupée par le joueur O (minimisant). Chaque configuration de la grille peut être représentée 
             comme un nœud dans un arbre de recherche, où chaque nœud décrit un état possible du jeu. 
-            <br> Ainsi la grille de morpion peut-être répresenté comme une matrice de M_3 (IF_3).
+            <br> Ainsi la grille de morpion peut-être répresenté comme une matrice 3x3 de IF_3.
 <br> <br>
 Évaluation des nœuds <br>
 L'algorithme Minimax traverse cet arbre de recherche en évaluant les nœuds selon deux principes distincts :
@@ -188,8 +102,8 @@ Sinon, pour chaque coup possible (c'est-à-dire pour chaque case vide), un nœud
 Calcul récursif <br>
 Ce processus de maximisation et de minimisation se fait de manière récursive :
 
-Si c'est le tour de X (maximize), [ V(n) = \max{V(n') | n' \in \text{successeurs de } n } ]
-Si c'est le tour de O (minimize), [ V(n) = \min{V(n') | n' \in \text{successeurs de } n } ] <br>
+Si c'est le tour de X (maximize), [ V(n) = max{V(n') | n' \in successeurs de n } ]
+Si c'est le tour de O (minimize), [ V(n) = min{V(n') | n' \in successeurs de n } ] <br>
 Profondeur de recherche et élagage
 Pour des jeux plus complexes, le facteur de profondeur joue un rôle crucial. Minimax peut être combiné avec des techniques comme 
             l'élagage alpha-bêta pour réduire le nombre de nœuds évalués. L'élagage permet d'éviter d'explorer des branches de l'arbre 

@@ -64,7 +64,7 @@ if (!isset($_SESSION['mode'])) {
                 <label for="human"><h3>Jouer contre un ami</h3></label><br><br>
                 <div id="com-container" style="display: none;">
                     <!-- Ce container sert dans la gestion dynamique en JS ci-dessous -->
-                    <input type="submit" value="Commencer">
+                    <input type="submit" value="Commencer" class="color-button">
                 </div>
         <!-- Contenu principal -->
         
@@ -114,7 +114,7 @@ if (!isset($_SESSION['mode'])) {
                         <?php endif; ?>
                     </div>
                 <?php /* endif; */ ?>
-                <input type="submit" value="Commencer">   
+                <input type="submit" value="Commencer" class="color-button">   
                 </div>
                 <br>
             </form>
@@ -448,7 +448,7 @@ function Win() {
         Uniquement en fin de partie -->
         <?php if ($winner OR $winner == 'N'): ?>
             <form method="post" class="reset-btn">
-                <input type="submit" name="reset" value="Nouvelle partie" />
+                <input type="submit" name="reset" value="Nouvelle partie" class="color-button"/>
             </form>
         <?php endif; ?>
 
