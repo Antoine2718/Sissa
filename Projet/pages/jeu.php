@@ -315,6 +315,10 @@ function logMove($cell) {
     $date = date('Y-m-d H:i:s');
     $stmt = $pdo->prepare("INSERT INTO joue_coup (idPartie, idCoup, date_coup) VALUES (:idPartie, :idCoup, :date_coup)");
     $stmt->execute([':idPartie' => $idPartie, ':idCoup' => $idCoup, ':date_coup' => $date]);
+    $state = Win();
+    if($state['win']){
+        echo "test";
+    }
 }
 
 /*
@@ -381,6 +385,12 @@ if ($_SESSION['mode'] === 'computer' && $_SESSION['current_player'] === 'O' && $
 function Win() {
     $data = [];
     $winner = checkWinner($_SESSION['board']);
+    $available_moves = [];
+    foreach ($_SESSION['board'] as $i => $cell) {
+        if ($cell === ' ') {
+            $available_moves[] = $i;
+        }
+    }
     // Parité :
     /* 
     Cout restant pair = > IA perdu
@@ -388,7 +398,6 @@ function Win() {
     */
     if($winner) {
         $data['win'] = True;
-    
         if(count($available_moves) % 2 == 1) {
             $data['winner'] = 'IA';
             $data['IdWinner'] = $difficulty;
@@ -399,7 +408,6 @@ function Win() {
     } else {
         $data['win'] = False;
     }
-
     // Retouner : Bool gagné ou non, IA gagné ?, ID IA Gagnante sinon ID utilisateur
     return $data;
 }
@@ -434,7 +442,6 @@ function Win() {
                 </div>
             <?php endforeach; ?>
         </div>
-        
         <!-- Affichage du gagnant ou du match nul -->
         <?php if ($winner): ?>
             <h2 class="winner"><?= $winner ?> a gagné !</h2>

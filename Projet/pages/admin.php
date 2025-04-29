@@ -20,7 +20,7 @@
         include("../common/nav.php");
     ?>
     <!-- Contenu principal -->
-    <div class="content">
+    <div class="admin-content">
         <div class="admin-nav">
             <div class="admin-nav-element">
                 <a class ="color-button" href="admin.php?action=STK">Gestion du Stock</a>
@@ -32,7 +32,7 @@
                 <a class ="color-button" href="admin.php?action=HGM">Historique des parties</a>
             </div>
             <div class="admin-nav-element">
-                <a class ="color-button" href="admin.php?action=HSH">Historique du Shop</a>
+                <a class ="color-button" href="admin.php?action=HSH">Historique de la boutique</a>
             </div>
             <div class="admin-nav-element">
                 <a class ="color-button" href="admin.php?action=PRM">Gestion des Promotions</a>
@@ -41,7 +41,7 @@
         <div class="data">
         <?php 
         if(isset($_SESSION['message'])){
-            echo $_SESSION['message'];
+            //echo $_SESSION['message'];
             unset($_SESSION['message']);
         }
         $db = connect();

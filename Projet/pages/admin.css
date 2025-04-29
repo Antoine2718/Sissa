@@ -1,7 +1,7 @@
 .admin-nav{
     grid-column: 1;
     float: left;
-    height: 90%;
+    height: fit-content;
     width: fit-content;
     margin-left: 5%;
     display: table;
@@ -9,6 +9,8 @@
     border: solid 1px grey;
     border-radius: 15px;
     border-spacing: 10px; /*On sépare les boutons entre eux*/
+    margin-left: 30px;
+    margin-top: 30px;
 }
 .admin-nav-element{
     display: table-row;
@@ -193,23 +195,6 @@ tr td {
     border-radius: 4px;
     margin-top: 5px;
 }
-
-.color-button {
-    background: #003366;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 8px 15px;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-block;
-    margin: 5px 0;
-}
-
-.color-button:hover {
-    background: #00254d;
-}
-
 .text-center {
     text-align: center;
 }
@@ -247,4 +232,14 @@ tr td {
 .promotion-reduction {
     font-weight: bold;
     color: #c00;
+}
+.admin-content{
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+}
+.data{
+    grid-column: 2;
+    width: 95%;
+    margin: 30px;
+    margin-top: 0;
 }

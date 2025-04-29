@@ -8,13 +8,16 @@
     <?php //Ajoute la barre de navigation
         include("../common/styles.php")
     ?>
+    <link rel="stylesheet" href="shop.css">
 </head>
 <body>
 
     <!--Barre de navigation-->
     <?php //Ajoute la barre de navigation
         require_once("../common/db.php");
-        include("../common/nav.php")
+        include("../common/nav.php");
+        $GLOBALS['user_per_page']=25;
+        require_once("../admin/pagination.php");
     ?>
     
     <!-- Contenu principal -->
@@ -31,10 +34,19 @@
         //Affiche les 10 meilleurs joueurs
         $db = connect();
         try{
-            $stmt = $db->prepare("SELECT u.identifiant as name,u.points as pts,r.couleur_rang as couleur,r.nomRang as rang FROM utilisateur u inner join rang r on r.idRang = u.idRang order by u.points DESC limit 15");
+            $page = 1;
+            if(isset($_GET['page'])){
+                $page= $_GET['page'];
+            }
+            $stmt = $db->prepare("SELECT u.identifiant as name,u.points as pts,r.couleur_rang as couleur,r.nomRang as rang FROM utilisateur u inner join rang r on r.idRang = u.idRang order by u.points DESC 
+            limit ?, ?");
+            $page_size =  $GLOBALS['user_per_page'];
+            $debut =($page-1) * $page_size;
+            $stmt->bindParam(1,$debut, PDO::PARAM_INT);
+            $stmt->bindParam(2,$page_size, PDO::PARAM_INT);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            $i=1;
+            $i=($page-1)*$page_size +1;
             echo "<table>";
             echo "<thead><tr class=\"leaderboard-element\"><th>Position</th><th>Nom</th><th>Rang</th><th>Points</th></tr></thead>";
             foreach($result as $user){
@@ -48,6 +60,11 @@
                 $i=$i+1;
             }
             echo "</table>";
+            
+            $name ="Utilisateurs";
+            $numberofproducts = getNumberOfUsers($db);
+            $nombre_pages=floor( $numberofproducts/$GLOBALS['user_per_page'] + (($numberofproducts%$GLOBALS['user_per_page']==0)?0:1));
+            generatePagination("classement.php",$page,$nombre_pages,"test",$numberofproducts ,$name);
         }catch(PDOException $e){
             header("Location: ../pages/error_page.php");
             exit();

@@ -178,6 +178,9 @@ function getPurchaseHistory($pdo,$idUtilisateur){
         exit();
     }
 }
+function calculatePoints($difficulty){
+    
+}
 function getPurchases($pdo,$page,$page_size){
     try{
         $stmt = $pdo->prepare("
