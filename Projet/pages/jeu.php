@@ -89,8 +89,8 @@ if (!isset($_SESSION['mode'])) {
             <div id="difficulty-container" <?php echo"style=\"display: $display;\";"?>>
                 <label for="difficulty"> <h4> Niveau de difficulté pour l'IA </h4> </label>
                 <div class="robots">
-                    <h1>IA disponibles</h1>
-                    <br>
+                    <h1>Découvrez notre technologie unique<br>d'intelligence artificielle</h1>
+                    <br> <br>
                     <?php if (!empty($robots)): ?>
                         <ul>
                                 
