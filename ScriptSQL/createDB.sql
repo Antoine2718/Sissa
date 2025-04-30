@@ -295,3 +295,21 @@ INSERT INTO achete (idUtilisateur, idArticle, date_achat, quantité_achat, prix_
 (5, 10, '2025-04-03 09:45:00', 5, 1.50, 1.50, NULL, NULL), -- 5 Stickers "Je joue X" - pas de promotion
 (33, 11, '2025-04-03 09:45:00', 4, 1.50, 1.50, NULL, NULL), -- 4 Stickers "Je joue O" - pas de promotion
 (33, 15, '2025-04-05 16:20:00', 2, 17.49, 24.99, 0.30, 'Déstockage'); -- 2 Jeux "Morpion Deluxe" - avec déstockage (30%)
+
+-- Ajout de partie
+INSERT INTO coup (code_coup, numero_coup) VALUES
+(285, 0, 1),
+(286, 4, 2),
+(287, 1, 3),
+(288, 8, 4),
+(289, 2, 5);
+
+INSERT INTO partie(idPartie, date_premier_coup, premier_joueur, idRobot, idUtilisateur) VALUES 
+(28, '2025-04-30 22:04:17', 'X', 9, 1);
+
+INSERT INTO joue_coup(idPartie, idCoup, date_coup) VALUES
+(28, 285, '2025-04-30 22:04:17'), 
+(28, 286, '2025-04-30 22:04:17'), 
+(28, 287, '2025-04-30 22:04:17'), 
+(28, 288, '2025-04-30 22:04:17'), 
+(28, 289, '2025-04-30 22:04:17');
