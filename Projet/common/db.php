@@ -30,7 +30,7 @@ function connect(){
     $dbname = $config['database'];
     $dsn = "mysql:host=$host;port=$port;dbname=$dbname";
     $options = array(PDO::ATTR_PERSISTENT =>
-    true);  
+    FALSE);  
     try{
         $connexion = new PDO($dsn,$usr,$pwd,$options);
     }catch(PDOException $e){
