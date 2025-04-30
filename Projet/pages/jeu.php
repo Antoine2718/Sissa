@@ -106,8 +106,10 @@ if (!isset($_SESSION['mode'])) {
                                 <br><br><br>
                                 </th>
                                 <?php 
+                                // Indice qui permet de faire l'affichage souhaité
                                 $i += 1;
-                                if($i % 5 == 0) : ?>
+                                if($i % 5 == 0) : // Si $i congrut à 0 modulo 5 faire :
+                                    ?>
                                     </tr> <tr>
                                 <?php endif; ?>
                             <?php endforeach; ?>
@@ -154,6 +156,7 @@ if (isset($_POST['reset'])) {
 
 // --- Initialisation du plateau et des données de session ---
 if (!isset($_SESSION['board'])) {
+    // Isomorphe au matrice 3x3
     $_SESSION['board'] = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
     $first_player = array('X','O');
     $_SESSION['current_player'] = $first_player[array_rand($first_player)];
@@ -262,8 +265,10 @@ de l'arbre
 */
 function best_move($board) {
     $bestScore = -INF;
+    // $move = -1 pour commencer
     $move = -1;
     for ($i = 0; $i < count($board); $i++) {
+        // Si la case est libre
         if ($board[$i] === ' ') {
             /* Si le coef de la matrice est null alors : */
             $board[$i] = 'O';
@@ -353,8 +358,10 @@ if ($_SESSION['mode'] === 'computer' && $_SESSION['current_player'] === 'O' && $
     // Pour le niveau 10 --> (10-1)/9 = 1 (coup optimisé)
     // Pour la selection de l'IA, tout ce passe dans minimaxProbability
     $minimaxProbability = ($difficulty - 1) / 9;
+    // Fabrication d'un reel aléatoire en 0 et 1
     $rand = mt_rand(0, 100000) / 100000;
-    
+
+    // Si l'indice aleatoire est inférieur a la constante de difficultée, alors on prend le meilleur coup
     if ($rand < $minimaxProbability) {
         $aiMove = best_move($_SESSION['board']);
     } else {
@@ -378,8 +385,10 @@ function Win(){
     $data = [];
     $winner = checkWinner($_SESSION['board']);
     $available_moves = [];
+    // Calcul des coup possibles restants
     foreach ($_SESSION['board'] as $i => $cell) {
         if ($cell === ' ') {
+            // Si la cellule est libre, on l'ajoute
             $available_moves[] = $i;
         }
     }
@@ -459,7 +468,9 @@ function Win(){
             <div>
                 <h3>Joueur X</h3>
                 <ul>
-                    <?php foreach ($_SESSION['history_X'] as $move): ?>
+                    <?php foreach ($_SESSION['history_X'] as $move): 
+                        // Pour chaque coup dans l'historique :
+                        ?>
                         <li>Joué en <?= $move ?></li>
                     <?php endforeach; ?>
                 </ul>
@@ -467,7 +478,7 @@ function Win(){
             <div>
                 <h3>Joueur O</h3>
                 <ul>
-                    <?php foreach ($_SESSION['history_O'] as $move): ?>
+                    <?php foreach ($_SESSION['history_O'] as $move): // Pour chaque coup dans l'historique : ?>
                         <li>Joué en <?= $move ?></li>
                     <?php endforeach; ?>
                 </ul>
