@@ -132,12 +132,12 @@ INSERT INTO robot (idRobot,	nomRobot,	niveauRobot,	lien_icone) VALUES
 (1, "Alice","10", "https://docmed.ru/upload/iblock/49c/49cf137831eefc72f330fdaae639ee0b.png"),
 (2, "Bob","9", "https://pbs.twimg.com/profile_images/1385724221406519300/PRJvcMCr_400x400.jpg"),
 (3, "Cédric","8", "https://i.pinimg.com/736x/cf/f1/b0/cff1b00211b10b5e9820ef6494b28da3.jpg"),
-(4, "Daniel","7", "https://www.popsci.com/uploads/2020/01/07/WMD5M52LJFBEBIHNEEABHVB6LA.jpg?auto=webp&width=1440&height=864"),
-(5, "Eric","6", "https://attic.sh/pbhjkckp5v4gta1pazoa3zjz8bha"),
+(4, "Daniel","7", "https://thafd.bing.com/th/id/OIP.w4u-Jc9Xx5TE0wYyOHva_wAAAA?pid=ImgDet&w=184&h=184&c=7&dpr=1,3"),
+(5, "Eric","6", "https://miro.medium.com/v2/resize:fit:2400/1*0cgoVzt2xjIDs64axeeV9w@2x.jpeg"),
 (6, "Francois","5", "https://thafd.bing.com/th/id/OIP.QccB1M1GLcdOM7jGDyxT6QAAAA?pid=ImgDet&w=184&h=184&c=7&dpr=1,3"),
 (7, "Gérard","4", "https://thafd.bing.com/th/id/OIP.9763FywczzmAfUPmng_shwAAAA?pid=ImgDet&w=184&h=184&c=7&dpr=1,3"),
 (8, "Harold","3", "https://cdn1.iconfinder.com/data/icons/facely-metapeople-3d-avatar-set/128/3._Black_Man.png"),
-(9, "Ivan","2", "https://images.squarespace-cdn.com/content/v1/60908318cfa0741ace5d53c2/1622671636760-O7MZ9RQ2KTVE0WA4U0U7/Fichier+3%402x.png?format=1500w"),
+(9, "Ivan","2", "https://thafd.bing.com/th/id/OIP.Gk7KHsKdlwiAy3vl1jb6bgAAAA?pid=ImgDet&w=184&h=184&c=7&dpr=1,3"),
 (10, "Jean","1", "https://preview.redd.it/sfln9t4ddwt51.png?auto=webp&s=0a246cc8fc8036921d303863061660ac7fa8a5f1")
 ;
 
