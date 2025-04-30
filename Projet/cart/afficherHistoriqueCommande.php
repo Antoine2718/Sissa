@@ -1,4 +1,4 @@
-<?php echo $title ?>
+<?php echo "<h1>$title</h1>" ?>
 
 <?php if (!empty($message)): ?>
     <div class="message-container success"><?= htmlspecialchars($message) ?></div>
