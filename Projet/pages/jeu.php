@@ -98,7 +98,7 @@ if (!isset($_SESSION['mode'])) {
                             <?php $i = 0; 
                             foreach ($robots as $robot): ?>
                                 <th>
-                                <img src="<?= $robot['lien_icone'] ?>" style="width:200px;height:200px; vertical-align: middle; border-radius: 40%; border: 1px solid lightgray;">
+                                <img src="<?= $robot['lien_icone'] ?>" style="width:200px;height:200px; vertical-align: middle; border-radius: 45%; border: 1px solid lightgray;">
                                 <br>
                                 <h3> <?= $robot['nomRobot'] ?> </h3> Niveau : <?= $robot['niveauRobot'] ?>
                                 <input id="difficulty" type="radio" name="difficulty" value="<?= $robot['niveauRobot'] ?>">
