@@ -4,66 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sissa</title>
-    <style>
-        body {
-            font-family: Helvetica, sans-serif;
-            margin: 0;
-            padding: 20px;
-        }
-
-        .contact-container {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            max-width: 800px;
-            margin: auto;
-            padding: 20px;
-        }
-
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        input[type="text"],
-        input[type="email"],
-        textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
-        }
-
-        textarea {
-            height: 100px;
-        }
-
-        #Message_bleu {
-            color: #007BFF;
-        }
-
-        .equipe-container {
-            display: grid;
-            grid-template-columns: 25% 25% 25% 25% ; /* Définir les largeurs des colonnes */
-        }
-
-        .lucas, .andrieu, .dl, .Owen {
-            padding: 20px;
-
-            background-color: #007BFF;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            max-width: 800px;
-            margin: auto;
-            padding: 20px;
-        }
-
-    </style>
+    <link rel="stylesheet" href="style_apropos.css">
     <?php //Ajoute la barre de navigation
         include("../common/styles.php")
     ?>
