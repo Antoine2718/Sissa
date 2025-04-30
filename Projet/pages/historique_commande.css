@@ -88,7 +88,9 @@
 }
 
 .total-commande {
+    font-weight: 700;
     font-size: 1.2em;
+    color: #343a40;
 }
 
 .message-container {
@@ -137,4 +139,25 @@
 
 .bouton-retour:hover {
     background: #00254d;
+}
+
+/* Style spécifique pour le prix réduit */
+.prix-reduit {
+    display: block;
+    margin-top: 5px;
+    color: #dc3545;
+    font-weight: 500;
+    font-size: 0.9em;
+}
+
+/* Style pour le nom de la promotion */
+.promotion-nom {
+    display: inline-block;
+    margin-left: 8px;
+    background-color: #ffc107;
+    color: #212529;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 0.8em;
+    font-weight: 500;
 }

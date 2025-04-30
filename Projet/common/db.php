@@ -185,19 +185,21 @@ function getNumberOfProducts($db){
         exit();
     }
 }
-function getPurchaseHistory($pdo,$idUtilisateur){
-    try{
+function getPurchaseHistory($pdo, $idUtilisateur) {
+    try {
         $stmt = $pdo->prepare("
-    select a.idArticle, a.nom, ac.quantité_achat, ac.date_achat, a.prix, a.lien_image
-    from achete ac
-    join article a on ac.idArticle = a.idArticle
-    where ac.idUtilisateur = ?
-    order by ac.date_achat desc
+            SELECT a.idArticle, a.nom, ac.quantité_achat, ac.date_achat, 
+                   ac.prix_achat, ac.prix_original, ac.promotion_appliquee, ac.nom_promotion,
+                   a.prix, a.lien_image
+            FROM achete ac
+            JOIN article a ON ac.idArticle = a.idArticle
+            WHERE ac.idUtilisateur = ?
+            ORDER BY ac.date_achat DESC
         ");
         $stmt->execute([$idUtilisateur]);
         $commandes = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $commandes;
-    }catch(PDOException $e){
+    } catch(PDOException $e) {
         header("Location: ../pages/error_page.php");
         exit();
     }
