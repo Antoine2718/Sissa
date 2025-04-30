@@ -107,7 +107,7 @@ p{
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
-    border-radius: 20px; /* Coins arrondis */
+    border-radius: 40px; /* Coins arrondis */
 }
 /* Style pour le conteneur du panier dans la navbar */
 .panier {
