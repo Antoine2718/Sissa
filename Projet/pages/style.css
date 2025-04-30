@@ -341,3 +341,9 @@ p{
     grid-row: 2;
     justify-content: center;
 }
+.control{
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

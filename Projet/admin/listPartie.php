@@ -42,7 +42,7 @@
                 </td>
                 <td>
                 <div class=\"list-table-element\">
-                    <a class =\"color-button table-button\" href=\"../pages/view.phpid=$id\">Voir la partie</a>
+                    <a class =\"color-button table-button\" href=\"../pages/view.php?id=$id\">Voir la partie</a>
                 </div>
                 </td>
                 </tr>";

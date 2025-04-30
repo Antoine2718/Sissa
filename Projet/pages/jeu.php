@@ -142,6 +142,7 @@ if (!isset($_SESSION['mode'])) {
 if (isset($_POST['reset'])) {
     // unset tout ce qui doit l'être (ont evite d'arreter la session
     unset($_SESSION['partie']);
+    unset($_SESSION['first_player']);
     unset($_SESSION['board']);
     unset($_SESSION['difficulty']);
     unset($GLOBALS['difficulty']);
@@ -155,6 +156,7 @@ if (!isset($_SESSION['board'])) {
     $_SESSION['board'] = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
     $first_player = array('X','O');
     $_SESSION['current_player'] = $first_player[array_rand($first_player)];
+    $_SESSION['first_player'] = $_SESSION['current_player'];
     $_SESSION['history_X'] = []; // Historique des coups du joueur X (humain)
     $_SESSION['history_O'] = []; // Historique des coups du joueur O (humain ou IA)
 }
@@ -282,6 +284,7 @@ require_once("../common/db.php");
 function logMove($cell) {
     global $pdo;
     $moveNumber = count($_SESSION['history_X']) + count($_SESSION['history_O']);
+    if($_SESSION['current_player'])
     $stmt = $pdo->prepare("INSERT INTO coup (code_coup, numero_coup) VALUES (:code, :numero)");
     $stmt->execute([':code' => $cell, ':numero' => $moveNumber]);
     // Dernier ID inseret dans la base pour recuperer idcoup
@@ -358,13 +361,14 @@ if ($_SESSION['mode'] === 'computer' && $_SESSION['current_player'] === 'O' && $
         
         $aiMove = $available_moves[array_rand($available_moves)];
     }
-    logMove($aiMove);
     if ($aiMove !== -1 && $_SESSION['board'][$aiMove] === ' ') {
         $_SESSION['board'][$aiMove] = 'O';
         $_SESSION['history_O'][] = $aiMove;
         $_SESSION['current_player'] = 'X';
         $winner = checkWinner($_SESSION['board']);
+        logMove($aiMove);
     }
+    
 }
 //TODO vérifie une victoire match null ou victoire bot ou victoire joueur
 //Uniquement lorsque la partie est terminée on affiche nouvelle partie bouton
@@ -385,7 +389,7 @@ function Win(){
     */
     if($winner) {
         $data['win'] = True;
-        if(count($available_moves) % 2 == 1) {
+        if($_SESSION['current_player']=='X') {
             $data['winner'] = 'IA';
             $data['IdWinner'] = $difficulty??10;
         } else {

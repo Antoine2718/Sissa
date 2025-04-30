@@ -52,3 +52,22 @@
 .profile-container hr{
     width: 95%;
 }
+.list-table{
+    grid-column: 2;
+    width: 95%;
+    background:white;
+    border-radius:10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    border-collapse: collapse;
+    display: table;
+}
+.list-table thead{
+    background-color: #d8dee9;
+}
+.list-table-element{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}

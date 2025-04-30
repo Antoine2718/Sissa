@@ -1,5 +1,6 @@
 <?php
 function getResultForm($state,$board,$difficulty){
+    $db = connect();
     $available_moves = [];
     foreach ($board as $i => $cell) {
         if ($cell === ' ') {
@@ -7,7 +8,18 @@ function getResultForm($state,$board,$difficulty){
         }
     }
     $move_to_win = 9 - count($available_moves);
-    
+    $first = $_SESSION['first_player'];
+    $first_player = ($first == 'X')?"Vous":"Adversaire";
+    try{
+        //Recupère le nombre de points du joueur
+        $stmt = $db->prepare("SELECT r.nomRobot as robot_name from robot r where idRobot=?");
+        $stmt->bindParam(1, $difficulty, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $robot = $result['robot_name'];
+    }catch(PDOException $e){
+        exit();
+    }
     if(!isset($state['winner'])){
         $win =0;
         $class="nul";
@@ -34,7 +46,9 @@ function getResultForm($state,$board,$difficulty){
             <div class ="statistique">
                 <h3>Statistiques</h3>
                 <hr>
+                <p><?php echo "Adversaire: $robot";?></p>
                 <p><?php echo "Fin de partie en $move_to_win coups";?></p>
+                <p><?php echo "Premier joueur: $first_player";?></p>
             </div>
             <div class ="resultat">
                 <h3>Résultat</h3>
@@ -51,7 +65,6 @@ function getResultForm($state,$board,$difficulty){
                     $var_pts = "<span class=\"win\">+$delta</span>";
                 }
                 
-                
                 echo "<p>Difficulté: $difficulty</p>";
                 echo "<p>Points: $delta</p>";
                 ?>
@@ -59,7 +72,7 @@ function getResultForm($state,$board,$difficulty){
             <div class="lead">
             <h2>Classement</h2><br>
             <?php 
-            $db = connect();
+            
             if(isset($_SESSION['partie']))updatePoints($db,$user->getID(),$delta);
             
             $pts = getUser()->getPoints();

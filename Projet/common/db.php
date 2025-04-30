@@ -210,7 +210,7 @@ function calculatePoints($win,$difficulty,$move_to_win){
     }else if($win==0){
         return floor(15* ($difficulty-6)/$move_to_win);
     }else{
-        return -floor(33 * (10-$difficulty) / $move_to_win);
+        return -floor(33 * (11-$difficulty) / $move_to_win);
     }
 }
 function updateUser($db){
@@ -344,6 +344,42 @@ function getPartie($pdo,$page,$page_size){
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $result;
+    }catch(PDOException $e){
+        header("Location: ../pages/error_page.php");
+        exit();
+    }
+}
+function getPartieforUser($db,$page,$page_size,$idUtilisateur){
+    try{
+        $stmt = $db->prepare('
+        SELECT p.idPartie as id,p.date_premier_coup as first_coup,p.premier_joueur as first_player, r.niveauRobot as lvl, r.nomRobot robot_name, count(j.idCoup) as nb_coup from partie p
+        inner join robot r on p.idRobot = r.idRobot
+        inner join utilisateur u on u.idUtilisateur = p.idUtilisateur
+        inner join joue_coup j on j.idPartie = p.idPartie
+        where u.idUtilisateur = ?
+        group by 1
+        order by p.date_premier_coup DESC
+        limit ?,?
+        ');
+        $debut =($page-1) * $page_size;
+        $stmt->bindParam(1,$idUtilisateur, PDO::PARAM_INT);
+        $stmt->bindParam(2,$debut, PDO::PARAM_INT);
+        $stmt->bindParam(3,$page_size, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }catch(PDOException $e){
+        header("Location: ../pages/error_page.php");
+        exit();
+    }
+}
+function getNumberOfGamesOfUser($db,$idUtilisateur){
+    try{
+        $stmt = $db->prepare("SELECT COUNT(*) as cs FROM partie where idUtilisateur =?");
+        $stmt->bindParam(1,$idUtilisateur, PDO::PARAM_INT);
+        $stmt->execute();
+        $count = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $count['cs'];
     }catch(PDOException $e){
         header("Location: ../pages/error_page.php");
         exit();
