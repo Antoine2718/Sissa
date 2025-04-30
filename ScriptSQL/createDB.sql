@@ -297,7 +297,7 @@ INSERT INTO achete (idUtilisateur, idArticle, date_achat, quantité_achat, prix_
 (33, 15, '2025-04-05 16:20:00', 2, 17.49, 24.99, 0.30, 'Déstockage'); -- 2 Jeux "Morpion Deluxe" - avec déstockage (30%)
 
 -- Ajout de partie
-INSERT INTO coup (code_coup, numero_coup) VALUES
+INSERT INTO coup (idCoup,code_coup, numero_coup) VALUES
 (285, 0, 1),
 (286, 4, 2),
 (287, 1, 3),
@@ -332,10 +332,10 @@ INSERT INTO coup (code_coup, numero_coup) VALUES
 (316, 7, 9);
 
 INSERT INTO partie(idPartie, date_premier_coup, premier_joueur, idRobot, idUtilisateur) VALUES 
-(28, '2025-04-30 22:04:17', 'X', 9, 1),
-(30, '2025-04-30 22:17:10', 'X', 9, 1),
-(31, '2025-04-30 22:26:47', 'X', 5, 1), 
-(32, '2025-04-30 22:33:37', 'X', 10, 1);
+(28, '2025-04-30 22:04:17', 'X', 9, 33),
+(30, '2025-04-30 22:17:10', 'X', 9, 33),
+(31, '2025-04-30 22:26:47', 'X', 5, 33), 
+(32, '2025-04-30 22:33:37', 'X', 10, 33);
 
 INSERT INTO joue_coup(idPartie, idCoup, date_coup) VALUES
 (28, 285, '2025-04-30 22:04:17'), 

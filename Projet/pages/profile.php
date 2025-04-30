@@ -130,6 +130,8 @@
             }
         }else if($action =="RBS"){
             include("../pages/profile_remboursement.php");
+        }else if($action =="RBA"){
+            include("../admin/rembourse.php");
         }
         ?>
         </div>

@@ -1,6 +1,7 @@
 <?php
 $target = $_SERVER['HTTP_REFERER'];
 $regex_datetime = '/^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})$/';
+
 if(!isset($_GET['id']) || !isset($_GET['idP']) || !isset($_GET['date']) ){
     header("Location: ../pages/error_page.php");
     exit();
@@ -8,6 +9,11 @@ if(!isset($_GET['id']) || !isset($_GET['idP']) || !isset($_GET['date']) ){
 $id = $_GET['id'];
 $idP = $_GET['idP'];
 $date = $_GET['date'];
+//sécurité qui permet qu'il soit impossible pour un imposteur de rembourser un produit
+if(!isAdmin()&& getUser()->getID()!=$id){
+    header("Location: ../pages/error_page.php");
+    exit();
+}
 if(!preg_match($regex_datetime,$date)|| !preg_match("/^[0-9]+$/",$id)|| !preg_match("/^[0-9]+$/",$idP) ){
     header("Location: ../pages/error_page.php");
     exit();
@@ -22,6 +28,16 @@ try{
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $prix = $result['prix'];
     $qte = $result['qte'];
+}catch(PDOException $e){
+    header("Location: ../pages/error_page.php");
+    exit();
+}
+//on modifie le stock de l'article
+try{
+    $stmt = $db->prepare("UPDATE article set stock = stock + ? where idArticle = ?");
+    $stmt->bindParam(1, $qte, PDO::PARAM_INT);
+    $stmt->bindParam(2, $idP, PDO::PARAM_INT);
+    $stmt->execute();
 }catch(PDOException $e){
     header("Location: ../pages/error_page.php");
     exit();

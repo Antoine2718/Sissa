@@ -347,3 +347,9 @@ p{
     justify-content: center;
     align-items: center;
 }
+.refund-button{
+    padding: 5px;
+    border-radius: 10px;
+    margin-left: 10px;
+    background-color: var(--sissa_dark_blue);
+}

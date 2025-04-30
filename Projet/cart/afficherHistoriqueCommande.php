@@ -48,6 +48,7 @@
                                 <?= strtoupper(substr($article['nom'], 0, 1)) ?>
                             <?php } ?>
                         </div>
+                        
                         <div class="produit-details">
                             <div class="produit-nom"><?= htmlspecialchars($article['nom']) ?></div>
                             <div class="produit-meta">
@@ -66,7 +67,14 @@
                                 <?php endif; ?>
                             </div>
                         </div>
+                        
                         <div class="produit-prix"><?= number_format($totalArticle, 2, ',', ' ') ?> €</div>
+                        <?php 
+                        
+                        $idP = $article['idArticle'];
+                        $date = $article['date_achat'];
+                        $id = getUser()->getID();
+                        echo "<a class =\"refund-button\" href=\"profile.php?action=RBA&id=$id&idP=$idP&date=$date\">Rembourser le produit</a>";?>
                     </div>
                 <?php endforeach; ?>
             </div>
