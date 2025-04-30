@@ -87,9 +87,10 @@ if (!isset($_SESSION['mode'])) {
         ?>
         <form method="post">
             <div id="difficulty-container" <?php echo"style=\"display: $display;\";"?>>
-                <label for="difficulty"> <h4> Niveau de difficulté pour l'IA : </h4> </label>
+                <label for="difficulty"> <h4> Niveau de difficulté pour l'IA </h4> </label>
                 <div class="robots">
-                    <h2>IA disponibles</h2>
+                    <h1>IA disponibles</h1>
+                    <br>
                     <?php if (!empty($robots)): ?>
                         <ul>
                                 
