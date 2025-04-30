@@ -57,12 +57,13 @@ function getUpdateForm(){
         <input type="password" id="password" name="password">
         <p class ="info">Laisser vide pour ne pas changer le mot de passe</p>
     </div>
+    <div class="form-group">
     <label for="type">Role:</label>
         <select name="type" id="type">
             <option value="user" <?php if($user->getType()=="user")echo "selected"?>>Utilisateur</option>
             <option value="admin" <?php if($user->getType()=="admin")echo "selected"?>>Administrateur</option>
         </select>
-    
+    </div>
     <div class ="form-group">
         <button class ="color-button" type="submit">Modifier</button>
     </div>
@@ -109,5 +110,53 @@ function getStockForm(){
 </div>
 <?php
 signout($db);
+}
+
+?>
+<?php
+function getAddArticleForm(){
+    
+?>
+<div class="login-container">
+    <h1>Ajouter un nouvel article</h1>
+    <form action="../admin/addArticle.php" method="POST">
+    <div class="form-group">
+        <label for="name">Nom article:</label>
+        <input type="text" id="name" name="name" pattern="^[\x00-\x7F]{1,50}$" required>
+    </div>
+    <div class="form-group">
+        <label for="descp">Description:</label>
+        <input type="textarea" id="descp" name="descp" pattern="^[\x00-\x7F]{1,200}$" required>
+    </div>
+    <div class="form-group">
+        <label for="price">Prix:</label>
+        <input type="textarea" id="price" name="price" pattern = "^\d*\,?\d*$"required>
+    </div>
+    <div class="form-group">
+        <label for="stock">Stock initial:</label>
+        <input type="text" id="stock" name="stock" pattern="^[0-9]+$"required>
+    </div>
+    
+        
+    <div class ="form-group">
+        <label for="categorie">Categorie:</label>
+        <select name="categorie" id="categorie">
+            <option value="vêtements" selected>Vêtements</option>
+            <option value="accessoires" >Accessoires</option>
+            <option value="goodies" >Goodies</option>
+            <option value="jeux" >Jeux</option>
+            <option value="posters" >Posters</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="icone">Lien icone:</label>
+        <input type="text" id="icone" name="icone" pattern="^[\x00-\x7F]{0,50}$">
+    </div>
+    <div class ="form-group">
+        <button class ="color-button" type="submit">Ajouter l'article</button>
+    </div>
+    </form>
+</div>
+<?php
 }
 ?>

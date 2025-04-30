@@ -35,6 +35,9 @@
             <div class="profile-nav-element">
                 <a class ="color-button" href="profile.php?action=HGM">Historique des parties</a>
             </div>
+            <div class="profile-nav-element">
+                <a class ="color-button" href="profile.php?action=RBS">Remboursements</a>
+            </div>
         </div>
         <div class ="data">
             <?php 
@@ -125,6 +128,8 @@
             }catch(PDOException $e){
                 echo "Une erreur est survenue";
             }
+        }else if($action =="RBS"){
+            include("../pages/profile_remboursement.php");
         }
         ?>
         </div>

@@ -13,8 +13,7 @@ function connect(){
     if (json_last_error() !== JSON_ERROR_NONE) {
         die("Error decoding JSON configuration file.");
     }
-    if(!
-    (
+    if(!(
         isset($config['host'])&&
         isset($config['port'])&&
         isset($config['username'])&&
@@ -384,6 +383,24 @@ function getNumberOfGamesOfUser($db,$idUtilisateur){
         return $count['cs'];
     }catch(PDOException $e){
         header("Location: ../pages/error_page.php");
+        exit();
+    }
+}
+function getRemboursementOf($db,$idUtilisateur,$page,$page_size){
+    try{
+        $stmt = $db->prepare(
+            "SELECT a.nom as name, r.date_remboursement as date, r.prix_remboursé as prix from remboursement r inner join article a on a.idArticle = r.idArticle where idUtilisateur= ? limit ?,?"
+        );
+        $debut =($page-1) * $page_size;
+        $stmt->bindParam(1,$idUtilisateur, PDO::PARAM_INT);
+        $stmt->bindParam(2,$debut, PDO::PARAM_INT);
+        $stmt->bindParam(3,$page_size, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }catch(PDOException $e){
+        echo $e;
+        //header("Location: ../pages/error_page.php");
         exit();
     }
 }

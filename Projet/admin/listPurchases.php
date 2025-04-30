@@ -38,7 +38,7 @@
                 <div class=\"list-table-element\">
                     <a class =\"color-button table-button\" href=\"../pages/admin.php?action=HST&id=$id\">Voir pour cet utilisateur</a>
                     <a class =\"color-button table-button\" href=\"../pages/admin.php?action=HPD&id=$idP\">Voir pour ce produit</a>
-                    <a class =\"color-button table-button\" href=\"../pages/admin.php?action=RBS&id=$idP\">Rembourser le produit</a>
+                    <a class =\"color-button table-button\" href=\"../pages/admin.php?action=RBS&idP=$idP&id=$id&date=$date\">Rembourser le produit</a>
                 </div>
                 </td>
                 </tr>";

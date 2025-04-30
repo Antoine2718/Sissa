@@ -26,6 +26,9 @@
                 <a class ="color-button" href="admin.php?action=STK">Gestion du Stock</a>
             </div>
             <div class="admin-nav-element">
+                <a class ="color-button" href="admin.php?action=ADD">Ajouter article</a>
+            </div>
+            <div class="admin-nav-element">
                 <a class ="color-button" href="admin.php?action=USR">Liste des utilisateurs</a>
             </div>
             <div class="admin-nav-element">
@@ -105,6 +108,10 @@
                 include("../admin/listPurchasesProduct.php");
             }else if($action == "HGM"){
                 include("../admin/listPartie.php");
+            }else if($action =="RBS"){
+                include("../admin/rembourse.php");
+            }else if($action=="ADD"){
+                getAddArticleForm();
             }
         }
     ?>
