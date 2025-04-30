@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sissa</title>
+    <link rel="stylesheet" href="page_perso_jeu.css">
     <style>
         body {
             font-family: Helvetica, sans-serif;
