@@ -14,60 +14,7 @@
     <!-- Ajoute Montserrat depuis Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="shop.css">
-    <style>
-        /* Badge promotion */
-.badge-promotion {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: #e74c3c;
-    color: white;
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-size: 0.8em;
-    font-weight: bold;
-    z-index: 1;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
 
-/* Badge best-seller */
-.badge-bestseller {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background-color: #f39c12;
-    color: white;
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-size: 0.8em;
-    font-weight: bold;
-    z-index: 1;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-/* Prix en promotion */
-.prix-original {
-    text-decoration: line-through;
-    color: #888;
-    font-size: 0.9em;
-    margin-right: 8px;
-}
-
-.prix-promotion {
-    color: #e74c3c;
-    font-weight: bold;
-}
-
-/* Ajuster le positionnement quand les deux badges sont présents */
-.carte-produit .badge-promotion + .badge-bestseller {
-    top: 50px; /* Décaler le badge best-seller vers le bas si une promo est présente */
-}
-
-/* Si la carte a déjà un badge vedette, décaler le badge promo */
-.carte-vedette .badge-promotion {
-    top: 50px;
-}
-</style>
 </head>
 <body>
     <?php 
@@ -79,8 +26,8 @@
     <?php
     // Configuration de la pagination
     $articles_par_page = 5; // Nombre d'articles à afficher par page, peut éventuellement être modifié, lorsque je l'ai fait j'ai essayé avec 6, mais le rendu était pas top
-    $page_courante = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
-    $debut = ($page_courante - 1) * $articles_par_page;
+    $page_courante = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1; // Page courante, par défaut 1, on s'assure qu'elle est au moins 1, on pourrait limiter le nombre de pages
+    $debut = ($page_courante - 1) * $articles_par_page; // Calcul du début de la page, pour la pagination
 
     // Construction des filtres (utilisé pour les deux requêtes)
     $where = [];
@@ -108,14 +55,20 @@
     $where_clause = "stock > 0";
     if ($where) {
         $where_clause .= " and " . implode(" and ", $where);
-    }
+    }//Ici la where clause est construite pour ne pas afficher les articles en rupture de stock, et pour filtrer par catégorie, prix min et max si spécifié
+    // On pourrait aussi ajouter un filtre par date d'ajout, mais je ne l'ai pas fait pour garder la page plus simple
+    //Pour se faire le plus simple serait de modifier la base de données pour ajouter une colonne date d'ajout en boutique à la table article, puis construire la requête avec une clause WHERE sur cette colonne, mais je ne l'ai pas fait pour garder la base de données simple et éviter de la modifier inutilement
+    //Voici le potentiel code pour ajouter une colonne date d'ajout à la table article : alter table Article add column date_ajout datetime default now() pour ajouter la colonne, puis update Article set date_ajout = now() pour mettre à jour la date d'ajout de tous les articles déjà présents dans la base de données
+    //Ensuite la requête pour recupérer les articles serait : select * from Article where date_ajout >= date_sub(now(), interval 30 day) and stock > 0 order by date_ajout desc limit ?, ? pour récupérer les articles ajoutés dans les 30 derniers jours, cette requête s'explique comme suit : on récupère tous les articles dont la date d'ajout est supérieure à la date actuelle moins 30 jours, et on les trie par date d'ajout décroissante, puis on limite le nombre de résultats à afficher avec la clause limit ?, ? qui prend en paramètre le début et le nombre d'articles à afficher
+    // La requête pour un éventuel tri par nom d'article serait : select * from Article where stock > 0 and nom like ? order by nom asc limit ?, ? pour récupérer les articles dont le nom contient une chaîne de caractères donnée, triés par ordre alphabétique croissant, et limités à un certain nombre de résultats
+
 
     // Requête pour compter le nombre total d'articles (pour la pagination)
-    $sql_count = "select count(*) from Article where " . $where_clause;
-    $stmt_count = $pdo->prepare($sql_count);
-    $stmt_count->execute($params);
-    $total_articles = $stmt_count->fetchColumn();
-    $nombre_pages = ceil($total_articles / $articles_par_page);
+    $sql_count = "select count(*) from Article where " . $where_clause; // On compte le nombre d'articles qui correspondent aux critères de la requête, on pourrait aussi faire un count distinct pour ne pas compter les doublons, mais ici on ne s'en sert pas
+    $stmt_count = $pdo->prepare($sql_count); // Préparation de la requête pour compter le nombre d'articles
+    $stmt_count->execute($params); 
+    $total_articles = $stmt_count->fetchColumn(); // Récupération du nombre total d'articles
+    $nombre_pages = ceil($total_articles / $articles_par_page); // Calcul du nombre total de pages, on utilise la fonction ceil pour arrondir à l'entier supérieur, on pourrait aussi utiliser floor pour arrondir à l'entier inférieur, mais ici on veut afficher le nombre total de pages, donc on utilise ceil
 
     // Ajouter les paramètres de pagination à $params
     $params[] = $debut;

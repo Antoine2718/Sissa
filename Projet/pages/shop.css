@@ -402,3 +402,56 @@
         width: 100%;
     }
 }
+
+    /* Badge promotion */
+    .badge-promotion {
+        position: absolute; /* Positionnement absolu pour le badge de promotion, permet au badge de "flotter" */
+        top: 10px; 
+        right: 10px; 
+        background-color: #e74c3c;
+        color: white;
+        padding: 5px 12px; 
+        border-radius: 20px;
+        font-size: 0.8em;
+        font-weight: bold;
+        z-index: 1;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Badge best-seller */
+    .badge-bestseller {
+        position: absolute; /* Positionnement absolu pour le badge best-seller, permet au badge de "flotter" */
+        top: 10px;
+        left: 10px;
+        background-color: #f39c12;
+        color: white;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.8em;
+        font-weight: bold;
+        z-index: 1;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Prix en promotion */
+    .prix-original {
+        text-decoration: line-through; /* Prix original barré */
+        color: #888; /* Couleur grise pour le prix original */
+        font-size: 0.9em;
+        margin-right: 8px;
+    }
+
+    .prix-promotion {
+        color: #e74c3c;
+        font-weight: bold;
+    }
+
+    /* Ajuster le positionnement quand les deux badges sont présents */
+    .carte-produit .badge-promotion + .badge-bestseller { /* Si la carte a déjà un badge promo, décaler le badge best-seller, le "+" indique une adjacence directe */
+        top: 50px; /* Décaler le badge best-seller vers le bas si une promo est présente */
+    }
+
+    /* Si la carte a déjà un badge vedette, décaler le badge promo */
+    .carte-vedette .badge-promotion {
+        top: 50px;
+    }
