@@ -69,9 +69,6 @@
     ?>
     <?php include("../common/styles.php"); ?>
     <link rel ="stylesheet" href="produit.css">
-    <style>
-
-    </style>
 </head>
 <body>
     <?php 
