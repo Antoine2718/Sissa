@@ -4,7 +4,7 @@ session_start();
 require_once '../common/db.php';
 $pdo = connect();
 
-$panier = $_SESSION['panier'] ?? [];
+$panier = $_SESSION['panier'] ?? []; // Récupérer le panier de la session, ou un tableau vide si non défini
 $articles = [];
 $total = 0;
 

@@ -132,7 +132,7 @@
                         </div>
                         
                         <p class="produit-description">
-                            <?= nl2br(htmlspecialchars($product['description'])) ?>
+                            <?= nl2br(htmlspecialchars($product['description'])) ?> <!-- nl2br permet de garder les sauts de ligne dans la description, htmlspecialchars pour éviter les injections XSS -->
                         </p>
                         
                         <div class="produit-meta">
@@ -148,6 +148,7 @@
                                     <span class="stock-rupture">Rupture de stock</span>
                                 <?php endif; ?>
                                 <!-- On pourrait ajouter une icône en plus du message concernant le stock, peut-être peut-on ajouter le nb de produits en stock ? -->
+                                 <!-- Si l'on souhaitait afficher le nombre de produits en stock, il suffirait de faire un echo de $product['stock'] ici -->
                             </div>
                         </div>
                         

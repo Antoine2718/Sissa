@@ -75,7 +75,7 @@
     $params[] = $articles_par_page;
 
     // Construction de la requête SQL
-        // Récupération des best-sellers des 30 derniers jours (les 3 produits les plus vendus)
+    // Récupération des best-sellers des 30 derniers jours (les 3 produits les plus vendus)
     $sql_bestsellers = "SELECT a.idArticle, SUM(ac.quantité_achat) as total_ventes
     FROM Article a
     JOIN achete ac ON a.idArticle = ac.idArticle
@@ -215,7 +215,7 @@
                     <div class="badge-promotion">-<?= round($produit['promotion_active'] * 100) ?>%</div>
                 <?php endif; ?>
                 
-                <?php if (in_array($produit['idArticle'], $bestSellers)): ?>
+                <?php if (in_array($produit['idArticle'], $bestSellers)): ?> <!-- Vérifie si le produit est un best-seller -->
                     <div class="badge-bestseller">Best-seller</div>
                 <?php endif; ?>
                 
@@ -254,7 +254,7 @@
             
             <!-- Filtres par catégorie -->
             <div class="filtres-categories">
-                <a href="?" class="bouton-categorie <?= empty($_GET['categorie']) ? 'actif' : '' ?>">
+                <a href="?" class="bouton-categorie <?= empty($_GET['categorie']) ? 'actif' : '' ?>"> <!-- Lien vers la page principale sans filtre de catégorie -->
                     Tous les produits
                 </a>
                 <?php foreach ($categories as $cat): ?>
@@ -326,14 +326,14 @@
                 <div class="controles-pagination">
                     <?php if ($page_courante > 1): ?>
                         <a href="?page=1<?= !empty($_GET['categorie']) ? '&categorie='.urlencode($_GET['categorie']) : '' ?><?= isset($_GET['min_price']) ? '&min_price='.urlencode($_GET['min_price']) : '' ?><?= isset($_GET['max_price']) ? '&max_price='.urlencode($_GET['max_price']) : '' ?>" class="bouton-pagination">&laquo; Première</a>
-                        <a href="?page=<?= $page_courante - 1 ?><?= !empty($_GET['categorie']) ? '&categorie='.urlencode($_GET['categorie']) : '' ?><?= isset($_GET['min_price']) ? '&min_price='.urlencode($_GET['min_price']) : '' ?><?= isset($_GET['max_price']) ? '&max_price='.urlencode($_GET['max_price']) : '' ?>" class="bouton-pagination">&lsaquo; Précédente</a>
+                        <a href="?page=<?= $page_courante - 1 ?><?= !empty($_GET['categorie']) ? '&categorie='.urlencode($_GET['categorie']) : '' ?><?= isset($_GET['min_price']) ? '&min_price='.urlencode($_GET['min_price']) : '' ?><?= isset($_GET['max_price']) ? '&max_price='.urlencode($_GET['max_price']) : '' ?>" class="bouton-pagination">&lsaquo; Précédente</a><!-- Lien vers la page précédente -->
                     <?php endif; ?>
                     
                     <div class="pages-numeros">
                         <?php
                         // Affichage des numéros de page avec un intervalle autour de la page courante
                         $intervalle = 2; // Nombre de pages à afficher avant et après la page courante
-                        for ($i = max(1, $page_courante - $intervalle); $i <= min($nombre_pages, $page_courante + $intervalle); $i++) {
+                        for ($i = max(1, $page_courante - $intervalle); $i <= min($nombre_pages, $page_courante + $intervalle); $i++) { //On affiche les pages de la page courante moins l'intervalle à la page courante plus l'intervalle, on s'assure que la page courante est bien dans l'intervalle
                             $classe_page = ($i == $page_courante) ? 'page-active' : '';
                             echo '<a href="?page='.$i.(!empty($_GET['categorie']) ? '&categorie='.urlencode($_GET['categorie']) : '').(isset($_GET['min_price']) ? '&min_price='.urlencode($_GET['min_price']) : '').(isset($_GET['max_price']) ? '&max_price='.urlencode($_GET['max_price']) : '').'" class="numero-page '.$classe_page.'">'.$i.'</a>';
                         }
