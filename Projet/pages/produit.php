@@ -48,7 +48,7 @@
                     FROM Article a WHERE idArticle = :id");
                 $stmt->bindParam(':id', $id, PDO::PARAM_INT);
                 $stmt->execute();
-                $product = $stmt->fetch(PDO::FETCH_ASSOC);
+                $product = $stmt->fetch(PDO::FETCH_ASSOC);// On utilise fetch pour récupérer une seule ligne
                 
                 if ($product) {
                     $pageTitle = htmlspecialchars($product['nom']);

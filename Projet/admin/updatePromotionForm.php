@@ -76,7 +76,7 @@ $fin_formatted = date('Y-m-d\TH:i', strtotime($promotion['fin_promotion']));
             <div class="commande-item">
                 <div class="produit-details">
                     <div class="produit-nom">Nom de la promotion</div>
-                    <input type="text" name="nom_promotion" value="<?= htmlspecialchars($promotion['nom_promotion']) ?>" required class="form-control">
+                    <input type="text" name="nom_promotion" value="<?= htmlspecialchars($promotion['nom_promotion']) ?>" required class="form-control"> <!-- required class="form-control" pour s'assurer que le champ est rempli avant l'envoi du formulaire -->
                 </div>
             </div>
             <div class="commande-item">

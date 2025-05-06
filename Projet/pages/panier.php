@@ -10,7 +10,7 @@ $total = 0;
 
 if (!empty($panier)) {
     $ids = array_keys($panier);
-    $placeholders = implode(',', array_fill(0, count($ids), '?'));
+    $placeholders = implode(',', array_fill(0, count($ids), '?'));// Créer des placeholders pour la requête préparée, la fonction array_fill crée un tableau de la même taille que le nombre d'articles dans le panier, et implode les transforme en une chaîne de caractères séparée par des virgules
     
     $stmt = $pdo->prepare("SELECT a.*, 
     (SELECT MAX(p.proportion_promotion) FROM Promotion p 
@@ -27,8 +27,8 @@ if (!empty($panier)) {
     FROM Article a WHERE a.idArticle IN ($placeholders)");
     $stmt->execute($ids);
     
-    while ($article = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $quantite = $panier[$article['idArticle']]['quantite'];
+    while ($article = $stmt->fetch(PDO::FETCH_ASSOC)) { // Récupérer les informations de chaque article dans le panier
+        $quantite = $panier[$article['idArticle']]['quantite']; // Récupérer la quantité de l'article dans le panier
         $prix_unitaire = !empty($article['promotion_active']) ? 
             $article['prix'] * (1 - $article['promotion_active']) : 
             $article['prix'];
@@ -78,7 +78,7 @@ unset($_SESSION['message'], $_SESSION['erreur']);
         
         <?php if (empty($articles)) : ?>
             <div class="panier-vide">
-                <i>🛒</i>
+                <i>🛒</i> <!-- La balise <i> est utilisée ici car elle est historiquement destinée à représenter du texte en italique, mais elle est souvent utilisée pour des icônes dans les pratiques modernes. Elle est légère, stylable avec CSS, et sémantiquement neutre, ce qui la rend appropriée pour afficher une icône comme celle-ci. -->
                 <h2>Votre panier est vide</h2>
                 <p>Découvrez nos produits et ajoutez-les à votre panier</p>
                 <a href="shop.php" class="bouton-retour">Parcourir la boutique</a>
@@ -101,7 +101,7 @@ unset($_SESSION['message'], $_SESSION['erreur']);
                             <div class="produit-info">
                                 <div class="produit-image">
                                     <?php if (!empty($item['infos']['lien_image'])): ?>
-                                        <img src="<?= htmlspecialchars($item['infos']['lien_image']) ?>" alt="<?= htmlspecialchars($item['infos']['nom']) ?>">
+                                        <img src="<?= htmlspecialchars($item['infos']['lien_image']) ?>" alt="<?= htmlspecialchars($item['infos']['nom']) ?>"><!-- Notons que < ?= est l'équivalent php de < ?php echo -->
                                     <?php else: ?>
                                         <?= strtoupper(substr($item['infos']['nom'], 0, 1)) ?>
                                     <?php endif; ?>
