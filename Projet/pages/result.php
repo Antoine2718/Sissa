@@ -13,7 +13,8 @@ function getResultForm($state,$board,$difficulty){
     try{
         //Recupère le nombre de points du joueur
         $stmt = $db->prepare("SELECT r.nomRobot as robot_name from robot r where idRobot=?");
-        $stmt->bindParam(1, $difficulty, PDO::PARAM_INT);
+        $idr = 11-$difficulty;
+        $stmt->bindParam(1, $idr, PDO::PARAM_INT);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         $robot = $result['robot_name'];

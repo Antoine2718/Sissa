@@ -307,7 +307,7 @@ function logMove($cell) {
         $char = $_SESSION['current_player'];
         $id = $player->getID();
         $stmt = $pdo->prepare("INSERT INTO partie (date_premier_coup, premier_joueur, idRobot, idUtilisateur) VALUES (:date_pc, :firs, :id1, :id2)");
-        $stmt->execute([':date_pc' => $date, ':firs' => $char, ':id1' => $difficulty, ':id2' => $id]);
+        $stmt->execute([':date_pc' => $date, ':firs' => $char, ':id1' => 11-$difficulty, ':id2' => $id]);
         $idPartie = $pdo->lastInsertId();
         $_SESSION['partie'] = $idPartie;
     }
